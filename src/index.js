@@ -4,24 +4,12 @@ import AppRouter from './router/router'
 import { createGlobalStyle } from 'styled-components';
 import { Colors, Fonts } from './themes';
 
-import ApolloClient,  { gql } from 'apollo-boost';
+import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 
 const client = new ApolloClient({
-  // uri: 'http://localhost:3000'
-  uri: 'https://48p1r2roz4.sse.codesandbox.io'
+  uri: process.env.API_HOST,
 });
-
-client.query({
-  query: gql`
-    {
-      rates(currency: "USD") {
-        currency
-      }
-    }
-  `
-}).then(result => console.log(result))
-
 
 const GlobalStyle = createGlobalStyle`
   @import url('${Fonts.src}');
