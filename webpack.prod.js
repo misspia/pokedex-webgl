@@ -13,7 +13,8 @@ module.exports = merge(common, {
 	plugins: [
 		new webpack.DefinePlugin({
 			'process.env': {
-				'NODE_ENV': JSON.stringify('production')
+				'NODE_ENV': JSON.stringify('production'),
+				'GRAPHQL_API': JSON.stringify('https://pokedex-apolloserver.misspia.now.sh/graphql'),
 			}
 		})
 	]

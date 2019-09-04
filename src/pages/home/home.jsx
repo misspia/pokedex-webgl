@@ -1,15 +1,11 @@
 import React from 'react';
 import * as S from './home.styles';
-import { Query } from "react-apollo";
-import { gql } from "apollo-boost";
+import { Query } from 'react-apollo';
+import { gql } from 'apollo-boost';
 
-
-const RATES_QUERY = gql`
+const PK_TEST_QUERY = gql`
   {
-    rates(currency: "USD") {
-      currency
-      rate
-    }
+    hello
   }
 `;
 
@@ -24,15 +20,13 @@ export default class HomePage extends React.Component {
   render() {
     return (
       <S.Container>
-        <Query query={RATES_QUERY}>
+        <Query query={PK_TEST_QUERY}>
           {({ loading, error, data }) => {
-            if(loading) return <p>loading...</p>
-            if(error) return <p>error: {JSON.stringify(error)}</p>
-            return data.rates.map(({ currency, rate}) => (
-              <div key={currency}>
-                {currency}: {rate}
-              </div>
-            ));
+            if(loading) return <p>loading..</p>
+            if(error) {
+              return <p>Error: {JSON.stringify(error)}</p>
+            }
+            return <p>Success: {JSON.stringify(data)}</p>
           }}
         </Query>
       </S.Container>

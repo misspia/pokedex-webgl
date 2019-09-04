@@ -8,9 +8,11 @@ export default class EntryPage extends React.Component {
 
     }
   }
+  
   componentDidMount() {
 
   }
+
   render() {
     return (
       <S.Container>
