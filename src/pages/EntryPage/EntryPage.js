@@ -1,5 +1,5 @@
 import React from 'react';
-import * as S from './entry.styles';
+import * as S from './EntryPage.styles';
 
 export default class EntryPage extends React.Component {
   constructor(props) {

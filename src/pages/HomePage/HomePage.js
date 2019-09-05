@@ -1,5 +1,5 @@
 import React from 'react';
-import * as S from './home.styles';
+import * as S from './HomePage.styles';
 import { Query } from 'react-apollo';
 import { gql } from 'apollo-boost';
 
