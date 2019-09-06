@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import * as S from './HomePage.styles';
 import { Query } from 'react-apollo';
 import { gql } from 'apollo-boost';
+import SceneManager from '../../components/SceneManager/SceneManager';
+
 
 const PK_TEST_QUERY = gql`
   {
@@ -9,27 +11,24 @@ const PK_TEST_QUERY = gql`
   }
 `;
 
+export default function HomePage({
+  history,
+  location,
+  match,
+}) {
+  const canvas = useRef(null); 
+  let sceneManager = {};
 
-export default class HomePage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
+  useEffect(() => {
+    sceneManager = new SceneManager(canvas);
+  })
+  useEffect(() => {
+    window.addEventListener('resize', () => sceneManager.resize());
 
-    }
-  }
-  render() {
-    return (
-      <S.Container>
-        <Query query={PK_TEST_QUERY}>
-          {({ loading, error, data }) => {
-            if(loading) return <p>loading..</p>
-            if(error) {
-              return <p>Error: {JSON.stringify(error)}</p>
-            }
-            return <p>Success: {JSON.stringify(data)}</p>
-          }}
-        </Query>
-      </S.Container>
-    );
-  }
+    return window.removeEventListener('resize', () => sceneManager.resize());
+  });
+
+  return (
+    <S.Canvas ref={canvas}></S.Canvas>
+  )
 }

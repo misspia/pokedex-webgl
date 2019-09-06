@@ -18,6 +18,13 @@ const GlobalStyle = createGlobalStyle`
     font-family: ${Fonts.family};
     font-weight: ${Fonts.weightRegular};
     color: ${Colors.black};
+
+  }
+  
+  html {
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
   }
 `;
 
