@@ -34,8 +34,9 @@ export default class SceneManager {
     this.controls = new OrbitController(this.camera, this.renderer.domElement);
     
     this.resize();
+    
+    window.addEventListener('resize', this.resize);
 
-    this.testCube();
     this.draw();
   }
   
@@ -44,19 +45,19 @@ export default class SceneManager {
 
     requestAnimationFrame(() => this.draw());
   }
-  testCube() {
-    const material = new THREE.MeshBasicMaterial({ color: 0xffeedd });
-    const geometry = new THREE.BoxGeometry(2, 2, 2);
-    const mesh = new THREE.Mesh(geometry, material);
-    this.scene.add(mesh);
-  }
-  resize() {
+
+  resize = () => {
+    console.log('resize')
     const { clientWidth, clientHeight } = document.documentElement;
     this.canvas.width = clientWidth;
     this.canvas.height = clientHeight;
     this.renderer.setSize(window.innerWidth, window.innerHeight);
 
     this.updateProjectionMatrix();
+  }
+
+  unmount = () => {
+    return window.removeEventListener('resize', this.resize);
   }
 
   updateProjectionMatrix() {

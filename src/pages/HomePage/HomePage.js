@@ -1,15 +1,8 @@
 import React, { useRef, useEffect } from 'react';
 import * as S from './HomePage.styles';
-import { Query } from 'react-apollo';
-import { gql } from 'apollo-boost';
 import SceneManager from '../../components/SceneManager/SceneManager';
-
-
-const PK_TEST_QUERY = gql`
-  {
-    hello
-  }
-`;
+import EntryList from '../../components/EntryList/EntryList';
+import EntryListItem from '../../components/EntryListItem/EntryListItem';
 
 export default function HomePage({
   history,
@@ -20,13 +13,13 @@ export default function HomePage({
   let sceneManager = {};
 
   useEffect(() => {
-    sceneManager = new SceneManager(canvas);
-  })
-  useEffect(() => {
-    window.addEventListener('resize', () => sceneManager.resize());
+    const sceneManager = new SceneManager(canvas);
+    
+    const entryList = new EntryList();
+    sceneManager.scene.add(entryList.mesh);
 
-    return window.removeEventListener('resize', () => sceneManager.resize());
-  });
+    return sceneManager.unmount();
+  }, [sceneManager]);
 
   return (
     <S.Canvas ref={canvas}></S.Canvas>
