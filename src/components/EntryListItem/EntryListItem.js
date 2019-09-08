@@ -24,4 +24,7 @@ export default class EntryListItem {
 
     this.mesh = new THREE.Mesh(geometry, material);
   } 
+  setPosition(x = 0, y = 0, z = 0) {
+    this.mesh.position.set(x, y, z);
+  }
 }

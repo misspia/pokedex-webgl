@@ -18,7 +18,7 @@ export default class SceneManager {
       0.1, 
       1000
     );
-    this.camera.position.set(0, 1, -3);
+    this.camera.position.set(0, 20, -50);
     this.camera.lookAt(new THREE.Vector3());
 
     this.renderer = new THREE.WebGLRenderer({
@@ -46,8 +46,11 @@ export default class SceneManager {
     requestAnimationFrame(() => this.draw());
   }
 
+  unmount = () => {
+    return window.removeEventListener('resize', this.resize);
+  }
+
   resize = () => {
-    console.log('resize')
     const { clientWidth, clientHeight } = document.documentElement;
     this.canvas.width = clientWidth;
     this.canvas.height = clientHeight;
@@ -56,14 +59,14 @@ export default class SceneManager {
     this.updateProjectionMatrix();
   }
 
-  unmount = () => {
-    return window.removeEventListener('resize', this.resize);
-  }
-
   updateProjectionMatrix() {
     const { innerWidth, innerHeight } = window;
 
     this.camera.aspect = innerWidth / innerHeight;
     this.camera.updateProjectionMatrix();
+  }
+
+  setCameraPosition(x = 0, y = 0, z = 0) {
+    this.camera.position.set(x, y, z);
   }
 }
