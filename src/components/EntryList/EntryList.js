@@ -12,25 +12,26 @@ export default class EntryList {
     this.centerCoord = new THREE.Vector3(0, 0, 0);
     this.radius = 30;
     this.circumference = 2 * Math.PI * this.radius; 
-    console.log('cicumference', this.circumference)
     this.totalPokemon = 0;
 
     this.createList();
   }
   async createList() {
     const list = await this.fetchAllPokemon();
-    list.splice(10);
+    list.splice(20);
     this.totalPokemon = list.length;
 
     list.forEach(({ id, name, spriteUrl }, index) => {
       const entry = new EntryListItem({ id, name, spriteUrl });
 
-      const { x, y, z } = this.getListItemPosition(index);
-      entry.setPosition(x, y, z);
+      const { x: tx, y: ty, z: tz } = this.getListItemPosition(index);
+      entry.setPosition(tx, ty, tz);
+
+      const { x: rx, y: ry, z: rz } = this.getListItemRotation(index);
+      entry.setRotation(rx, ry, rz);
 
       this.mesh.add(entry.mesh);
     })
-    console.log(this.circumference / this.totalPokemon)
   }
   async fetchAllPokemon() {
     return await client.query({
@@ -63,5 +64,15 @@ export default class EntryList {
       y: this.centerCoord.y,
       z: this.radius * Math.sin(radians) + this.centerCoord.z,
     }
+  }
+  getListItemRotation(index) {
+    const angleIncrement = fullCircleRadians / this.totalPokemon;
+    const angle = angleIncrement * index;
+    return {
+      x: 0,
+      y: 0,
+      // y: angle,
+      z: 0,
+    };
   }
 }
