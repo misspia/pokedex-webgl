@@ -3,8 +3,9 @@ import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import * as S from './router.styles';
 import routes from './routes';
 
-import HomePage from '../pages/home/home';
-import EntryPage from '../pages/entry/entry';
+import HomePage from '../pages/HomePage/HomePage';
+import EntryPage from '../pages/EntryPage/EntryPage';
+import ListPage from '../pages/ListPage/ListPage';
 
 export default class AppRouter extends React.Component {
   render() {
@@ -14,6 +15,7 @@ export default class AppRouter extends React.Component {
         <S.Container>
           <Switch>
             <Route exact path={routes.home} component={HomePage}/>
+            <Route exact path={routes.list} component={ListPage}/>
             <Route path={routes.entry} component={EntryPage}/>
           </Switch>
         </S.Container>
