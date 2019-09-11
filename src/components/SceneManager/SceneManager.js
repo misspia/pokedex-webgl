@@ -19,7 +19,7 @@ export default class SceneManager {
       0.1, 
       1000
     );
-    this.camera.position.set(0, 20, -50);
+    this.camera.position.set(0, 10, -40);
     this.camera.lookAt(new THREE.Vector3());
 
     this.renderer = new THREE.WebGLRenderer({
