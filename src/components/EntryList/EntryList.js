@@ -65,6 +65,11 @@ export default class EntryList {
       z: this.radius * Math.sin(radians) + this.centerCoord.z,
     }
   }
+  /**
+   * 
+   * https://stackoverflow.com/questions/17203071/three-js-animate-rotation-of-a-mesh-on-its-y-axis-to-face-direction 
+   * https://discourse.mcneel.com/t/orientating-planes-to-centre-point/50729/3
+   */
   getListItemRotation(index) {
     const angleIncrement = fullCircleRadians / this.totalPokemon;
     const angle = angleIncrement * index;

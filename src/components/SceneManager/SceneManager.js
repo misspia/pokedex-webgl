@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import OrbitControls from 'three-orbit-controls';
+import { client } from '../../apollo';
 
 const OrbitController = OrbitControls(THREE);
 
@@ -35,7 +36,7 @@ export default class SceneManager {
     
     this.resize();
     
-    window.addEventListener('resize', this.resize);
+    window.addEventListener('resize', (e) => this.resize(e));
 
     this.draw();
   }
@@ -52,6 +53,7 @@ export default class SceneManager {
 
   resize = () => {
     const { clientWidth, clientHeight } = document.documentElement;
+
     this.canvas.width = clientWidth;
     this.canvas.height = clientHeight;
     this.renderer.setSize(window.innerWidth, window.innerHeight);
