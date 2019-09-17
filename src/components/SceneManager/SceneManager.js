@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import OrbitControls from 'three-orbit-controls';
 import { client } from '../../apollo';
+import { normalizeCoordinates } from '../../utils';
 
 const OrbitController = OrbitControls(THREE);
 
@@ -34,15 +35,22 @@ export default class SceneManager {
 
     this.controls = new OrbitController(this.camera, this.renderer.domElement);
     
+    this.raycaster = new THREE.Raycaster();
+    this.mouse = new THREE.Vector2();
+    this.intersections = [];
+
     this.resize();
     
     window.addEventListener('resize', (e) => this.resize(e));
+    window.addEventListener('mousemove', (e) => this.onMouseMove(e));
 
     this.draw();
   }
   
   draw() {
     this.renderer.render(this.scene, this.camera);
+    
+    this.updateRaycaster();
 
     requestAnimationFrame(() => this.draw());
   }
@@ -70,5 +78,27 @@ export default class SceneManager {
 
   setCameraPosition(x = 0, y = 0, z = 0) {
     this.camera.position.set(x, y, z);
+  }
+
+  onMouseMove = (event) => { 
+    const { x, y } = normalizeCoordinates(
+      event.clientX,
+      event.clientY,
+      window.innerWidth,
+      window.innerHeight
+    );
+    this.mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+    this.mouse.y = ( event.clientY / window.innerHeight ) * 2 + 1;
+  }
+
+  updateRaycaster() {
+    this.raycaster.setFromCamera(this.mouse, this.camera);
+    this.intersections = this.raycaster.intersectObjects(
+      this.scene.children
+    );
+    console.log(this.intersections, this.mouse)
+    if(this.intersections[0]) {
+      console.log(this.intersections[0]);
+    }
   }
 }

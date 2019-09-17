@@ -13,7 +13,7 @@ export default class EntryListItem {
     const spriteTexture = new THREE.TextureLoader().load(spriteUrl);
     const material = new THREE.RawShaderMaterial({
       side: THREE.DoubleSide,
-      transparent: true,
+      transparent: false,
       fragmentShader,
       vertexShader,
       flatShading: true,
