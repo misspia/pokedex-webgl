@@ -44,15 +44,6 @@ export default class SceneManager {
     window.addEventListener('resize', (e) => this.resize(e));
     window.addEventListener('mousemove', (e) => this.onMouseMove(e));
 
-    this.draw();
-  }
-  
-  draw() {
-    this.renderer.render(this.scene, this.camera);
-    
-    this.updateRaycaster();
-
-    requestAnimationFrame(() => this.draw());
   }
 
   unmount = () => {
@@ -88,17 +79,6 @@ export default class SceneManager {
       window.innerHeight
     );
     this.mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-    this.mouse.y = ( event.clientY / window.innerHeight ) * 2 + 1;
-  }
-
-  updateRaycaster() {
-    this.raycaster.setFromCamera(this.mouse, this.camera);
-    this.intersections = this.raycaster.intersectObjects(
-      this.scene.children
-    );
-    console.log(this.intersections, this.mouse)
-    if(this.intersections[0]) {
-      console.log(this.intersections[0]);
-    }
+    this.mouse.y = -( event.clientY / window.innerHeight ) * 2 + 1;
   }
 }

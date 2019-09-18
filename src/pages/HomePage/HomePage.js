@@ -9,21 +9,34 @@ export default function HomePage({
   location,
   match,
 }) {
-  const canvas = useRef(null); 
+  const canvas = useRef(null);
   let sceneManager = {};
 
   useEffect(() => {
-    const sceneManager = new SceneManager(canvas);
-    
-    // const entryList = new EntryList();
-    // sceneManager.scene.add(entryList.mesh);
+    const SM = new SceneManager(canvas);
 
-    const g = new THREE.BoxGeometry(5, 5, 5);
-    const m = new THREE.MeshBasicMaterial({ color: 0xccddff });
-    sceneManager.scene.add(new THREE.Mesh(g, m));
+    const entryList = new EntryList();
+    SM.scene.add(entryList.mesh);
 
-    return sceneManager.unmount();
+    function draw() {
+      SM.renderer.render(SM.scene, SM.camera);
+
+      SM.raycaster.setFromCamera(SM.mouse, SM.camera);
+      SM.intersections = SM.raycaster.intersectObjects(
+        entryList.mesh.children
+      );
+
+      if (SM.intersections[0]) {
+        console.log(SM.intersections[0]);
+      }
+
+      requestAnimationFrame(() => draw());
+
+    }
+    draw();
+    return SM.unmount();
   }, [sceneManager]);
+
 
   return (
     <S.Canvas ref={canvas}></S.Canvas>

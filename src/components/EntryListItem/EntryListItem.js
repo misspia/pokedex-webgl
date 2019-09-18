@@ -8,19 +8,23 @@ export default class EntryListItem {
     name = '',
     spriteUrl = '',
   }) {
-    const geometry = new THREE.PlaneGeometry(5, 5);
+    // const geometry = new THREE.PlaneGeometry(5, 5, 5, 5);
+    const geometry = new THREE.BoxGeometry(5, 5, 0.5);
 
     const spriteTexture = new THREE.TextureLoader().load(spriteUrl);
-    const material = new THREE.RawShaderMaterial({
-      side: THREE.DoubleSide,
-      transparent: false,
-      fragmentShader,
-      vertexShader,
-      flatShading: true,
-      uniforms: {
-        uSpriteTexture: { type: 't', value: spriteTexture },
-      },
-    });
+    // const material = new THREE.RawShaderMaterial({
+    //   side: THREE.DoubleSide,
+    //   // transparent: false,
+    //   fragmentShader,
+    //   vertexShader,
+    //   // flatShading: true,
+    //   uniforms: {
+    //     uSpriteTexture: { type: 't', value: spriteTexture },
+    //   },
+    // });
+    const material = new THREE.MeshBasicMaterial({
+      color: 0xffeedd,
+    })
 
     this.mesh = new THREE.Mesh(geometry, material);
   } 
