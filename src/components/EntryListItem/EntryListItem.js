@@ -8,12 +8,12 @@ export default class EntryListItem {
     name = '',
     spriteUrl = '',
   }) {
-    const geometry = new THREE.PlaneGeometry(5, 5);
+    const geometry = new THREE.PlaneGeometry(5, 5, 5, 5);
 
     const spriteTexture = new THREE.TextureLoader().load(spriteUrl);
     const material = new THREE.RawShaderMaterial({
       side: THREE.DoubleSide,
-      transparent: true,
+      transparent: false,
       fragmentShader,
       vertexShader,
       flatShading: true,
@@ -23,6 +23,7 @@ export default class EntryListItem {
     });
 
     this.mesh = new THREE.Mesh(geometry, material);
+    this.mesh.name = id;
   } 
   setPosition(x = 0, y = 0, z = 0) {
     this.mesh.position.set(x, y, z);
@@ -30,4 +31,5 @@ export default class EntryListItem {
   setRotation(x = 0, y = 0, z = 0) {
     this.mesh.rotation.set(x, y, z);
   }
+  
 }
