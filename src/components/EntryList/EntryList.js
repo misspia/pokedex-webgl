@@ -80,4 +80,8 @@ export default class EntryList {
       z: 0,
     };
   }
+
+  selectEntry(id) {
+    console.log(id)
+  }
 }

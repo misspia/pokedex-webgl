@@ -14,9 +14,19 @@ export default function HomePage({
 
   useEffect(() => {
     const SM = new SceneManager(canvas);
+    
 
     const entryList = new EntryList();
     SM.scene.add(entryList.mesh);
+
+    canvas.current.addEventListener('click', (e) => {
+      const intersection = SM.intersections[0];
+      if(!intersection) {
+        return;
+      }
+      const { name: id } = intersection.object;
+      entryList.selectEntry(id);
+    });
 
     function draw() {
       SM.renderer.render(SM.scene, SM.camera);
@@ -26,13 +36,9 @@ export default function HomePage({
         entryList.mesh.children
       );
 
-      if (SM.intersections[0]) {
-        console.log(SM.intersections[0]);
-      }
-
       requestAnimationFrame(() => draw());
-
     }
+    
     draw();
     return SM.unmount();
   }, [sceneManager]);
