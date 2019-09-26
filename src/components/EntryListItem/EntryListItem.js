@@ -8,6 +8,13 @@ export default class EntryListItem {
     name = '',
     spriteUrl = '',
   }) {
+    this.id = id;
+    this.name = name;
+    this.isActive = false;
+    this.mesh = this.createMesh(spriteUrl);
+  } 
+
+  createMesh(spriteUrl) {
     const geometry = new THREE.PlaneGeometry(5, 5, 5, 5);
 
     const spriteTexture = new THREE.TextureLoader().load(spriteUrl);
@@ -21,15 +28,16 @@ export default class EntryListItem {
         uSpriteTexture: { type: 't', value: spriteTexture },
       },
     });
+    return new THREE.Mesh(geometry, material);
+  }
 
-    this.mesh = new THREE.Mesh(geometry, material);
-    this.mesh.name = id;
-  } 
   setPosition(x = 0, y = 0, z = 0) {
     this.mesh.position.set(x, y, z);
   }
   setRotation(x = 0, y = 0, z = 0) {
     this.mesh.rotation.set(x, y, z);
   }
-  
+  setActiveState(isActive) {
+    this.isActive = isActive;
+  }
 }
