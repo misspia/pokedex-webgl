@@ -12,6 +12,7 @@ export default class EntryListItem {
     this.name = name;
     this.isActive = false;
     this.mesh = this.createMesh(spriteUrl);
+    this.mesh.name = id;
   } 
 
   createMesh(spriteUrl) {

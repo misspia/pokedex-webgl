@@ -2,8 +2,8 @@ import React, { useRef, useEffect } from 'react';
 import * as S from './HomePage.styles';
 import SceneManager from '../../components/SceneManager/SceneManager';
 import EntryList from '../../components/EntryList/EntryList';
-import EntryListItem from '../../components/EntryListItem/EntryListItem';
-import * as THREE from 'three';
+import { toEntry } from '../../router/routes';
+
 export default function HomePage({
   history,
   location,
@@ -26,6 +26,9 @@ export default function HomePage({
       }
       const { name: id } = intersection.object;
       entryList.selectEntry(id);
+
+      const path = toEntry(id);
+      history.push(path)
     });
 
     function draw() {
