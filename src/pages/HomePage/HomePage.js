@@ -1,4 +1,6 @@
 import React, { useRef, useEffect } from 'react';
+import { useQueryParam, NumberParam } from 'use-query-params';
+
 import * as S from './HomePage.styles';
 import SceneManager from '../../components/SceneManager/SceneManager';
 import EntryList from '../../components/EntryList/EntryList';
@@ -9,6 +11,8 @@ export default function HomePage({
   location,
   match,
 }) {
+  const [pkid, setPkid] = useQueryParam('id', NumberParam);
+
   const canvas = useRef(null);
   let sceneManager = {};
 
@@ -27,8 +31,7 @@ export default function HomePage({
       const { name: id } = intersection.object;
       entryList.selectEntry(id);
 
-      const path = toEntry(id);
-      history.push(path)
+      setPkid(id);
     });
 
     function draw() {
