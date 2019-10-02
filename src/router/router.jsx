@@ -5,8 +5,6 @@ import * as S from './router.styles';
 import * as routes from './routes';
 
 import HomePage from '../pages/HomePage/HomePage';
-import EntryPage from '../pages/EntryPage/EntryPage';
-import ListPage from '../pages/ListPage/ListPage';
 
 export default class AppRouter extends React.Component {
   render() {

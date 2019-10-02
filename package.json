@@ -52,7 +52,6 @@
     "apollo-boost": "^0.4.3",
     "graphql": "^14.4.2",
     "react-apollo": "^2.5.8",
-    "stats-js": "^1.0.1",
-    "use-query-params": "^0.4.1"
+    "stats-js": "^1.0.1"
   }
 }
