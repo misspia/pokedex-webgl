@@ -8,6 +8,7 @@ import EntryListItem from '../EntryListItem/EntryListItem';
 
 export default class EntryList {
   constructor() {
+    this.entries = [];
     this.mesh = new THREE.Group();
     this.centerCoord = new THREE.Vector3(0, 0, 0);
     this.radius = 30;
@@ -34,6 +35,7 @@ export default class EntryList {
       entry.setRotation(rx, ry, rz);
 
       this.mesh.add(entry.mesh);
+      this.entries.push(entry);
     })
   }
   async fetchAllPokemon() {
@@ -82,6 +84,7 @@ export default class EntryList {
   }
 
   selectEntry(id) {
-    console.log(id)
+    const entry = this.entries.find(item => item.id === id);
+    entry.setActiveState(true);
   }
 }

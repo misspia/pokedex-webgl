@@ -2,16 +2,13 @@ const HOME_ROUTE = '/';
 const LIST_ROUTE = '/list';
 const ENTRY_ROUTE = '/entry/';
 
-const routes = {
-  home: HOME_ROUTE,
-  list: LIST_ROUTE,
-  entry: `${ENTRY_ROUTE}:nationalNo`,
+ 
+export const home = HOME_ROUTE;
+export const list = LIST_ROUTE;
+export const entry = `${ENTRY_ROUTE}:nationalNo`;
 
-  toHome: () => HOME_ROUTE,
-  toList: () => LIST_ROUTE,
-  toEntry: (index) => {
-    return `${ENTRY_ROUTE}${index}`;
-  }
+export const toHome = () => HOME_ROUTE;
+export const toList = () => LIST_ROUTE;
+export const toEntry = (nationalNo) => {
+  return `${ENTRY_ROUTE}${nationalNo}`;
 }
-
-export default routes;

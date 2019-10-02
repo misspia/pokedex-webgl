@@ -1,14 +1,15 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect} from 'react';
+
 import * as S from './HomePage.styles';
 import SceneManager from '../../components/SceneManager/SceneManager';
 import EntryList from '../../components/EntryList/EntryList';
-import EntryListItem from '../../components/EntryListItem/EntryListItem';
-import * as THREE from 'three';
+
 export default function HomePage({
   history,
   location,
   match,
 }) {
+
   const canvas = useRef(null);
   let sceneManager = {};
 
@@ -26,6 +27,7 @@ export default function HomePage({
       }
       const { name: id } = intersection.object;
       entryList.selectEntry(id);
+
     });
 
     function draw() {
