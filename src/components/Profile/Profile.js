@@ -1,4 +1,6 @@
 import * as THREE from 'three';
+import { gql } from 'apollo-boost';
+import { client } from '../../apollo';
 
 export default class Profile {
   constructor() {
@@ -21,5 +23,41 @@ export default class Profile {
 
   setId(id) {
     this.id = id;
+  }
+
+  async fetchPokemonById() {
+    return await client.query({
+      query: gql`
+        {
+          GetPokemonById(id: ${this.id}) {
+            id
+            name
+            chainId
+            types
+            height
+            weight
+            baseExperience
+            abilities
+            stats {
+              key
+              value
+            }
+            artworkUrl
+          }
+        }
+      `
+    })
+    .then(result => (
+      result.data.GetPokemonById
+    ))
+    .catch(err => {
+      console.log(err);
+      return {};
+    })
+  }
+  async update(id) {
+    this.setId(id);
+    const pokemon = await this.fetchPokemonById();
+    console.log('[update profile]', pokemon);
   }
 }

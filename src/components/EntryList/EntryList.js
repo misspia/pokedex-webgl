@@ -4,6 +4,7 @@ import { gql } from 'apollo-boost';
 import { client } from '../../apollo';
 import { fullCircleRadians } from '../../utils';
 import EntryListItem from '../EntryListItem/EntryListItem';
+import Profile from '../Profile/Profile';
 
 
 export default class EntryList {
@@ -16,6 +17,7 @@ export default class EntryList {
     this.totalPokemon = 0;
     this.numRows = 3;
     this.entriesPerRow = 0;
+    this.profile = new Profile();
 
     this.createList();
   }
@@ -50,9 +52,9 @@ export default class EntryList {
         }
       `,
     })
-      .then(result => {
-        return result.data.GetAllPokemon;
-      })
+      .then(result => (
+        result.data.GetAllPokemon
+      ))
       .catch(err => {
         console.log(err);
         return [];
@@ -86,5 +88,7 @@ export default class EntryList {
   selectEntry(id) {
     const entry = this.entries.find(item => item.id === id);
     entry.setActiveState(true);
+
+    this.profile.update(id);
   }
 }
