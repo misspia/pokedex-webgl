@@ -15,7 +15,7 @@ export default class EntryList {
     this.circumference = 2 * Math.PI * this.radius;
     this.totalPokemon = 0;
     this.numRows = 3;
-    this.entriesPerRow = 0;;
+    this.entriesPerRow = 0;
 
     this.createList();
   }
