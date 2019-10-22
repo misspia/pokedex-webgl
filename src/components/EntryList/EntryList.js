@@ -21,7 +21,7 @@ export default class EntryList {
   }
   async createList() {
     const list = await this.fetchAllPokemon();
-    list.splice(80);
+    list.splice(10);
     this.totalPokemon = list.length;
     this.entriesPerRow = this.totalPokemon / this.numRows;
 
@@ -50,9 +50,9 @@ export default class EntryList {
         }
       `,
     })
-      .then(result => {
-        return result.data.GetAllPokemon;
-      })
+      .then(result => (
+        result.data.GetAllPokemon
+      ))
       .catch(err => {
         console.log(err);
         return [];
