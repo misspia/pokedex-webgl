@@ -7,34 +7,31 @@ export const PROFILE_NAME = 'profile';
 export default class Profile {
   constructor() {
     this.id = 0;
-    this.isActive = false;
 
-    this.material = new THREE.MeshBasicMaterial({
-      color: 0xaaaaff,
-      side: THREE.DoubleSide,
-    });
-    this.geometry = new THREE.PlaneGeometry(50, 28);
-    this.mesh = new THREE.Mesh(this.geometry, this.material);
+    
+    this.background = this.createBackground();
+
+    this.mesh = new THREE.Group();
     this.mesh.name = PROFILE_NAME;
     this.setPosition(0, 0, -35);
+
+    this.mesh.add(this.background);
+
     this.hide();
   }
   
   hide() {
-    this.isActive = false;
-
-    const hideenScale = 0.000001;
-    this.mesh.scale.set(hideenScale, hideenScale, hideenScale);
+    this.mesh.visible = false;
   }
   reveal() {
-    this.isActive = true;
-    this.mesh.scale.set(1, 1, 1);
+    this.mesh.visible = true;
     
   }
 
   setId(id) {
     this.id = id;
   }
+  
 
   async fetchPokemonById() {
     return await client.query({
@@ -77,5 +74,16 @@ export default class Profile {
   }
   setPosition(x, y, z) {
     this.mesh.position.set(x, y, z);
+  }
+
+
+  createBackground() {
+    const geometry = new THREE.PlaneGeometry(50, 28, 5, 5);
+    const material = new THREE.MeshBasicMaterial({
+      color: 0xaaaaff,
+      side: THREE.DoubleSide,
+    });
+
+    return new THREE.Mesh(geometry, material);
   }
 }

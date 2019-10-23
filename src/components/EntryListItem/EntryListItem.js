@@ -19,6 +19,8 @@ export default class EntryListItem {
     const geometry = new THREE.PlaneGeometry(5, 5, 5, 5);
 
     const spriteTexture = new THREE.TextureLoader().load(spriteUrl);
+    spriteTexture.minFilter = THREE.LinearFilter;
+
     const material = new THREE.RawShaderMaterial({
       side: THREE.DoubleSide,
       transparent: false,

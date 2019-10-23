@@ -25,6 +25,11 @@ export default function HomePage({
 
     canvas.current.addEventListener('click', (e) => {
       const intersection = SM.intersections[0];
+      console.group('[CLICK]')
+      console.debug(SM.scene.children)
+      console.debug(SM.intersections)
+
+      console.groupEnd();
       if(!intersection) {
         return;
       }
@@ -35,7 +40,6 @@ export default function HomePage({
         entryList.selectEntry(id);
         profile.activate(id);
       }
-
     });
 
     function draw() {
