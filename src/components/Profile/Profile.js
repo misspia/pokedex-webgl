@@ -2,6 +2,8 @@ import * as THREE from 'three';
 import { gql } from 'apollo-boost';
 import { client } from '../../apollo';
 
+import ProfileImage from '../ProfileImage/ProfileImage';
+
 export const PROFILE_NAME = 'profile';
 
 export default class Profile {
@@ -10,6 +12,7 @@ export default class Profile {
 
     
     this.background = this.createBackground();
+    this.profileImage = {};
 
     this.mesh = new THREE.Group();
     this.mesh.name = PROFILE_NAME;
@@ -31,7 +34,6 @@ export default class Profile {
   setId(id) {
     this.id = id;
   }
-  
 
   async fetchPokemonById() {
     return await client.query({
@@ -66,6 +68,8 @@ export default class Profile {
   async update(id) {
     this.setId(id);
     const pokemon = await this.fetchPokemonById();
+    this.createProfileImage(pokemon.artworkUrl);
+
     console.log('[update profile]', pokemon);
   }
   async activate(id) {
@@ -78,12 +82,20 @@ export default class Profile {
 
 
   createBackground() {
-    const geometry = new THREE.PlaneGeometry(50, 28, 5, 5);
+    const geometry = new THREE.PlaneGeometry(50, 28);
     const material = new THREE.MeshBasicMaterial({
       color: 0xaaaaff,
       side: THREE.DoubleSide,
     });
 
     return new THREE.Mesh(geometry, material);
+  }
+  createProfileImage(spriteUrl) {
+    this.profileImage = new ProfileImage({
+      spriteUrl,
+    });
+
+    this.profileImage.setPosition(0, 0, -1);
+    this.mesh.add(this.profileImage.mesh);
   }
 }
