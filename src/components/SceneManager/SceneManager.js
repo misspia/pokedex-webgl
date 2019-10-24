@@ -1,6 +1,5 @@
 import * as THREE from 'three';
 import OrbitControls from 'three-orbit-controls';
-import { client } from '../../apollo';
 import { normalizeCoordinates } from '../../utils';
 
 const OrbitController = OrbitControls(THREE);
@@ -41,8 +40,8 @@ export default class SceneManager {
 
     this.resize();
     
-    window.addEventListener('resize', (e) => this.resize(e));
-    window.addEventListener('mousemove', (e) => this.onMouseMove(e));
+    window.addEventListener('resize', (e) => this.resize(e), { passive: true });
+    window.addEventListener('mousemove', (e) => this.onMouseMove(e), { passive: true });
 
   }
 

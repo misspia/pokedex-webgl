@@ -2,33 +2,32 @@ import * as THREE from 'three';
 import { gql } from 'apollo-boost';
 import { client } from '../../apollo';
 
+import ProfileImage from '../ProfileImage/ProfileImage';
+
 export const PROFILE_NAME = 'profile';
 
 export default class Profile {
   constructor() {
     this.id = 0;
-    this.isActive = false;
 
-    this.material = new THREE.MeshBasicMaterial({
-      color: 0xaaaaff,
-      side: THREE.DoubleSide,
-    });
-    this.geometry = new THREE.PlaneGeometry(50, 28);
-    this.mesh = new THREE.Mesh(this.geometry, this.material);
+    
+    this.background = this.createBackground();
+    this.profileImage = {};
+
+    this.mesh = new THREE.Group();
     this.mesh.name = PROFILE_NAME;
     this.setPosition(0, 0, -35);
+
+    this.mesh.add(this.background);
+
     this.hide();
   }
   
   hide() {
-    this.isActive = false;
-
-    const hideenScale = 0.000001;
-    this.mesh.scale.set(hideenScale, hideenScale, hideenScale);
+    this.mesh.visible = false;
   }
   reveal() {
-    this.isActive = true;
-    this.mesh.scale.set(1, 1, 1);
+    this.mesh.visible = true;
     
   }
 
@@ -69,6 +68,8 @@ export default class Profile {
   async update(id) {
     this.setId(id);
     const pokemon = await this.fetchPokemonById();
+    this.createProfileImage(pokemon.artworkUrl);
+
     console.log('[update profile]', pokemon);
   }
   async activate(id) {
@@ -77,5 +78,24 @@ export default class Profile {
   }
   setPosition(x, y, z) {
     this.mesh.position.set(x, y, z);
+  }
+
+
+  createBackground() {
+    const geometry = new THREE.PlaneGeometry(50, 28);
+    const material = new THREE.MeshBasicMaterial({
+      color: 0xaaaaff,
+      side: THREE.DoubleSide,
+    });
+
+    return new THREE.Mesh(geometry, material);
+  }
+  createProfileImage(spriteUrl) {
+    this.profileImage = new ProfileImage({
+      spriteUrl,
+    });
+
+    this.profileImage.setPosition(0, 0, -1);
+    this.mesh.add(this.profileImage.mesh);
   }
 }
