@@ -16,9 +16,6 @@ export default function HomePage({
 
   useEffect(() => {
     const SM = new SceneManager(canvas);
-    
-    const profile = new Profile();
-    SM.scene.add(profile.mesh);
 
     const entryList = new EntryList();
     SM.scene.add(entryList.mesh);
@@ -31,10 +28,8 @@ export default function HomePage({
       }
       const { name: id } = intersection.object;
       if(id === PROFILE_NAME) {
-        profile.hide();
       } else {
         entryList.selectEntry(id);
-        profile.activate(id);
       }
     }, { passive: true });
 
@@ -48,13 +43,18 @@ export default function HomePage({
 
       requestAnimationFrame(() => draw());
     }
-    
+
     draw();
     return SM.unmount();
-  }, [sceneManager]);
-
+  }, []);
 
   return (
-    <S.Canvas ref={canvas}></S.Canvas>
+    <S.Wrapper>
+      <Profile
+        id={1}
+        active={true}
+      />
+      <S.Canvas ref={canvas}></S.Canvas>
+    </S.Wrapper>
   )
 }
