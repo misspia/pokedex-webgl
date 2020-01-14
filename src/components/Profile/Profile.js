@@ -32,53 +32,26 @@ export default function Profile({
   active = false,
   id = null,
 }) {
-  const { loading, error, data} = useQuery(GET_POKEMON_BY_ID, { variables: { id: 1 }});
+  const { loading, error, data } = useQuery(GET_POKEMON_BY_ID, { variables: { id: id } });
 
   // animate in/out
   useEffect(() => {
 
   }, [active]);
+  if (loading || error) {
+    return (
+      <S.Wrapper>
+        {loading && 'loading ...'}
+        {error && 'ERROR: ' + JSON.stringify(error)}
+      </S.Wrapper>
+    )
+  }
 
-  // fetch new data
-  useEffect(() => {
-    // const pokemon = fetchPokemonById(id);
-    // console.debug(pokemon);
-  }, [id]);
-
- return (
-  <S.Wrapper>
-    { id }
-  </S.Wrapper>
- )
-}
-
-async function fetchPokemonById(id) {
-  return await client.query({
-    query: gql`
-      {
-        GetPokemonById(id: ${id}) {
-          id
-          name
-          chainId
-          types
-          height
-          weight
-          baseExperience
-          abilities
-          stats {
-            key
-            value
-          }
-          artworkUrl
-        }
-      }
-    `
-  })
-  // .then(result => (
-  //   result.data.GetPokemonById
-  // ))
-  // .catch(err => {
-  //   console.log(err);
-  //   return {};
-  // })
+  const pokemon = data.GetPokemonById;
+  return (
+    <S.Wrapper>
+      {pokemon.id}
+      {pokemon.name}
+    </S.Wrapper>
+  )
 }

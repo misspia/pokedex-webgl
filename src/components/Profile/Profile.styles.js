@@ -2,8 +2,10 @@ import styled from 'styled-components';
 import { Colors } from '../../themes';
 
 export const Wrapper = styled.div`
-  width: 90vw;
-  height: 90vh;
+  // width: 90vw;
+  // height: 90vh;
+  width: 20vw;
+  height: 20vh;
 
   position: absolute;
   top: 0;

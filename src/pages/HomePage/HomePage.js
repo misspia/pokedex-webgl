@@ -10,7 +10,7 @@ export default function HomePage({
   location,
   match,
 }) {
-
+  const [id, setId] = useState(1);
   const canvas = useRef(null);
   let sceneManager = {};
 
@@ -29,6 +29,7 @@ export default function HomePage({
       const { name: id } = intersection.object;
       if(id === PROFILE_NAME) {
       } else {
+        setId(id); // debounce + same id check
         entryList.selectEntry(id);
       }
     }, { passive: true });
@@ -51,7 +52,7 @@ export default function HomePage({
   return (
     <S.Wrapper>
       <Profile
-        id={1}
+        id={id}
         active={true}
       />
       <S.Canvas ref={canvas}></S.Canvas>
