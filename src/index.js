@@ -1,9 +1,9 @@
-import ReactDOM from 'react-dom'
-import React, { Component } from 'react'
+import ReactDOM from 'react-dom';
+import React from 'react';
 import AppRouter from './router/router'
 import { createGlobalStyle } from 'styled-components';
 import { Colors, Fonts } from './themes';
-import { ApolloProvider } from 'react-apollo';
+import { ApolloProvider } from '@apollo/react-hooks';
 import { client } from './apollo';
 
 const GlobalStyle = createGlobalStyle`
@@ -15,7 +15,7 @@ const GlobalStyle = createGlobalStyle`
     color: ${Colors.black};
 
   }
-  
+
   html {
     height: 100vh;
     width: 100vw;
@@ -23,15 +23,13 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-class App extends Component {
-  render() {
-    return (
-      <ApolloProvider client={client}>
-        <GlobalStyle />
-        <AppRouter />
-      </ApolloProvider>
-    )
-  }
+function App() {
+  return (
+    <ApolloProvider client={client}>
+      <GlobalStyle />
+      <AppRouter />
+    </ApolloProvider>
+  )
 };
 
 ReactDOM.render(<App />, document.getElementById('app'));

@@ -16,7 +16,7 @@ export default class SceneManager {
     this.camera = new THREE.PerspectiveCamera(
       75,
       aspectRatio,
-      0.1, 
+      0.1,
       1000
     );
     this.camera.position.set(0, 10, -60);
@@ -33,13 +33,13 @@ export default class SceneManager {
     this.renderer.setPixelRatio(dpr);
 
     this.controls = new OrbitController(this.camera, this.renderer.domElement);
-    
+
     this.raycaster = new THREE.Raycaster();
     this.mouse = new THREE.Vector2();
     this.intersections = [];
 
     this.resize();
-    
+
     window.addEventListener('resize', (e) => this.resize(e), { passive: true });
     window.addEventListener('mousemove', (e) => this.onMouseMove(e), { passive: true });
 
@@ -70,7 +70,7 @@ export default class SceneManager {
     this.camera.position.set(x, y, z);
   }
 
-  onMouseMove = (event) => { 
+  onMouseMove = (event) => {
     const { x, y } = normalizeCoordinates(
       event.clientX,
       event.clientY,

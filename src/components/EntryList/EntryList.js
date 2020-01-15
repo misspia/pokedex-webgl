@@ -1,13 +1,10 @@
 import * as THREE from 'three';
-import { gql } from 'apollo-boost';
 
-import { client } from '../../apollo';
 import { fullCircleRadians } from '../../utils';
 import EntryListItem from '../EntryListItem/EntryListItem';
 
-
 export default class EntryList {
-  constructor() {
+  constructor(list) {
     this.entries = [];
     this.mesh = new THREE.Group();
     this.centerCoord = new THREE.Vector3(0, 0, 0);
@@ -17,10 +14,9 @@ export default class EntryList {
     this.numRows = 3;
     this.entriesPerRow = 0;
 
-    this.createList();
+    this.createList(list);
   }
-  async createList() {
-    const list = await this.fetchAllPokemon();
+  createList(list) {
     list.splice(10);
     this.totalPokemon = list.length;
     this.entriesPerRow = this.totalPokemon / this.numRows;
@@ -37,26 +33,6 @@ export default class EntryList {
       this.mesh.add(entry.mesh);
       this.entries.push(entry);
     })
-  }
-  async fetchAllPokemon() {
-    return await client.query({
-      query: gql`
-        {
-          GetAllPokemon {
-            id
-            name
-            spriteUrl
-          }
-        }
-      `,
-    })
-      .then(result => (
-        result.data.GetAllPokemon
-      ))
-      .catch(err => {
-        console.log(err);
-        return [];
-      });
   }
   getListItemPosition(index) {
     const angleIncrement = fullCircleRadians / this.entriesPerRow;
@@ -88,3 +64,4 @@ export default class EntryList {
     entry.setActiveState(true);
   }
 }
+
