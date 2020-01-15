@@ -1,9 +1,20 @@
 import React, { useRef, useEffect, useState } from 'react';
+import { gql } from 'apollo-boost';
+import { useQuery } from '@apollo/react-hooks';
 
 import * as S from './HomePage.styles';
-import SceneManager from '../../components/SceneManager/SceneManager';
-import EntryList from '../../components/EntryList/EntryList';
-import Profile, { PROFILE_NAME } from '../../components/Profile/Profile';
+import SelectionCavnas from '../../components/SelectionCanvas/SelectionCanvas';
+import Profile from '../../components/Profile/Profile';
+
+const GET_ALL_POKEMON = gql`
+  query getAllPokemon {
+    GetAllPokemon {
+      id
+      name
+      spriteUrl
+    }
+  }
+`;
 
 export default function HomePage({
   history,
@@ -11,51 +22,28 @@ export default function HomePage({
   match,
 }) {
   const [id, setId] = useState(1);
-  const canvas = useRef(null);
-  let sceneManager = {};
+  const { loading, data, error } = useQuery(GET_ALL_POKEMON);
 
   useEffect(() => {
-    const SM = new SceneManager(canvas);
-
-    const entryList = new EntryList();
-    SM.scene.add(entryList.mesh);
-
-    canvas.current.addEventListener('click', (e) => {
-      const intersection = SM.intersections[0];
-
-      if(!intersection) {
-        return;
-      }
-      const { name: id } = intersection.object;
-      if(id === PROFILE_NAME) {
-      } else {
-        setId(id); // debounce + same id check
-        entryList.selectEntry(id);
-      }
-    }, { passive: true });
-
-    function draw() {
-      SM.renderer.render(SM.scene, SM.camera);
-
-      SM.raycaster.setFromCamera(SM.mouse, SM.camera);
-      SM.intersections = SM.raycaster.intersectObjects(
-        entryList.mesh.children
-      );
-
-      requestAnimationFrame(() => draw());
-    }
-
-    draw();
-    return SM.unmount();
-  }, []);
+    console.debug('ID', id)
+  }, [id]);
 
   return (
     <S.Wrapper>
+      { loading && 'loading...'}
+      { error && `ERROR: ${JSON.stringify(error)}`}
       <Profile
         id={id}
         active={true}
       />
-      <S.Canvas ref={canvas}></S.Canvas>
+      {
+        data &&
+        <SelectionCavnas
+          entries={data.GetAllPokemon}
+          id={id}
+          setId={id => setId(id)}
+        />
+      }
     </S.Wrapper>
   )
 }
