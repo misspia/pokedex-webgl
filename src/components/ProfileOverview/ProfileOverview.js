@@ -17,6 +17,7 @@ export default function ProfileOverview({
   stats = [],
   artworkUrl = '',
 }) {
+  console.debug(stats)
   return (
     <S.Wrapper>
       <S.Row>
@@ -25,6 +26,29 @@ export default function ProfileOverview({
         </S.Title>
         <S.Image src={artworkUrl}/>
       </S.Row>
+      <S.ContentGrid>
+        <S.StatsBox>
+          {stats.map((stat) => (
+            <S.StatRow key={stat.key}>
+              <S.StatKey>
+                {stat.key}
+              </S.StatKey>
+              <S.StatValue>
+                {stat.value}
+              </S.StatValue>
+            </S.StatRow>
+          ))}
+        </S.StatsBox>
+        <S.SummaryBox>
+          summary
+        </S.SummaryBox>
+        <S.AbilitiesBox>
+          abilities
+        </S.AbilitiesBox>
+        <div>
+          div
+        </div>
+      </S.ContentGrid>
     </S.Wrapper>
   );
 }

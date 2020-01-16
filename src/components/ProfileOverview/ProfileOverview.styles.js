@@ -4,6 +4,11 @@ export const Wrapper = styled.div`
   width: 100%;
   height: 100%;
   position: relative;
+  display: flex;
+  flex-direction: column;
+
+  padding: 1em;
+  box-sizing: border-box;
 `;
 
 export const Row = styled.div`
@@ -27,9 +32,16 @@ export const Image = styled.img`
   height: auto;
 `;
 
+export const ContentGrid = styled.div`
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+`;
 
 export const StatsBox = styled.div`
   display: flex;
+  flex-direction: column;
 `;
 
 export const StatRow = styled.div`
@@ -45,8 +57,12 @@ export const StatValue = styled.div`
 `;
 
 
-export const Summary = styled.div`
+export const SummaryBox = styled.div`
   display: flex;
+`;
+
+export const AbilitiesBox = styled.div`
+
 `;
 
 export const Types = styled.div`

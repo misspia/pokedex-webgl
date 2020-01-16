@@ -35,20 +35,25 @@ export const CloseButton = styled.div`
 `;
 
 export const Tabs = styled.div`
- display: flex;
-`;
-  // border: solid 1px red;
-  // position: absolute;
-  // width: 15em;
-  // height: 8em;
-  // bottom: -8em;
-  // left: 0;
-  // right: 0;
+  position: absolute;
+  width: 20em;
+  height: 3em;
+  bottom: -1.5em;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
 
-  // display: flex;
+  display: flex;
+`;
 
 export const Tab = styled.div`
   flex: 1;
   cursor: pointer;
   text-transform: uppercase;
+  background-color: red;
+  margin: 0 0.5em;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
