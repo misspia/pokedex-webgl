@@ -1,7 +1,6 @@
 import React from 'react';
 import * as S from './ProfileOverview.styles';
-import ProfileImage from '../ProfileImage/ProfileImage';
-
+import Type from '../common/Type';
 
 export default function ProfileOverview({
   id = 0,
@@ -42,9 +41,18 @@ export default function ProfileOverview({
         <S.SummaryBox>
           summary
         </S.SummaryBox>
-        <S.AbilitiesBox>
-          abilities
-        </S.AbilitiesBox>
+        <S.SummaryBox>
+          <S.Subtitle>Abilities</S.Subtitle>
+          <S.Subtitle>Types</S.Subtitle>
+          <S.Types>
+            {types.map(type => (
+              <Type
+              key={type}
+              name={type}
+              customStyles={S.typeStyles}/>
+            ))}
+          </S.Types>
+        </S.SummaryBox>
         <div>
           div
         </div>

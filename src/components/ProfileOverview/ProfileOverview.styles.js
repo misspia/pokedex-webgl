@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Wrapper = styled.div`
   width: 100%;
@@ -18,6 +18,12 @@ export const Row = styled.div`
 
 export const Title = styled.div`
   font-size: 3em;
+`;
+
+export const Subtitle = styled.div`
+  font-size: 1.2em;
+  margin-bottom: 0.5em;
+  letter-spacing: 1px;
 `;
 
 export const Image = styled.img`
@@ -59,6 +65,7 @@ export const StatValue = styled.div`
 
 export const SummaryBox = styled.div`
   display: flex;
+  flex-direction: column;
 `;
 
 export const AbilitiesBox = styled.div`
@@ -67,4 +74,8 @@ export const AbilitiesBox = styled.div`
 
 export const Types = styled.div`
   display: flex;
+`;
+
+export const typeStyles = css`
+  margin-right: 0.5em;
 `;
