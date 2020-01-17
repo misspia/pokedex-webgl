@@ -22,6 +22,7 @@ export default function HomePage({
   match,
 }) {
   const [id, setId] = useState(1);
+  const [isProfileActive, setIsProfileActive] = useState(true);
   const { loading, data, error } = useQuery(GET_ALL_POKEMON);
 
   useEffect(() => {
@@ -34,7 +35,8 @@ export default function HomePage({
       { error && `ERROR: ${JSON.stringify(error)}`}
       <Profile
         id={id}
-        active={true}
+        active={isProfileActive}
+        onClose={() => setIsProfileActive(false)}
       />
       {
         data &&
