@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { Colors } from '../../themes';
 
 export const Wrapper = styled.div`
   width: 100%;
@@ -9,6 +10,7 @@ export const Wrapper = styled.div`
 
   padding: 1em;
   box-sizing: border-box;
+  color: ${Colors.white};
 `;
 
 export const Row = styled.div`
@@ -16,13 +18,19 @@ export const Row = styled.div`
   padding: 0.5em;
 `;
 
+export const Header = styled(Row)`
+  justify-content: center;
+  align-items: center;
+`;
+
 export const Title = styled.div`
   font-size: 3em;
+  letter-spacing: 2px;
 `;
 
 export const Subtitle = styled.div`
   font-size: 1.2em;
-  margin-bottom: 0.5em;
+  margin: 1em 0 0.5em;
   letter-spacing: 1px;
 `;
 
@@ -51,24 +59,33 @@ export const StatsBox = styled.div`
 `;
 
 export const StatRow = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: 4em 3fr 3em;
+  margin-bottom: 0.5em;
+
 `;
 
 export const StatKey = styled.div`
-
+  padding-right: 0.5em;
+  text-transform: uppercase;
+  text-align: right;
 `;
 
 export const StatValue = styled.div`
-
+  padding-left: 0.5em;
 `;
-
 
 export const SummaryBox = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
-export const AbilitiesBox = styled.div`
+export const Abilities = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const Ability = styled.div`
 
 `;
 

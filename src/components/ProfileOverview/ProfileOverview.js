@@ -1,6 +1,16 @@
 import React from 'react';
 import * as S from './ProfileOverview.styles';
 import Type from '../common/Type';
+import StatBar from '../StatBar';
+
+const statKeyMap = {
+  hp: 'hp',
+  attack: 'atk',
+  defense: 'def',
+  'special-attack': 'sp. atk',
+  'special-defense': 'sp. def',
+  speed: 'spd',
+};
 
 export default function ProfileOverview({
   id = 0,
@@ -19,19 +29,20 @@ export default function ProfileOverview({
   console.debug(stats)
   return (
     <S.Wrapper>
-      <S.Row>
+      <S.Header>
         <S.Title>
-          {id} {name}
+          No. {id} {name}
         </S.Title>
         <S.Image src={artworkUrl}/>
-      </S.Row>
+      </S.Header>
       <S.ContentGrid>
         <S.StatsBox>
           {stats.map((stat) => (
             <S.StatRow key={stat.key}>
               <S.StatKey>
-                {stat.key}
+                {statKeyMap[stat.key]}
               </S.StatKey>
+              <StatBar stat={stat.value}/>
               <S.StatValue>
                 {stat.value}
               </S.StatValue>
@@ -43,6 +54,13 @@ export default function ProfileOverview({
         </S.SummaryBox>
         <S.SummaryBox>
           <S.Subtitle>Abilities</S.Subtitle>
+          <S.Abilities>
+            {abilities.map(ability => (
+              <S.Ability key={ability}>
+                {ability}
+              </S.Ability>
+            ))}
+          </S.Abilities>
           <S.Subtitle>Types</S.Subtitle>
           <S.Types>
             {types.map(type => (
@@ -60,3 +78,4 @@ export default function ProfileOverview({
     </S.Wrapper>
   );
 }
+
