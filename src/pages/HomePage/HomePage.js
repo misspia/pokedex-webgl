@@ -4,7 +4,7 @@ import { useQuery } from '@apollo/react-hooks';
 
 import * as S from './HomePage.styles';
 import SelectionCavnas from '../../components/SelectionCanvas/SelectionCanvas';
-import Profile from '../../components/Profile/Profile';
+import Profile from '../../components/Profile';
 
 const GET_ALL_POKEMON = gql`
   query getAllPokemon {
