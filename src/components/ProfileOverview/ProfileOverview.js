@@ -36,14 +36,6 @@ export default function ProfileOverview({
           baseExperience={baseExperience}
         />
         <S.SummaryBox>
-          <S.Subtitle>Abilities</S.Subtitle>
-          <S.Abilities>
-            {abilities.map(ability => (
-              <S.Ability key={ability}>
-                {ability}
-              </S.Ability>
-            ))}
-          </S.Abilities>
           <S.Subtitle>Types</S.Subtitle>
           <S.Types>
             {types.map(type => (

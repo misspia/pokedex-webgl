@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Colors } from '../../themes';
+import { Colors } from '../../../themes';
 
 const borderRadius = '3px';
 

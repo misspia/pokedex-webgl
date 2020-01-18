@@ -51,20 +51,12 @@ export const ContentGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
+  grid-gap: 1em;
 `;
 
 export const SummaryBox = styled.div`
   display: flex;
   flex-direction: column;
-`;
-
-export const Abilities = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-export const Ability = styled.div`
-
 `;
 
 export const Types = styled.div`

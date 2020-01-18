@@ -1,5 +1,5 @@
 import React from 'react';
-import StatBar from '../StatBar';
+import StatBar from './StatBar';
 import * as S from './StatsBox.styles';
 
 
@@ -19,9 +19,9 @@ export default function StatsBox({
     <S.Wrapper>
       {stats.map((stat) => (
         <S.Row key={stat.key}>
-          <S.Row>
+          <S.Key>
             {statKeyMap[stat.key]}
-          </S.Row>
+          </S.Key>
           <StatBar stat={stat.value} />
           <S.Value>
             {stat.value}
