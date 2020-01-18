@@ -53,28 +53,6 @@ export const ContentGrid = styled.div`
   grid-template-rows: 1fr 1fr;
 `;
 
-export const StatsBox = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-export const StatRow = styled.div`
-  display: grid;
-  grid-template-columns: 4em 3fr 3em;
-  margin-bottom: 0.5em;
-
-`;
-
-export const StatKey = styled.div`
-  padding-right: 0.5em;
-  text-transform: uppercase;
-  text-align: right;
-`;
-
-export const StatValue = styled.div`
-  padding-left: 0.5em;
-`;
-
 export const SummaryBox = styled.div`
   display: flex;
   flex-direction: column;
