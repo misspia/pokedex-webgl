@@ -59,10 +59,3 @@ export const SummaryBox = styled.div`
   flex-direction: column;
 `;
 
-export const Types = styled.div`
-  display: flex;
-`;
-
-export const typeStyles = css`
-  margin-right: 0.5em;
-`;

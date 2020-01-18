@@ -1,8 +1,9 @@
 import React from 'react';
 import * as S from './ProfileOverview.styles';
-import Type from '../common/Type';
 import SummaryBox from '../SummaryBox';
 import StatsBox from '../StatsBox';
+import TypesBox from '../TypesBox';
+import SizeDiagramBox from '../SizeDiagramBox';
 
 export default function ProfileOverview({
   id = 0,
@@ -18,7 +19,6 @@ export default function ProfileOverview({
   stats = [],
   artworkUrl = '',
 }) {
-  console.debug(stats)
   return (
     <S.Wrapper>
       <S.Header>
@@ -35,20 +35,8 @@ export default function ProfileOverview({
           weight={weight}
           baseExperience={baseExperience}
         />
-        <S.SummaryBox>
-          <S.Subtitle>Types</S.Subtitle>
-          <S.Types>
-            {types.map(type => (
-              <Type
-              key={type}
-              name={type}
-              customStyles={S.typeStyles}/>
-            ))}
-          </S.Types>
-        </S.SummaryBox>
-        <div>
-          div
-        </div>
+        <TypesBox types={types}/>
+        <SizeDiagramBox height={height}/>
       </S.ContentGrid>
     </S.Wrapper>
   );
