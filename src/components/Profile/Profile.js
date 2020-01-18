@@ -41,7 +41,7 @@ export default function Profile({
   const [activeTab, setActiveTab] = useState(tabs[0]);
 
   useEffect(() => {
-    console.debug(data);
+
   }, [id]);
 
   // animate in/out
