@@ -10,6 +10,7 @@ export default class SelectionCanvas extends Component {
     entries: [],
     setId: () => { },
     id: null,
+    setLoadingComplete: () => {},
   };
   constructor(props) {
     super(props);
@@ -19,7 +20,10 @@ export default class SelectionCanvas extends Component {
   }
   componentDidMount() {
     this.SM = new SceneManager(this.canvas);
-    this.entryList = new EntryList(this.props.entries);
+    this.entryList = new EntryList(
+      this.props.entries,
+      this.props.setLoadingComplete
+    );
     this.SM.scene.add(this.entryList.mesh);
 
     this.canvas.current.addEventListener('click', (e) => this.onClick(e), { passive: true });
