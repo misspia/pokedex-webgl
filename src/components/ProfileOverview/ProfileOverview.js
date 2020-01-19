@@ -21,18 +21,17 @@ export default function ProfileOverview({
   artworkUrl = '',
 }) {
 
-  const [isLoaded, setIsLoad] = useState(false);
-  console.debug('isLoaded', isLoaded);
+  const [isLoading, setIsLoading] = useState(true);
   return (
     <S.Wrapper>
-      <LoadingOverlay isActive={!isLoaded}/>
+      <LoadingOverlay isActive={isLoading}/>
       <S.Header>
         <S.Title>
           No. {id} {name}
         </S.Title>
         <S.Image
           src={artworkUrl}
-          onLoad={() => setIsLoad(true)}
+          onLoad={() => setIsLoading(false)}
         />
       </S.Header>
       <S.ContentGrid>

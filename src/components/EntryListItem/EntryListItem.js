@@ -7,18 +7,15 @@ export default class EntryListItem {
     id = 0,
     name = '',
     spriteUrl = '',
+    onLoadComplete = () => {},
   }) {
     this.id = id;
     this.name = name;
     this.isActive = false;
-    this.mesh = this.createMesh(spriteUrl);
-    this.mesh.name = id;
-  } 
 
-  createMesh(spriteUrl) {
     const geometry = new THREE.PlaneGeometry(5, 5, 5, 5);
 
-    const spriteTexture = new THREE.TextureLoader().load(spriteUrl);
+    const spriteTexture = new THREE.TextureLoader().load(spriteUrl, onLoadComplete);
     spriteTexture.minFilter = THREE.LinearFilter;
 
     const material = new THREE.RawShaderMaterial({
@@ -31,9 +28,10 @@ export default class EntryListItem {
         uSpriteTexture: { type: 't', value: spriteTexture },
       },
     });
-    return new THREE.Mesh(geometry, material);
-  }
 
+    this.mesh = new THREE.Mesh(geometry, material);
+    this.mesh.name = id;
+  }
   setPosition(x = 0, y = 0, z = 0) {
     this.mesh.position.set(x, y, z);
   }

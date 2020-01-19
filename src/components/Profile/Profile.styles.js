@@ -4,7 +4,7 @@ import { Colors } from '../../themes';
 export const Wrapper = styled.div`
   width: 90vw;
   height: 80vh;
-  padding: 1em;
+  padding: 0.5em;
   box-sizing: border-box;
 
   position: absolute;
@@ -14,7 +14,7 @@ export const Wrapper = styled.div`
   bottom: 0;
   margin: auto;
 
-  border: solid 0.5em ${Colors.blueTranslucent};
+  border: solid 0.2em ${Colors.blueTranslucent};
 
 `;
 

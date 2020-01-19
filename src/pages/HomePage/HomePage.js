@@ -5,6 +5,7 @@ import { useQuery } from '@apollo/react-hooks';
 import * as S from './HomePage.styles';
 import SelectionCavnas from '../../components/SelectionCanvas/SelectionCanvas';
 import Profile from '../../components/Profile';
+import { LoadingOverlay } from '../../components/common';
 
 const GET_ALL_POKEMON = gql`
   query getAllPokemon {
@@ -22,6 +23,7 @@ export default function HomePage({
   match,
 }) {
   const [id, setId] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
   const [isProfileActive, setIsProfileActive] = useState(true);
   const { loading, data, error } = useQuery(GET_ALL_POKEMON);
 
@@ -31,7 +33,7 @@ export default function HomePage({
 
   return (
     <S.Wrapper>
-      { loading && 'loading...'}
+      <LoadingOverlay isActive={loading || isLoading}/>
       { error && `ERROR: ${JSON.stringify(error)}`}
       <Profile
         id={id}
@@ -44,6 +46,7 @@ export default function HomePage({
           entries={data.GetAllPokemon}
           id={id}
           setId={id => setId(id)}
+          setLoadingComplete={() => setIsLoading(false)}
         />
       }
     </S.Wrapper>
