@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import { Icons } from '../../themes';
 import ProfileOverview from '../ProfileOverview';
 import * as S from './Profile.styles';
 
@@ -66,11 +68,10 @@ export default function Profile({
   return (
     <S.Wrapper>
       <S.InnerWrapper>
-        <S.Row>
           <S.CloseButton onClick={onClose}>
-            close
+          <FontAwesomeIcon icon={Icons.close}/>
           </S.CloseButton>
-        </S.Row>
+
         <ProfileOverview {...overview}/>
         <S.Tabs>
           {tabs.map((tab) => (

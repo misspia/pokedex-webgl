@@ -1,7 +1,8 @@
 export default {
   white: '#fff',
   black: '#000',
-  blue: 'rgba(200, 200, 255, 0.7)',
+  blueTranslucent: 'rgba(200, 200, 255, 0.7)',
+  blue: 'rgba(200, 200, 255, 1.0)',
 
 
   /**

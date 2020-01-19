@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Colors } from '../../../themes';
 
 export const Wrapper = styled.div`
+  z-index: 999;
   position: absolute;
   top: 0;
   left: 0;

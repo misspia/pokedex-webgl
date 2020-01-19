@@ -25,7 +25,7 @@ export default function ProfileOverview({
   console.debug('isLoaded', isLoaded);
   return (
     <S.Wrapper>
-      {!isLoaded && <LoadingOverlay/>}
+      <LoadingOverlay isActive={!isLoaded}/>
       <S.Header>
         <S.Title>
           No. {id} {name}
