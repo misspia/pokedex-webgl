@@ -46,11 +46,11 @@ export default function Profile({
 
   // animate in/out
   useEffect(() => {
-    console.debug('is active', active);
+
   }, [active]);
 
   useEffect(() => {
-    console.debug('active tab', activeTab);
+
   }, [activeTab]);
 
   if (loading || error) {
