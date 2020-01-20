@@ -15,15 +15,14 @@ export const Wrapper = styled.div`
   margin: auto;
 
   border: solid 0.2em ${Colors.blueTranslucent};
-
 `;
-
 
 export const InnerWrapper = styled.div`
   background-color: ${Colors.blueTranslucent};
   width: 100%;
   height: 100%;
   position: relative;
+  display: flex;
 `;
 
 export const CloseButton = styled.div`
@@ -57,4 +56,16 @@ export const Tab = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+
+const TabView = styled.div`
+  flex: 1;
+`;
+
+export const ProfileView = styled(TabView)`
+  display: flex;
+`;
+
+export const EvolutionView = styled(TabView)`
+  display: none;
 `;

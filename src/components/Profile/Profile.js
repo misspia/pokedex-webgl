@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { Icons } from '../../themes';
 import ProfileOverview from '../ProfileOverview';
+import EvolutionDiagram from '../EvolutionDiagram';
 import * as S from './Profile.styles';
+import * as Animations from './Profile.animations';
 
 export const PROFILE_NAME = 'profile';
 
@@ -29,18 +31,64 @@ const GET_POKEMON_BY_ID = gql`
   }
 `;
 
-const tabs = [
-  'overview',
-  'evolutions'
-];
+const GET_EVOLUTION_BY_CHAIN_ID = gql`
+  query getEvolutionByChainId($chainId: PositiveInt!) {
+    GetEvolutionByChainId(chainId: $chainId) {
+      chain {
+        id
+        name
+        evolvesFromId
+        evolutionTrigger
+        triggerItem
+        minimumLevel
+        gender
+        location
+        heldItem
+        timeOfDay
+        knownMove
+        mimimumHappiness
+        minimumBeauty
+        minimumAffection
+        relativePhysicalStats
+        needsOverworldRain
+        turnUpsideDown
+      }
+    }
+  }
+`;
+
+const Tabs = {
+  OVERVIEW: 'overview',
+  EVOLUTIONS: 'evolutions',
+}
+// const tabs = [
+//   'overview',
+//   'evolutions'
+// ];
 
 export default function Profile({
   onClose = () => { },
   active = false,
   id = null,
 }) {
-  const { loading, error, data } = useQuery(GET_POKEMON_BY_ID, { variables: { id: id } });
-  const [activeTab, setActiveTab] = useState(tabs[0]);
+  const {
+    loading: pokemonLoading,
+    error: pokemonError,
+    data: pokemonData
+  } = useQuery(GET_POKEMON_BY_ID,{ variables: { id }});
+  const {
+    loading: evolutionLoading,
+    error: evolutionError,
+    data: evolutionData
+  } = useQuery(GET_EVOLUTION_BY_CHAIN_ID,
+    {
+      skip: !pokemonData,
+      variables: { chainId: pokemonData && pokemonData.GetPokemonById.chainId },
+  });
+
+  const [activeTab, setActiveTab] = useState(Tabs.OVERVIEW);
+  const profileRef = useRef(null);
+  const evolutionRef = useRef(null);
 
   useEffect(() => {
 
@@ -52,19 +100,31 @@ export default function Profile({
   }, [active]);
 
   useEffect(() => {
-
+    if(activeTab === Tabs.OVERVIEW) {
+      Animations.swapTabViews(
+        profileRef.current,
+        evolutionRef.current
+      );
+    } else {
+      Animations.swapTabViews(
+        evolutionRef.current,
+        profileRef.current
+      );
+    }
   }, [activeTab]);
 
-  if (loading || error) {
+  if (pokemonLoading || evolutionLoading || pokemonError || evolutionError) {
     return (
       <S.Wrapper>
-        {loading && 'loading ...'}
-        {error && 'ERROR: ' + JSON.stringify(error)}
+        {(pokemonLoading || evolutionLoading) && 'loading ...'}
+        {pokemonError && 'ERROR: ' + JSON.stringify(pokemonError)}
+        {evolutionError && 'ERROR: ' + JSON.stringify(evolutionError)}
       </S.Wrapper>
     )
   }
 
-  const  { chainId, ...overview } = data.GetPokemonById;
+  const  { chainId, ...overview } = pokemonData.GetPokemonById;
+  const { chain } = evolutionData.GetEvolutionByChainId;
   return (
     <S.Wrapper>
       <S.InnerWrapper>
@@ -72,11 +132,16 @@ export default function Profile({
           <FontAwesomeIcon icon={Icons.close}/>
           </S.CloseButton>
 
-        <ProfileOverview {...overview}/>
+        <S.ProfileView ref={profileRef}>
+          <ProfileOverview {...overview}/>
+        </S.ProfileView>
+        <S.EvolutionView ref={evolutionRef}>
+          <EvolutionDiagram chain={chain} />
+        </S.EvolutionView>
         <S.Tabs>
-          {tabs.map((tab) => (
-            <S.Tab key={tab} onClick={() => setActiveTab(tab)}>
-              {tab}
+          {Object.keys(Tabs).map((name) => (
+            <S.Tab key={Tabs[name]} onClick={() => setActiveTab(Tabs[name])}>
+              {Tabs[name]}
             </S.Tab>
           ))}
         </S.Tabs>
