@@ -75,7 +75,7 @@ export default function Profile({
     loading: pokemonLoading,
     error: pokemonError,
     data: pokemonData
-  } = useQuery(GET_POKEMON_BY_ID,{ variables: { id }});
+  } = useQuery(GET_POKEMON_BY_ID, { variables: { id } });
   const {
     loading: evolutionLoading,
     error: evolutionError,
@@ -84,9 +84,9 @@ export default function Profile({
     {
       skip: !pokemonData,
       variables: { chainId: pokemonData && pokemonData.GetPokemonById.chainId },
-  });
+    });
 
-  const [activeTab, setActiveTab] = useState(Tabs.OVERVIEW);
+  const [activeTab, setActiveTab] = useState(Tabs.EVOLUTIONS);
   const profileRef = useRef(null);
   const evolutionRef = useRef(null);
 
@@ -100,7 +100,7 @@ export default function Profile({
   }, [active]);
 
   useEffect(() => {
-    if(activeTab === Tabs.OVERVIEW) {
+    if (activeTab === Tabs.OVERVIEW) {
       Animations.swapTabViews(
         profileRef.current,
         evolutionRef.current
@@ -123,17 +123,17 @@ export default function Profile({
     )
   }
 
-  const  { chainId, ...overview } = pokemonData.GetPokemonById;
+  const { chainId, ...overview } = pokemonData.GetPokemonById;
   const { chain } = evolutionData.GetEvolutionByChainId;
   return (
     <S.Wrapper>
       <S.InnerWrapper>
-          <S.CloseButton onClick={onClose}>
-          <FontAwesomeIcon icon={Icons.close}/>
-          </S.CloseButton>
+        <S.CloseButton onClick={onClose}>
+          <FontAwesomeIcon icon={Icons.close} />
+        </S.CloseButton>
 
         <S.ProfileView ref={profileRef}>
-          <ProfileOverview {...overview}/>
+          <ProfileOverview {...overview} />
         </S.ProfileView>
         <S.EvolutionView ref={evolutionRef}>
           <EvolutionDiagram chain={chain} />
