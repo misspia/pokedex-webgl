@@ -37,6 +37,8 @@ const GET_EVOLUTION_BY_CHAIN_ID = gql`
       chain {
         id
         name
+        types
+        artworkUrl
         evolvesFromId
         evolutionTrigger
         triggerItem
@@ -60,11 +62,7 @@ const GET_EVOLUTION_BY_CHAIN_ID = gql`
 const Tabs = {
   OVERVIEW: 'overview',
   EVOLUTIONS: 'evolutions',
-}
-// const tabs = [
-//   'overview',
-//   'evolutions'
-// ];
+};
 
 export default function Profile({
   onClose = () => { },
@@ -100,6 +98,7 @@ export default function Profile({
   }, [active]);
 
   useEffect(() => {
+    console.debug('!', activeTab)
     if (activeTab === Tabs.OVERVIEW) {
       Animations.swapTabViews(
         profileRef.current,
@@ -111,7 +110,7 @@ export default function Profile({
         profileRef.current
       );
     }
-  }, [activeTab]);
+  }, [activeTab, profileRef.current, evolutionRef.current]);
 
   if (pokemonLoading || evolutionLoading || pokemonError || evolutionError) {
     return (

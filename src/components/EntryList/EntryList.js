@@ -73,7 +73,7 @@ export default class EntryList {
   markEntryLoaded() {
     this.numEntriesLoaded++;
 
-    if (this.numEntriesLoaded === this.entries.length - 1) {
+    if (this.numEntriesLoaded === this.entries.length) {
       this.setLoadingComplete();
     }
   }

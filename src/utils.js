@@ -13,4 +13,9 @@ export const isAllImagesLoaded = (images) => {
 
 };
 
+const NATIONAL_NO_NUM_DIGITS = 3;
+export const formatNationalNo = (id) => (
+  id.toString().padStart(NATIONAL_NO_NUM_DIGITS, '0')
+);
+
 
