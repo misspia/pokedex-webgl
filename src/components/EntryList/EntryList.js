@@ -20,7 +20,7 @@ export default class EntryList {
     this.createList(list);
   }
   createList(list) {
-    list.splice(10);
+    list.splice(1);
     this.totalPokemon = list.length;
     this.entriesPerRow = this.totalPokemon / this.numRows;
 
@@ -73,7 +73,7 @@ export default class EntryList {
   markEntryLoaded() {
     this.numEntriesLoaded++;
 
-    if(this.numEntriesLoaded === this.entries.length -1) {
+    if (this.numEntriesLoaded === this.entries.length) {
       this.setLoadingComplete();
     }
   }
