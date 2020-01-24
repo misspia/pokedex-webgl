@@ -84,7 +84,7 @@ export default function Profile({
       variables: { chainId: pokemonData && pokemonData.GetPokemonById.chainId },
     });
 
-  const [activeTab, setActiveTab] = useState(Tabs.EVOLUTIONS);
+  const [activeTab, setActiveTab] = useState(Tabs.OVERVIEW);
   const profileRef = useRef(null);
   const evolutionRef = useRef(null);
 
@@ -98,7 +98,6 @@ export default function Profile({
   }, [active]);
 
   useEffect(() => {
-    console.debug('!', activeTab)
     if (activeTab === Tabs.OVERVIEW) {
       Animations.swapTabViews(
         profileRef.current,

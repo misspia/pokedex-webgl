@@ -29,19 +29,13 @@ export default function EvolutionDiagram({
    */
   chain = [],
 }) {
+  const [isLoading, setIsLoading] = useState(false);
   const [numNodesLoaded, setNumNodesLoaded] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
+  const incrementNumNodesLoaded = () => setNumNodesLoaded(numNodesLoaded + 1);
 
   let list = clone(chain);
   const babyIndex = list.findIndex(node => node.evolvesFromId === null);
   const [baby] = list.splice(babyIndex, 1);
-  console.debug('BABY', baby)
-  let tree = {
-    ...baby,
-    next: createTree(list, baby.id),
-  };
-  console.debug('tree', tree);
-
 
   useEffect(() => {
     if (numNodesLoaded === chain.length - 1) {
@@ -49,41 +43,57 @@ export default function EvolutionDiagram({
     }
   }, [numNodesLoaded]);
 
-  // console.debug(chain)
   return (
     <S.Wrapper>
       <LoadingOverlay isActive={isLoading} />
-      {chain.map((node) => (
-        <EvolutionNode
-          key={node.id}
-          id={node.id}
-          name={node.name}
-          spriteUrl={node.artworkUrl}
-          types={node.types}
-          onLoad={() => setNumNodesLoaded(numNodesLoaded + 1)}
-        />
-      ))}
+      <S.Row>
+        <S.Col>
+          <EvolutionNode
+            id={baby.id}
+            name={baby.name}
+            spriteUrl={baby.artworkUrl}
+            types={baby.types}
+            onLoad={incrementNumNodesLoaded}
+          />
+        </S.Col>
+        <S.Row>
+          {renderTree(list, baby.id, incrementNumNodesLoaded)}
+        </S.Row>
+      </S.Row>
     </S.Wrapper>
   );
 }
 
-function createTree(list, targetId) {
+function renderTree(list, targetId, onLoad) {
   if (!list.length) {
     return null;
   }
-
-  const stage = [];
+  let stageNodes = [];
   let i = 0;
   while (list[i]) {
     if (list[i].evolvesFromId === targetId) {
       const [node] = list.splice(i, 1);
-      stage.push({
-        ...node,
-        next: createTree(list, node.id),
-      });
+      stageNodes.push(node);
       i--;
     }
     i++
   }
-  return stage;
+  return (
+    stageNodes.map((node => (
+      <S.Row key={node.id}>
+        <S.Col>
+          <EvolutionNode
+            id={node.id}
+            name={node.name}
+            spriteUrl={node.artworkUrl}
+            types={node.types}
+            onLoad={onLoad}
+          />
+        </S.Col>
+        <S.Col>
+          {renderTree(list, node.id)}
+        </S.Col>
+      </S.Row>
+    )))
+  )
 }
