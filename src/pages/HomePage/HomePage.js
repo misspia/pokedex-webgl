@@ -22,7 +22,7 @@ export default function HomePage({
   location,
   match,
 }) {
-  const [id, setId] = useState(1);
+  const [id, setId] = useState(281);
   const [isLoading, setIsLoading] = useState(true);
   const [isProfileActive, setIsProfileActive] = useState(true);
   const { loading, data, error } = useQuery(GET_ALL_POKEMON);
@@ -33,8 +33,8 @@ export default function HomePage({
 
   return (
     <S.Wrapper>
-      <LoadingOverlay isActive={loading || isLoading}/>
-      { error && `ERROR: ${JSON.stringify(error)}`}
+      <LoadingOverlay isActive={loading || isLoading} />
+      {error && `ERROR: ${JSON.stringify(error)}`}
       <Profile
         id={id}
         active={isProfileActive}

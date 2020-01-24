@@ -18,4 +18,6 @@ export const formatNationalNo = (id) => (
   id.toString().padStart(NATIONAL_NO_NUM_DIGITS, '0')
 );
 
-
+export const clone = (object) => ( // arr or object
+  Array.isArray(object) ? [...object] : { ...object }
+);
