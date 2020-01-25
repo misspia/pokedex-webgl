@@ -59,11 +59,6 @@ const GET_EVOLUTION_BY_CHAIN_ID = gql`
   }
 `;
 
-const Tabs = {
-  OVERVIEW: 'overview',
-  EVOLUTIONS: 'evolutions',
-};
-
 export default function Profile({
   onClose = () => { },
   active = false,
@@ -84,10 +79,7 @@ export default function Profile({
       variables: { chainId: pokemonData && pokemonData.GetPokemonById.chainId },
     });
 
-  const [activeTab, setActiveTab] = useState(Tabs.OVERVIEW);
   const wrapperRef = useRef(null);
-  const profileRef = useRef(null);
-  const evolutionRef = useRef(null);
 
   useEffect(() => {
 
@@ -100,20 +92,6 @@ export default function Profile({
       Animations.hide(wrapperRef.current);
     }
   }, [active, wrapperRef.current]);
-
-  useEffect(() => {
-    if (activeTab === Tabs.OVERVIEW) {
-      Animations.swapTabViews(
-        profileRef.current,
-        evolutionRef.current
-      );
-    } else {
-      Animations.swapTabViews(
-        evolutionRef.current,
-        profileRef.current
-      );
-    }
-  }, [activeTab, profileRef.current, evolutionRef.current]);
 
   const overview = pokemonData && pokemonData.GetPokemonById;
   const chain = evolutionData && evolutionData.GetEvolutionByChainId.chain;
@@ -131,20 +109,7 @@ export default function Profile({
             <S.CloseButton onClick={onClose}>
               <FontAwesomeIcon icon={Icons.close} />
             </S.CloseButton>
-
-            <S.ProfileView ref={profileRef}>
-              <ProfileOverview {...overview} />
-            </S.ProfileView>
-            <S.EvolutionView ref={evolutionRef}>
-              <EvolutionDiagram chain={chain} />
-            </S.EvolutionView>
-            <S.Tabs>
-              {Object.keys(Tabs).map((name) => (
-                <S.Tab key={Tabs[name]} onClick={() => setActiveTab(Tabs[name])}>
-                  {Tabs[name]}
-                </S.Tab>
-              ))}
-            </S.Tabs>
+            <ProfileOverview {...overview} chain={chain} />
           </S.InnerWrapper>
       }
     </S.Wrapper>

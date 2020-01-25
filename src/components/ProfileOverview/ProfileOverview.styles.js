@@ -1,7 +1,8 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { Colors } from '../../themes';
 
 export const Wrapper = styled.div`
+  flex: 1;
   width: 100%;
   height: 100%;
   position: relative;
@@ -34,7 +35,7 @@ export const Subtitle = styled.div`
   letter-spacing: 1px;
 `;
 
-export const Image = styled.img`
+export const Artwork = styled.div`
   position: absolute;
   top: 0;
   bottom: 0;
@@ -42,20 +43,21 @@ export const Image = styled.img`
   left: 0;
   margin: auto;
 
-  width: 35%;
+  width: 20em;
+  height: 20em;
+`;
+
+export const Image = styled.img`
+  width: 100%;
   height: auto;
 `;
 
-export const ContentGrid = styled.div`
+export const Content = styled.div`
   flex: 1;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  grid-gap: 1em;
-`;
-
-export const SummaryBox = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
+export const ContentRow = styled(Row)`
+  flex: 1;
+`;

@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Colors } from '../../themes';
 
 export const Wrapper = styled.div`
+  font-size: 0.8em;
   display: flex;
   flex-direction: column;
   align-items: center;

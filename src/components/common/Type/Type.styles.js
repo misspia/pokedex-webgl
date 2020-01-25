@@ -16,8 +16,8 @@ export const Wrapper = styled.div`
 `;
 
 export const Image = styled.img`
-  height: 70%;
-  width: auto;
+  width: 70%;
+  height: auto;
   display: block;
   fill: ${Colors.white};
 `;
