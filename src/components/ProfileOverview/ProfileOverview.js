@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import * as S from './ProfileOverview.styles';
+import ProfileArtwork from '../ProfileArtwork';
 import SummaryBox from '../SummaryBox';
 import StatsBox from '../StatsBox';
 import EvolutionDiagram from '../EvolutionDiagram';
@@ -20,7 +21,6 @@ export default function ProfileOverview({
   artworkUrl = '',
   chain = [],
 }) {
-  const artworkRef = useRef(null);
   const [isLoading, setIsLoading] = useState(true);
 
   return (
@@ -30,12 +30,11 @@ export default function ProfileOverview({
         <S.Title>
           No. {id} {name}
         </S.Title>
-        <S.Artwork ref={artworkRef}>
-          <S.Image
-            src={artworkUrl}
-            onLoad={() => setIsLoading(false)}
-          />
-        </S.Artwork>
+        <ProfileArtwork
+          src={artworkUrl}
+          onLoad={() => setIsLoading(false)}
+          customStyles={S.artworkStyles}
+        />
       </S.Header>
       <S.Content>
         <S.ContentRow>

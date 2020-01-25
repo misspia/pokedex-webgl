@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Colors } from '../../themes';
 
 export const Wrapper = styled.div`
@@ -35,7 +35,7 @@ export const Subtitle = styled.div`
   letter-spacing: 1px;
 `;
 
-export const Artwork = styled.div`
+export const artworkStyles = css`
   position: absolute;
   top: 0;
   bottom: 0;
@@ -45,11 +45,6 @@ export const Artwork = styled.div`
 
   width: 20em;
   height: 20em;
-`;
-
-export const Image = styled.img`
-  width: 100%;
-  height: auto;
 `;
 
 export const Content = styled.div`
