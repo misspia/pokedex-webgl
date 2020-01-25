@@ -85,6 +85,7 @@ export default function Profile({
     });
 
   const [activeTab, setActiveTab] = useState(Tabs.OVERVIEW);
+  const wrapperRef = useRef(null);
   const profileRef = useRef(null);
   const evolutionRef = useRef(null);
 
@@ -92,10 +93,13 @@ export default function Profile({
 
   }, [id]);
 
-  // animate in/out
   useEffect(() => {
-
-  }, [active]);
+    if (active) {
+      Animations.reveal(wrapperRef.current);
+    } else {
+      Animations.hide(wrapperRef.current);
+    }
+  }, [active, wrapperRef.current]);
 
   useEffect(() => {
     if (activeTab === Tabs.OVERVIEW) {
@@ -111,39 +115,38 @@ export default function Profile({
     }
   }, [activeTab, profileRef.current, evolutionRef.current]);
 
-  if (pokemonLoading || evolutionLoading || pokemonError || evolutionError) {
-    return (
-      <S.Wrapper>
-        {(pokemonLoading || evolutionLoading) && 'loading ...'}
-        {pokemonError && 'ERROR: ' + JSON.stringify(pokemonError)}
-        {evolutionError && 'ERROR: ' + JSON.stringify(evolutionError)}
-      </S.Wrapper>
-    )
-  }
+  const overview = pokemonData && pokemonData.GetPokemonById;
+  const chain = evolutionData && evolutionData.GetEvolutionByChainId.chain;
 
-  const { chainId, ...overview } = pokemonData.GetPokemonById;
-  const { chain } = evolutionData.GetEvolutionByChainId;
   return (
-    <S.Wrapper>
-      <S.InnerWrapper>
-        <S.CloseButton onClick={onClose}>
-          <FontAwesomeIcon icon={Icons.close} />
-        </S.CloseButton>
+    <S.Wrapper ref={wrapperRef}>
+      {
+        pokemonLoading || evolutionLoading || pokemonError || evolutionError ?
+          <S.Wrapper>
+            {(pokemonLoading || evolutionLoading) && 'loading ...'}
+            {pokemonError && 'ERROR: ' + JSON.stringify(pokemonError)}
+            {evolutionError && 'ERROR: ' + JSON.stringify(evolutionError)}
+          </S.Wrapper> :
+          <S.InnerWrapper>
+            <S.CloseButton onClick={onClose}>
+              <FontAwesomeIcon icon={Icons.close} />
+            </S.CloseButton>
 
-        <S.ProfileView ref={profileRef}>
-          <ProfileOverview {...overview} />
-        </S.ProfileView>
-        <S.EvolutionView ref={evolutionRef}>
-          <EvolutionDiagram chain={chain} />
-        </S.EvolutionView>
-        <S.Tabs>
-          {Object.keys(Tabs).map((name) => (
-            <S.Tab key={Tabs[name]} onClick={() => setActiveTab(Tabs[name])}>
-              {Tabs[name]}
-            </S.Tab>
-          ))}
-        </S.Tabs>
-      </S.InnerWrapper>
+            <S.ProfileView ref={profileRef}>
+              <ProfileOverview {...overview} />
+            </S.ProfileView>
+            <S.EvolutionView ref={evolutionRef}>
+              <EvolutionDiagram chain={chain} />
+            </S.EvolutionView>
+            <S.Tabs>
+              {Object.keys(Tabs).map((name) => (
+                <S.Tab key={Tabs[name]} onClick={() => setActiveTab(Tabs[name])}>
+                  {Tabs[name]}
+                </S.Tab>
+              ))}
+            </S.Tabs>
+          </S.InnerWrapper>
+      }
     </S.Wrapper>
   )
 }

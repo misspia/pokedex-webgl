@@ -26,6 +26,7 @@ export const InnerWrapper = styled.div`
 `;
 
 export const CloseButton = styled.div`
+  z-index: 1;
   position: absolute;
   top: 0.5em;
   right: 1em;

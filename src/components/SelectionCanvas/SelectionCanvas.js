@@ -8,9 +8,9 @@ import * as S from './SelectionCanvas.styles';
 export default class SelectionCanvas extends Component {
   static defaultProps = {
     entries: [],
-    setId: () => { },
+    selectEntry: () => { },
     id: null,
-    setLoadingComplete: () => {},
+    setLoadingComplete: () => { },
   };
   constructor(props) {
     super(props);
@@ -38,8 +38,7 @@ export default class SelectionCanvas extends Component {
     );
     requestAnimationFrame(() => this.draw());
   }
-  onClick(e) {
-    e.preventDefault();
+  onClick() {
     this.SM.intersections = this.SM.raycaster.intersectObjects(
       this.entryList.mesh.children
     );
@@ -50,7 +49,7 @@ export default class SelectionCanvas extends Component {
     }
     const { name: id } = intersection.object;
     if (id !== PROFILE_NAME) {
-      this.props.setId(id); // debounce + same id check
+      this.props.selectEntry(id); // debounce + same id check
       this.entryList.selectEntry(id);
     }
   }
