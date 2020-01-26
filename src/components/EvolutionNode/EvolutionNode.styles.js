@@ -2,29 +2,37 @@ import styled from 'styled-components';
 import { Colors } from '../../themes';
 
 export const Wrapper = styled.div`
-  font-size: 0.8em;
+  font-size: 0.6em;
+  margin: 0.5em;
+  width: 12em;
+  height: 10em;
+
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 10em;
-  height: 12em;
-  border: solid red 1px;
+  border: solid ${Colors.white} 1px;
+  border-radius: 0.5em;
 `;
 
 export const Image = styled.img`
-  width: 6em;
+  width: 5em;
   height: auto;
+`;
+
+export const Info = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 export const Title = styled.div`
   display: flex;
 `;
 
-export const NationalNo = styled.div``;
+export const NationalNo = styled.div`
+  letter-spacing: 1px;
+`;
 
 export const Name = styled.div`
-  margin-left: 0.5em;
   text-transform: uppercase;
   letter-spacing: 1px;
 `;

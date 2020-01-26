@@ -91,7 +91,7 @@ function renderTree(list, targetId, onLoad) {
           />
         </S.Col>
         <S.Col>
-          {renderTree(list, node.id)}
+          {renderTree(list, node.id, onLoad)}
         </S.Col>
       </S.Row>
     )))

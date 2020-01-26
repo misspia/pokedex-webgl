@@ -1,5 +1,6 @@
 export default {
   white: '#fff',
+  whiteTranslucent: 'rgba(255,255,255, 0.5)',
   black: '#000',
   blueTranslucent: 'rgba(200, 200, 255, 0.7)',
   blue: 'rgba(200, 200, 255, 1.0)',

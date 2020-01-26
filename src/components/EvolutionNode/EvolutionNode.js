@@ -15,19 +15,19 @@ export default function EvolutionNode({
         src={spriteUrl}
         onLoad={onLoad}
       />
-      <S.Title>
+      <S.Info>
         <S.NationalNo>
           #{formatNationalNo(id)}
         </S.NationalNo>
         <S.Name>
           {name}
         </S.Name>
-      </S.Title>
-      <S.Types>
-        {types.map((type) => (
-          <S.Type key={type} type={type}></S.Type>
-        ))}
-      </S.Types>
+        <S.Types>
+          {types.map((type) => (
+            <S.Type key={type} type={type}></S.Type>
+          ))}
+        </S.Types>
+      </S.Info>
     </S.Wrapper>
   )
 }

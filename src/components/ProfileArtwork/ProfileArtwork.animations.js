@@ -4,7 +4,7 @@ export const enter = (wrapper, image) => {
   TweenLite.fromTo(wrapper, 0.7,
     {
       autoAlpha: 0,
-      y: 300,
+      y: -200,
     },
     {
       autoAlpha: 1,

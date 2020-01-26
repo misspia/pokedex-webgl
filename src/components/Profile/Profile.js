@@ -100,17 +100,17 @@ export default function Profile({
     <S.Wrapper ref={wrapperRef}>
       {
         pokemonLoading || evolutionLoading || pokemonError || evolutionError ?
-          <S.Wrapper>
+          <>
             {(pokemonLoading || evolutionLoading) && 'loading ...'}
             {pokemonError && 'ERROR: ' + JSON.stringify(pokemonError)}
             {evolutionError && 'ERROR: ' + JSON.stringify(evolutionError)}
-          </S.Wrapper> :
-          <S.InnerWrapper>
+          </> :
+          <>
             <S.CloseButton onClick={onClose}>
               <FontAwesomeIcon icon={Icons.close} />
             </S.CloseButton>
             <ProfileOverview {...overview} chain={chain} />
-          </S.InnerWrapper>
+          </>
       }
     </S.Wrapper>
   )
