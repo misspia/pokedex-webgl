@@ -3,8 +3,8 @@ import { Colors } from '../../themes';
 
 export const Wrapper = styled.div`
   font-size: 0.6em;
-  margin: 0.5em;
-  width: 12em;
+  margin: 0.3em;
+  width: 12.5em;
   height: 10em;
 
   display: flex;
@@ -17,6 +17,7 @@ export const Wrapper = styled.div`
 export const Image = styled.img`
   width: 5em;
   height: auto;
+  margin-right: 0.5em;
 `;
 
 export const Info = styled.div`
@@ -48,5 +49,5 @@ export const Type = styled.div`
   width: 0.8em;
   height: 0.8em;
   border-radius: 50%;
-  background-color: ${props => Colors[props.type]};
+  background-color: ${props => Colors.types[props.type]};
 `;

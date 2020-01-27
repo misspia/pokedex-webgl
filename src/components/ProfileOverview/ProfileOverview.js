@@ -36,7 +36,7 @@ export default function ProfileOverview({
   const statsRef = useRef(null);
   const summaryRef = useRef(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState(SUMMARY);
+  const [activeTab, setActiveTab] = useState(EVOLUTION);
   const prevActiveTab = usePrevious(activeTab);
 
   const getRef = (tabName) => {
@@ -60,7 +60,6 @@ export default function ProfileOverview({
     const currRef = getRef(activeTab).current;
     const prevRef = getRef(prevActiveTab).current;
     if (prevActiveTab === activeTab) {
-      console.debug(currRef);
       Animations.revealView(currRef);
     } else {
       Animations.swapView(currRef, prevRef);

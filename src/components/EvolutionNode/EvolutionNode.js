@@ -7,10 +7,11 @@ export default function EvolutionNode({
   types = '',
   name = '',
   id = '',
+  isEeveeChain = false,
   onLoad = () => { }
 }) {
   return (
-    <S.Wrapper>
+    <S.Wrapper isEeveeChain={isEeveeChain}>
       <S.Image
         src={spriteUrl}
         onLoad={onLoad}

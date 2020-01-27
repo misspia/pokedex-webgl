@@ -17,10 +17,11 @@ export const Wrapper = styled.div`
 `;
 
 export const Header = styled.div`
+  margin-top: 2em;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: ${props => Colors[props.type]};
+  color: ${props => Colors.types[props.type]};
 `;
 
 export const Title = styled.div`
@@ -58,7 +59,7 @@ export const Content = styled.div`
   width: ${mainContentWidth};
   border-bottom-left-radius: 1em;
   border-bottom-right-radius: 1em;
-  background-color: ${props => Colors[props.type]};
+  background-color: ${props => Colors.types[props.type]};
 
   &::before {
     content: '';
@@ -69,14 +70,14 @@ export const Content = styled.div`
     height: 0;
     border-style: solid;
     border-width: 0 0 8em ${mainContentWidth};
-    border-color: transparent transparent ${props => Colors[props.type]} transparent;
+    border-color: transparent transparent ${props => Colors.types[props.type]} transparent;
   }
 `;
 
 export const artworkStyles = css`
   z-index: 1;
   position: absolute;
-  top: -10%;
+  top: -15%;
   right: 0;
   left: 0;
   margin: auto;
@@ -99,7 +100,7 @@ export const View = styled.div`
 `;
 
 export const EvolutionBox = styled(Styles.Box)`
-
+  padding: 0 1em;
 `
 export const Tabs = styled.div`
   display: flex;
@@ -111,10 +112,10 @@ export const Tab = styled.div`
   margin: 0 0.5em;
   border-radius: 1em;
 
-  background-color: ${props => props.isActive ? Colors[props.type] : Colors.white};
-  color: ${props => props.isActive ? Colors.white : Colors[props.type]};
+  background-color: ${props => props.isActive ? Colors.types[props.type] : 'transparent'};
+  color: ${props => props.isActive ? Colors.white : Colors.types[props.type]};
   border: solid 1px;
-  border-color: ${props => props.isActive ? 'transparent' : Colors[props.type]};
+  border-color: ${props => props.isActive ? 'transparent' : Colors.types[props.type]};
 
   text-transform: uppercase;
   letter-spacing: 1px;

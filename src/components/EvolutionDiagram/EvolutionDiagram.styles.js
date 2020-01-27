@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
+  font-size: ${props => props.isEeveeChain ? '0.8em' : '1em'};
   flex: 1;
   display: flex;
   justify-content: center;
@@ -17,4 +18,6 @@ export const Col = styled.div`
 export const Row = styled.div`
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+  max-width: ${props => props.limit ? '70%' : '100%'};
 `;

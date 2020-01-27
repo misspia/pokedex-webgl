@@ -22,7 +22,7 @@ export default function HomePage({
   location,
   match,
 }) {
-  const [id, setId] = useState(281);
+  const [id, setId] = useState(34);
   const [isLoading, setIsLoading] = useState(true);
   const [isProfileActive, setIsProfileActive] = useState(true);
   const { loading, data, error } = useQuery(GET_ALL_POKEMON);

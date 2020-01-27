@@ -4,6 +4,7 @@ import EvolutionNode from '../EvolutionNode';
 import { LoadingOverlay } from '../common';
 import { clone } from '../../utils';
 
+const EEVEE_ID = 133;
 export default function EvolutionDiagram({
   /**
    * each node expects the following fields
@@ -29,6 +30,7 @@ export default function EvolutionDiagram({
    */
   chain = [],
 }) {
+  const isEeveeChain = !!chain.find(node => node.id === EEVEE_ID);
   const [isLoading, setIsLoading] = useState(false);
   const [numNodesLoaded, setNumNodesLoaded] = useState(0);
   const incrementNumNodesLoaded = () => setNumNodesLoaded(numNodesLoaded + 1);
@@ -44,7 +46,7 @@ export default function EvolutionDiagram({
   }, [numNodesLoaded]);
 
   return (
-    <S.Wrapper>
+    <S.Wrapper isEeveeChain={isEeveeChain}>
       <LoadingOverlay isActive={isLoading} />
       <S.Row>
         <S.Col>
@@ -56,7 +58,7 @@ export default function EvolutionDiagram({
             onLoad={incrementNumNodesLoaded}
           />
         </S.Col>
-        <S.Row>
+        <S.Row limit={isEeveeChain}>
           {renderTree(list, baby.id, incrementNumNodesLoaded)}
         </S.Row>
       </S.Row>

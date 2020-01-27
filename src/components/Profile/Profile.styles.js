@@ -18,7 +18,7 @@ export const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
 
-  background-color: ${Colors.white};
+  background-color: ${Colors.whiteOverlayBackground};
 `;
 
 export const InnerWrapper = styled.div`
@@ -35,7 +35,7 @@ export const CloseButton = styled.div`
   top: 0.5em;
   right: 1em;
   font-size: 1.2em;
-  color: ${Colors.white};
+  color: ${Colors.black};
   cursor: pointer;
 `;
 
