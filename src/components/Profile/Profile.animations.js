@@ -12,3 +12,17 @@ export const swapTabViews = (activeView, inActiveView) => {
     }
   })
 };
+
+export const reveal = (wrapper) => {
+  TweenLite.to(wrapper, 0.7, {
+    autoAlpha: 1,
+    display: 'flex',
+  });
+}
+
+export const hide = (wrapper) => {
+  TweenLite.to(wrapper, 0.7, {
+    autoAlpha: 0,
+    display: 'none',
+  });
+};

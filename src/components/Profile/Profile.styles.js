@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import { Colors } from '../../themes';
 
 export const Wrapper = styled.div`
-  width: 90vw;
-  height: 80vh;
+  width: 100vw;
+  height: 100vh;
   padding: 0.5em;
   box-sizing: border-box;
 
@@ -14,23 +14,28 @@ export const Wrapper = styled.div`
   bottom: 0;
   margin: auto;
 
-  border: solid 0.2em ${Colors.blueTranslucent};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: ${Colors.whiteOverlayBackground};
 `;
 
 export const InnerWrapper = styled.div`
-  background-color: ${Colors.blueTranslucent};
-  width: 100%;
-  height: 100%;
+  background-color: ${Colors.white};
+  width: 100vw;
+  height: 100vh;
   position: relative;
   display: flex;
 `;
 
 export const CloseButton = styled.div`
+  z-index: 1;
   position: absolute;
   top: 0.5em;
   right: 1em;
   font-size: 1.2em;
-  color: ${Colors.white};
+  color: ${Colors.black};
   cursor: pointer;
 `;
 

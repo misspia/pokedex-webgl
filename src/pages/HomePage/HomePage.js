@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
 
@@ -22,14 +22,10 @@ export default function HomePage({
   location,
   match,
 }) {
-  const [id, setId] = useState(281);
+  const [id, setId] = useState(34);
   const [isLoading, setIsLoading] = useState(true);
   const [isProfileActive, setIsProfileActive] = useState(true);
   const { loading, data, error } = useQuery(GET_ALL_POKEMON);
-
-  useEffect(() => {
-    console.debug('ID', id)
-  }, [id]);
 
   return (
     <S.Wrapper>
@@ -45,7 +41,10 @@ export default function HomePage({
         <SelectionCavnas
           entries={data.GetAllPokemon}
           id={id}
-          setId={id => setId(id)}
+          selectEntry={id => {
+            setId(id);
+            setIsProfileActive(true);
+          }}
           setLoadingComplete={() => setIsLoading(false)}
         />
       }
