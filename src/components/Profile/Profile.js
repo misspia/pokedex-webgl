@@ -5,11 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { Icons } from '../../themes';
 import ProfileOverview from '../ProfileOverview';
-import EvolutionDiagram from '../EvolutionDiagram';
 import * as S from './Profile.styles';
 import * as Animations from './Profile.animations';
-
-export const PROFILE_NAME = 'profile';
 
 const GET_POKEMON_BY_ID = gql`
   query getPokemonById($id: PokemonId!) {

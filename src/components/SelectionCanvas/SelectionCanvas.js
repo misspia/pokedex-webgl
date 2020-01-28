@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 import SceneManager from '../SceneManager/SceneManager';
 import EntryList from '../EntryList/EntryList';
-import { PROFILE_NAME } from '../Profile/Profile';
 import * as S from './SelectionCanvas.styles';
 
 export default class SelectionCanvas extends Component {
@@ -25,6 +24,7 @@ export default class SelectionCanvas extends Component {
       this.props.setLoadingComplete
     );
     this.SM.scene.add(this.entryList.mesh);
+    this.SM.camera.lookAt(this.entryList.getCenter());
 
     this.canvas.current.addEventListener('click', (e) => this.onClick(e), { passive: true });
 
@@ -36,6 +36,7 @@ export default class SelectionCanvas extends Component {
     this.SM.intersections = this.SM.raycaster.intersectObjects(
       this.entryList.mesh.children
     );
+    console.debug(this.SM.camera.position)
     requestAnimationFrame(() => this.draw());
   }
   onClick() {
@@ -48,10 +49,8 @@ export default class SelectionCanvas extends Component {
       return;
     }
     const { name: id } = intersection.object;
-    if (id !== PROFILE_NAME) {
-      this.props.selectEntry(id); // debounce + same id check
-      this.entryList.selectEntry(id);
-    }
+    this.props.selectEntry(id); // debounce + same id check
+    this.entryList.selectEntry(id);
   }
   render() {
     return (

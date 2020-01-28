@@ -19,7 +19,7 @@ export default class SceneManager {
       0.1,
       1000
     );
-    this.camera.position.set(0, 10, -60);
+    this.camera.position.set(-23, 15, -26);
     this.camera.lookAt(new THREE.Vector3());
 
     this.renderer = new THREE.WebGLRenderer({
@@ -28,7 +28,7 @@ export default class SceneManager {
       alpha: false,
       stencil: false,
     });
-    this.renderer.setClearColor(0xffdddd);
+    this.renderer.setClearColor(0xffffff);
     const dpr = Math.min(1.5, window.devicePixelRatio);
     this.renderer.setPixelRatio(dpr);
 
@@ -77,7 +77,7 @@ export default class SceneManager {
       window.innerWidth,
       window.innerHeight
     );
-    this.mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-    this.mouse.y = -( event.clientY / window.innerHeight ) * 2 + 1;
+    this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
   }
 }
