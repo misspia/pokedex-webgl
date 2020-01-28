@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Colors } from '../../../themes';
+import { TypeVariants } from './Type';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -7,10 +8,23 @@ export const Wrapper = styled.div`
   justify-content: center;
   background-color: ${props => Colors.types[props.type] || Colors.unknown};
 
-  height: 2em;
-  width: 2em;
+
   border-radius: 50%;
-  box-shadow: 0 0 1em 0.1em ${Colors.shadow};
+
+  ${
+  props => props.variant === TypeVariants.MEDIUM ?
+    `
+    height: 2em;
+    width: 2em;
+    box-shadow: 0 0 1em 0.1em ${Colors.shadow};
+
+  ` :
+    `
+    height: 0.8em;
+    width: 0.8em;
+    border: solid 1px ${Colors.whiteTranslucent};
+  `
+  }
 
   ${props => props.customStyles}
 
