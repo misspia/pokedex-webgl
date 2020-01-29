@@ -19,8 +19,9 @@ export default class SceneManager {
       0.1,
       1000
     );
-    this.camera.position.set(-23, 15, -26);
-    this.camera.lookAt(new THREE.Vector3());
+    this.camera.position.set(-5, 13.7, -8.5);
+    this.camera.rotation.set(-2, -0.3, -2.7);
+    // this.camera.lookAt(new THREE.Vector3());
 
     this.renderer = new THREE.WebGLRenderer({
       canvas: this.canvas,
@@ -79,5 +80,14 @@ export default class SceneManager {
     );
     this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
     this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+  }
+
+  add(obj) {
+    this.scene.add(obj);
+  }
+
+  lookAt(coord = {}) {
+    console.debug(coord);
+    this.camera.lookAt(coord);
   }
 }

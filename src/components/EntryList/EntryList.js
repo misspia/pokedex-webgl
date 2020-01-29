@@ -7,7 +7,7 @@ const ENTRIES_PER_ROW = 12;
 const ENTRY_WIDTH = 6;
 const ENTRY_HEIGHT = 9;
 
-const ENTRY_PADDING = 2;
+const ENTRY_PADDING = 3;
 const GRID_WIDTH = ENTRY_WIDTH + ENTRY_PADDING;
 const GRID_HEIGHT = ENTRY_HEIGHT + ENTRY_PADDING;
 
@@ -23,7 +23,7 @@ export default class EntryList {
     this.createList(list);
   }
   createList(list) {
-    list.splice(15);
+    list.splice(151);
     let x = 0;
     let z = 0;
 
