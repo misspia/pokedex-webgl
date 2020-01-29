@@ -36,7 +36,6 @@ export default class SelectionCanvas extends Component {
     this.SM.intersections = this.SM.raycaster.intersectObjects(
       this.entryList.mesh.children
     );
-    console.debug(this.SM.camera.position)
     requestAnimationFrame(() => this.draw());
   }
   onClick() {
