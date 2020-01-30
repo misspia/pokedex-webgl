@@ -1,6 +1,8 @@
 import React from 'react';
 import * as S from './EvolutionNode.styles';
 import { formatNationalNo } from '../../utils';
+import Type from '../common/Type';
+import { TypeVariants } from '../common/Type/Type';
 
 export default function EvolutionNode({
   spriteUrl = '',
@@ -25,7 +27,12 @@ export default function EvolutionNode({
         </S.Name>
         <S.Types>
           {types.map((type) => (
-            <S.Type key={type} type={type}></S.Type>
+            <Type
+              key={type}
+              name={type}
+              variant={TypeVariants.SMALL}
+              customStyles={S.typeStyles}
+            />
           ))}
         </S.Types>
       </S.Info>

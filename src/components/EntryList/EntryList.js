@@ -1,7 +1,16 @@
 import * as THREE from 'three';
 
-import { fullCircleRadians } from '../../utils';
+import { toRadians } from '../../utils';
 import EntryListItem from '../EntryListItem/EntryListItem';
+
+const ENTRIES_PER_ROW = 12;
+const ENTRY_WIDTH = 6;
+const ENTRY_HEIGHT = 9;
+
+const ENTRY_PADDING = 3;
+const GRID_WIDTH = ENTRY_WIDTH + ENTRY_PADDING;
+const GRID_HEIGHT = ENTRY_HEIGHT + ENTRY_PADDING;
+
 
 export default class EntryList {
   constructor(list, setLoadingComplete) {
@@ -10,19 +19,13 @@ export default class EntryList {
     this.setLoadingComplete = setLoadingComplete;
 
     this.mesh = new THREE.Group();
-    this.centerCoord = new THREE.Vector3(0, 0, 0);
-    this.radius = 30;
-    this.circumference = 2 * Math.PI * this.radius;
-    this.totalPokemon = 0;
-    this.numRows = 3;
-    this.entriesPerRow = 0;
 
     this.createList(list);
   }
   createList(list) {
-    list.splice(1);
-    this.totalPokemon = list.length;
-    this.entriesPerRow = this.totalPokemon / this.numRows;
+    list.splice(150);
+    let x = 0;
+    let z = 0;
 
     list.forEach(({ id, name, spriteUrl }, index) => {
       const entry = new EntryListItem({
@@ -30,42 +33,27 @@ export default class EntryList {
         name,
         spriteUrl,
         onLoadComplete: () => this.markEntryLoaded(),
+        width: ENTRY_WIDTH,
+        height: ENTRY_HEIGHT,
       });
 
-      const { x: tx, y: ty, z: tz } = this.getListItemPosition(index);
-      entry.setPosition(tx, ty, tz);
-
-      const { x: rx, y: ry, z: rz } = this.getListItemRotation(index);
-      entry.setRotation(rx, ry, rz);
+      x -= GRID_WIDTH;
+      if (index % ENTRIES_PER_ROW === 0) {
+        z -= GRID_HEIGHT;
+        x = 0;
+      }
+      entry.setPosition(x, 0, z);
+      entry.setRotation(toRadians(90), 0, 0);
 
       this.mesh.add(entry.mesh);
       this.entries.push(entry);
     })
   }
-  getListItemPosition(index) {
-    const angleIncrement = fullCircleRadians / this.entriesPerRow;
-    const rowHeight = 6;
-    const verticalOffset = -Math.floor(index / this.entriesPerRow) * rowHeight;
-    const coord = this.getPointOnCircle(angleIncrement * index, verticalOffset);
-    return coord;
+  getCenter() {
+    const box = new THREE.Box3().setFromObject(this.mesh).getCenter(this.mesh.position).multiplyScalar(- 1);
+    return box;
   }
-  getPointOnCircle(radians, verticalOffset) {
-    return {
-      x: this.radius * Math.cos(radians) + this.centerCoord.x,
-      y: this.centerCoord.y + verticalOffset,
-      z: this.radius * Math.sin(radians) + this.centerCoord.z,
-    }
-  }
-  getListItemRotation(index) {
-    const angleIncrement = fullCircleRadians / this.entriesPerRow;
-    const angleOffset = Math.PI / 2;
-    const angle = -angleIncrement * index;
-    return {
-      x: 0,
-      y: angleOffset + angle,
-      z: 0,
-    };
-  }
+
   selectEntry(id) {
     const entry = this.entries.find(item => item.id === id);
     entry.setActiveState(true);

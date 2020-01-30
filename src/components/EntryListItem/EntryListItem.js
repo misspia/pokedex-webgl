@@ -7,13 +7,15 @@ export default class EntryListItem {
     id = 0,
     name = '',
     spriteUrl = '',
-    onLoadComplete = () => {},
+    onLoadComplete = () => { },
+    height = 5,
+    width = 5,
   }) {
     this.id = id;
     this.name = name;
     this.isActive = false;
 
-    const geometry = new THREE.PlaneGeometry(5, 5, 5, 5);
+    const geometry = new THREE.PlaneGeometry(width, height, 5, 5);
 
     const spriteTexture = new THREE.TextureLoader().load(spriteUrl, onLoadComplete);
     spriteTexture.minFilter = THREE.LinearFilter;
@@ -31,6 +33,7 @@ export default class EntryListItem {
 
     this.mesh = new THREE.Mesh(geometry, material);
     this.mesh.name = id;
+    this.mesh.castShadow = true;
   }
   setPosition(x = 0, y = 0, z = 0) {
     this.mesh.position.set(x, y, z);

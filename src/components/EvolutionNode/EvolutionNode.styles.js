@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Colors } from '../../themes';
 
 export const Wrapper = styled.div`
@@ -44,10 +44,6 @@ export const Types = styled.div`
   margin: 0.5em -0.2em;
 `;
 
-export const Type = styled.div`
+export const typeStyles = css`
   margin: 0 0.2em;
-  width: 0.8em;
-  height: 0.8em;
-  border-radius: 50%;
-  background-color: ${props => Colors.types[props.type]};
 `;

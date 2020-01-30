@@ -1,8 +1,13 @@
 import * as THREE from 'three';
 import OrbitControls from 'three-orbit-controls';
-import { normalizeCoordinates } from '../../utils';
+import { normalizeCoordinates, toRadians } from '../../utils';
 
 const OrbitController = OrbitControls(THREE);
+
+const Camera = {
+  TRANSLATE_THRESHOLD: 0.2,
+  TRANSLATE_VELOCITY: 0.1,
+}
 
 export default class SceneManager {
   constructor(canvas = {}) {
@@ -19,8 +24,8 @@ export default class SceneManager {
       0.1,
       1000
     );
-    this.camera.position.set(0, 10, -60);
-    this.camera.lookAt(new THREE.Vector3());
+    this.camera.position.set(-5, 13, -8);
+    this.camera.rotation.set(toRadians(-90), 0, 0);
 
     this.renderer = new THREE.WebGLRenderer({
       canvas: this.canvas,
@@ -28,20 +33,24 @@ export default class SceneManager {
       alpha: false,
       stencil: false,
     });
-    this.renderer.setClearColor(0xffdddd);
+    this.renderer.setClearColor(0xffffff);
     const dpr = Math.min(1.5, window.devicePixelRatio);
     this.renderer.setPixelRatio(dpr);
 
     this.controls = new OrbitController(this.camera, this.renderer.domElement);
+    this.controls.enabled = false;
 
     this.raycaster = new THREE.Raycaster();
     this.mouse = new THREE.Vector2();
+    this.cameraVelocity = new THREE.Vector2();
+    this.cameraTranslateVelocity = 0.1;
+    this.cameraTranslateThreshold = 0.2;
     this.intersections = [];
 
     this.resize();
 
     window.addEventListener('resize', (e) => this.resize(e), { passive: true });
-    window.addEventListener('mousemove', (e) => this.onMouseMove(e), { passive: true });
+    this.canvas.addEventListener('mousemove', (e) => this.onMouseMove(e), { passive: true });
 
   }
 
@@ -71,13 +80,50 @@ export default class SceneManager {
   }
 
   onMouseMove = (event) => {
+    this.updateMousePosition(event.clientX, event.clientY);
+    this.updateCameraVelocity();
+  }
+
+  updateMousePosition(clientX, clientY) {
     const { x, y } = normalizeCoordinates(
-      event.clientX,
-      event.clientY,
+      clientX,
+      clientY,
       window.innerWidth,
       window.innerHeight
     );
-    this.mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-    this.mouse.y = -( event.clientY / window.innerHeight ) * 2 + 1;
+    this.mouse.x = (clientX / window.innerWidth) * 2 - 1;
+    this.mouse.y = -(clientY / window.innerHeight) * 2 + 1;
+  }
+
+  updateCameraVelocity() {
+    if (this.mouse.x > Camera.TRANSLATE_THRESHOLD) {
+      this.cameraVelocity.x = -Camera.TRANSLATE_VELOCITY;
+    } else if (this.mouse.x < -Camera.TRANSLATE_THRESHOLD) {
+      this.cameraVelocity.x = Camera.TRANSLATE_VELOCITY;
+    } else {
+      this.cameraVelocity.x = 0;
+    }
+
+    if (this.mouse.y > Camera.TRANSLATE_THRESHOLD) {
+      this.cameraVelocity.y = Camera.TRANSLATE_VELOCITY;
+    } else if (this.mouse.y < -Camera.TRANSLATE_THRESHOLD) {
+      this.cameraVelocity.y = -Camera.TRANSLATE_VELOCITY;
+    } else {
+      this.cameraVelocity.y = 0;
+
+    }
+  }
+
+  moveCameraToVelocity() {
+    this.camera.position.x += this.cameraVelocity.x;
+    this.camera.position.z += this.cameraVelocity.y;
+  }
+
+  add(obj) {
+    this.scene.add(obj);
+  }
+
+  lookAt(coord = {}) {
+    this.camera.lookAt(coord);
   }
 }
