@@ -1,13 +1,8 @@
 import * as THREE from 'three';
 import OrbitControls from 'three-orbit-controls';
-import { normalizeCoordinates, toRadians } from '../../utils';
+import { toRadians } from '../../utils';
 
 const OrbitController = OrbitControls(THREE);
-
-const Camera = {
-  TRANSLATE_THRESHOLD: 0.2,
-  TRANSLATE_VELOCITY: 0.1,
-}
 
 export default class SceneManager {
   constructor(canvas = {}) {
@@ -85,38 +80,8 @@ export default class SceneManager {
   }
 
   updateMousePosition(clientX, clientY) {
-    const { x, y } = normalizeCoordinates(
-      clientX,
-      clientY,
-      window.innerWidth,
-      window.innerHeight
-    );
     this.mouse.x = (clientX / window.innerWidth) * 2 - 1;
     this.mouse.y = -(clientY / window.innerHeight) * 2 + 1;
-  }
-
-  updateCameraVelocity() {
-    if (this.mouse.x > Camera.TRANSLATE_THRESHOLD) {
-      this.cameraVelocity.x = -Camera.TRANSLATE_VELOCITY;
-    } else if (this.mouse.x < -Camera.TRANSLATE_THRESHOLD) {
-      this.cameraVelocity.x = Camera.TRANSLATE_VELOCITY;
-    } else {
-      this.cameraVelocity.x = 0;
-    }
-
-    if (this.mouse.y > Camera.TRANSLATE_THRESHOLD) {
-      this.cameraVelocity.y = Camera.TRANSLATE_VELOCITY;
-    } else if (this.mouse.y < -Camera.TRANSLATE_THRESHOLD) {
-      this.cameraVelocity.y = -Camera.TRANSLATE_VELOCITY;
-    } else {
-      this.cameraVelocity.y = 0;
-
-    }
-  }
-
-  moveCameraToVelocity() {
-    this.camera.position.x += this.cameraVelocity.x;
-    this.camera.position.z += this.cameraVelocity.y;
   }
 
   add(obj) {

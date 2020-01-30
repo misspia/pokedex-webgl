@@ -21,3 +21,7 @@ export const formatNationalNo = (id) => (
 export const clone = (object) => ( // arr or object
   Array.isArray(object) ? [...object] : { ...object }
 );
+
+export const clamp = (value, min, max) => (
+  Math.min(Math.max(value, min), max)
+);
