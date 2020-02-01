@@ -1,8 +1,6 @@
 import * as THREE from 'three';
-import OrbitControls from 'three-orbit-controls';
+import { MapControls } from 'three/examples/jsm/controls/OrbitControls';
 import { toRadians } from '../../utils';
-
-const OrbitController = OrbitControls(THREE);
 
 export default class SceneManager {
   constructor(canvas = {}) {
@@ -32,8 +30,12 @@ export default class SceneManager {
     const dpr = Math.min(1.5, window.devicePixelRatio);
     this.renderer.setPixelRatio(dpr);
 
-    this.controls = new OrbitController(this.camera, this.renderer.domElement);
-    this.controls.enabled = false;
+    this.controls = new MapControls(this.camera, this.renderer.domElement);
+    this.controls.screenSpacePanning = false;
+    this.controls.enableRotate = false;
+    this.controls.enableZoom = false;
+
+    this.controls.update();
 
     this.raycaster = new THREE.Raycaster();
     this.mouse = new THREE.Vector2();
@@ -76,7 +78,6 @@ export default class SceneManager {
 
   onMouseMove = (event) => {
     this.updateMousePosition(event.clientX, event.clientY);
-    this.updateCameraVelocity();
   }
 
   updateMousePosition(clientX, clientY) {

@@ -48,8 +48,8 @@ export default class Floor {
   }
 }
 
-const MAX_TILT = toRadians(5);
-const MIN_TILT = toRadians(-5);
+const MAX_TILT = toRadians(3);
+const MIN_TILT = toRadians(-3);
 const TILT_VELOCITY = 0.01;
 const TILT_THRESHOLD = 0;
 
