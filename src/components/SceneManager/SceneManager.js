@@ -34,6 +34,7 @@ export default class SceneManager {
     this.controls.screenSpacePanning = false;
     this.controls.enableRotate = false;
     this.controls.enableZoom = false;
+    this.controls.enableDamping = true;
 
     this.controls.update();
 

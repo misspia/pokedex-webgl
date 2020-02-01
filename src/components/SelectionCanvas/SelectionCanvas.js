@@ -39,7 +39,6 @@ export default class SelectionCanvas extends Component {
       this.props.setLoadingComplete
     );
     this.skyBox.add(this.entryList.mesh);
-    // this.SM.add(this.entryList.mesh);
     this.entryList.getCenter();
 
     this.canvas.current.addEventListener('click', (e) => this.onClick(e), { passive: true });
@@ -52,6 +51,20 @@ export default class SelectionCanvas extends Component {
     this.SM.intersections = this.SM.raycaster.intersectObjects(
       this.entryList.mesh.children
     );
+    this.SM.controls.update();
+    if (this.SM.controls.target.x > 5) {
+      this.SM.controls.target.setX(5);
+    }
+    if (this.SM.controls.target.x < -5) {
+      this.SM.controls.target.setX(-5);
+    }
+    if (this.SM.controls.target.z > 5) {
+      this.SM.controls.target.setZ(5);
+    }
+    if (this.SM.controls.target.z < -5) {
+      this.SM.controls.target.setZ(-5);
+    }
+
     this.skyBox.tilt();
     requestAnimationFrame(() => this.draw());
   }
