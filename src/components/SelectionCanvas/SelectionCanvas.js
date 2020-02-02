@@ -52,18 +52,18 @@ export default class SelectionCanvas extends Component {
       this.entryList.mesh.children
     );
     this.SM.controls.update();
-    if (this.SM.controls.target.x > 5) {
-      this.SM.controls.target.setX(5);
+    const { minX, maxX, minZ, maxZ } = this.entryList.bounds;
+    const x = Math.min(maxX, Math.max(minX, this.SM.camera.position.x));
+    const z = Math.min(maxZ, Math.max(minZ, this.SM.camera.position.z));
+
+    if (this.SM.camera.position.x <= minX || this.SM.camera.position.x >= maxX) {
+      this.SM.controls.target.x = x;
     }
-    if (this.SM.controls.target.x < -5) {
-      this.SM.controls.target.setX(-5);
+    if (this.SM.camera.position.z <= minZ || this.SM.camera.position.z >= maxZ) {
+      this.SM.controls.target.z = z;
     }
-    if (this.SM.controls.target.z > 5) {
-      this.SM.controls.target.setZ(5);
-    }
-    if (this.SM.controls.target.z < -5) {
-      this.SM.controls.target.setZ(-5);
-    }
+    this.SM.controls.update();
+
 
     this.skyBox.tilt();
     requestAnimationFrame(() => this.draw());

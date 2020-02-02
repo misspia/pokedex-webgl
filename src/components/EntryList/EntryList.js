@@ -19,6 +19,13 @@ export default class EntryList {
     this.setLoadingComplete = setLoadingComplete;
 
     this.mesh = new THREE.Group();
+    this.bbox = new THREE.Box3();
+    this.bounds = {
+      minX: 0,
+      maxX: 0,
+      minY: 0,
+      maxY: 0,
+    }
 
     this.createList(list);
   }
@@ -50,8 +57,16 @@ export default class EntryList {
     })
   }
   getCenter() {
-    const box = new THREE.Box3().setFromObject(this.mesh).getCenter(this.mesh.position).multiplyScalar(- 1);
-    return box;
+    return this.bbox.setFromObject(this.mesh).getCenter(this.mesh.position).multiplyScalar(-1);
+  }
+
+  calcBounds() {
+    this.bounds = {
+      minX: this.bbox.min.x,
+      maxX: this.bbox.max.x,
+      minZ: this.bbox.min.y,
+      maxZ: this.bbox.max.y,
+    }
   }
 
   selectEntry(id) {
@@ -63,6 +78,7 @@ export default class EntryList {
 
     if (this.numEntriesLoaded === this.entries.length) {
       this.setLoadingComplete();
+      this.calcBounds();
     }
   }
 }
