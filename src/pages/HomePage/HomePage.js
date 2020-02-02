@@ -3,7 +3,7 @@ import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
 
 import * as S from './HomePage.styles';
-import SelectionCavnas from '../../components/SelectionCanvas/SelectionCanvas';
+import Cavnas from '../../components/Canvas';
 import Profile from '../../components/Profile';
 import { LoadingOverlay } from '../../components/common';
 import { clone } from '../../utils';
@@ -39,7 +39,7 @@ export default function HomePage({
       />
       {
         data &&
-        <SelectionCavnas
+        <Cavnas
           entries={clone(data.GetAllPokemon)}
           id={id}
           selectEntry={id => {

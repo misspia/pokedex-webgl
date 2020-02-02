@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
-import { toRadians } from '../../utils';
-import EntryListItem from '../EntryListItem/EntryListItem';
+import { toRadians } from '../utils';
+import EntryListItem from './EntryListItem';
 
 const ENTRIES_PER_ROW = 12;
 const ENTRY_WIDTH = 6;
@@ -19,11 +19,18 @@ export default class EntryList {
     this.setLoadingComplete = setLoadingComplete;
 
     this.mesh = new THREE.Group();
+    this.bbox = new THREE.Box3();
+    this.bounds = {
+      minX: 0,
+      maxX: 0,
+      minY: 0,
+      maxY: 0,
+    }
 
     this.createList(list);
   }
   createList(list) {
-    list.splice(150);
+    list.splice(3);
     let x = 0;
     let z = 0;
 
@@ -50,8 +57,16 @@ export default class EntryList {
     })
   }
   getCenter() {
-    const box = new THREE.Box3().setFromObject(this.mesh).getCenter(this.mesh.position).multiplyScalar(- 1);
-    return box;
+    return this.bbox.setFromObject(this.mesh).getCenter(this.mesh.position).multiplyScalar(-1);
+  }
+
+  calcBounds() {
+    this.bounds = {
+      minX: this.bbox.min.x,
+      maxX: this.bbox.max.x,
+      minZ: this.bbox.min.y,
+      maxZ: this.bbox.max.y,
+    }
   }
 
   selectEntry(id) {
@@ -63,6 +78,7 @@ export default class EntryList {
 
     if (this.numEntriesLoaded === this.entries.length) {
       this.setLoadingComplete();
+      this.calcBounds();
     }
   }
 }

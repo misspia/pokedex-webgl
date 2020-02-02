@@ -1,13 +1,6 @@
 import * as THREE from 'three';
-import OrbitControls from 'three-orbit-controls';
-import { normalizeCoordinates, toRadians } from '../../utils';
-
-const OrbitController = OrbitControls(THREE);
-
-const Camera = {
-  TRANSLATE_THRESHOLD: 0.2,
-  TRANSLATE_VELOCITY: 0.1,
-}
+import { MapControls } from 'three/examples/jsm/controls/OrbitControls';
+import { toRadians } from '../utils';
 
 export default class SceneManager {
   constructor(canvas = {}) {
@@ -37,8 +30,13 @@ export default class SceneManager {
     const dpr = Math.min(1.5, window.devicePixelRatio);
     this.renderer.setPixelRatio(dpr);
 
-    this.controls = new OrbitController(this.camera, this.renderer.domElement);
-    this.controls.enabled = false;
+    this.controls = new MapControls(this.camera, this.renderer.domElement);
+    this.controls.screenSpacePanning = false;
+    this.controls.enableRotate = false;
+    this.controls.enableZoom = false;
+    this.controls.enableDamping = true;
+
+    this.controls.update();
 
     this.raycaster = new THREE.Raycaster();
     this.mouse = new THREE.Vector2();
@@ -81,42 +79,11 @@ export default class SceneManager {
 
   onMouseMove = (event) => {
     this.updateMousePosition(event.clientX, event.clientY);
-    this.updateCameraVelocity();
   }
 
   updateMousePosition(clientX, clientY) {
-    const { x, y } = normalizeCoordinates(
-      clientX,
-      clientY,
-      window.innerWidth,
-      window.innerHeight
-    );
     this.mouse.x = (clientX / window.innerWidth) * 2 - 1;
     this.mouse.y = -(clientY / window.innerHeight) * 2 + 1;
-  }
-
-  updateCameraVelocity() {
-    if (this.mouse.x > Camera.TRANSLATE_THRESHOLD) {
-      this.cameraVelocity.x = -Camera.TRANSLATE_VELOCITY;
-    } else if (this.mouse.x < -Camera.TRANSLATE_THRESHOLD) {
-      this.cameraVelocity.x = Camera.TRANSLATE_VELOCITY;
-    } else {
-      this.cameraVelocity.x = 0;
-    }
-
-    if (this.mouse.y > Camera.TRANSLATE_THRESHOLD) {
-      this.cameraVelocity.y = Camera.TRANSLATE_VELOCITY;
-    } else if (this.mouse.y < -Camera.TRANSLATE_THRESHOLD) {
-      this.cameraVelocity.y = -Camera.TRANSLATE_VELOCITY;
-    } else {
-      this.cameraVelocity.y = 0;
-
-    }
-  }
-
-  moveCameraToVelocity() {
-    this.camera.position.x += this.cameraVelocity.x;
-    this.camera.position.z += this.cameraVelocity.y;
   }
 
   add(obj) {
