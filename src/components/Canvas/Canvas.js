@@ -49,18 +49,7 @@ export default class Canvas extends Component {
     this.SM.intersections = this.SM.raycaster.intersectObjects(
       this.entryList.mesh.children
     );
-    this.SM.controls.update();
-    const { minX, maxX, minZ, maxZ } = this.entryList.bounds;
-    const x = Math.min(maxX, Math.max(minX, this.SM.camera.position.x));
-    const z = Math.min(maxZ, Math.max(minZ, this.SM.camera.position.z));
-
-    if (this.SM.camera.position.x <= minX || this.SM.camera.position.x >= maxX) {
-      this.SM.controls.target.x = x;
-    }
-    if (this.SM.camera.position.z <= minZ || this.SM.camera.position.z >= maxZ) {
-      this.SM.controls.target.z = z;
-    }
-    this.SM.controls.update();
+    this.SM.controls.update(this.entryList.bounds);
 
 
     this.skyBox.tilt();

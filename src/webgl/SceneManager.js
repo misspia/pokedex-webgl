@@ -1,6 +1,6 @@
 import * as THREE from 'three';
-import { MapControls } from 'three/examples/jsm/controls/OrbitControls';
 import { toRadians } from '../utils';
+import Controls from './Controls';
 
 export default class SceneManager {
   constructor(canvas = {}) {
@@ -30,13 +30,7 @@ export default class SceneManager {
     const dpr = Math.min(1.5, window.devicePixelRatio);
     this.renderer.setPixelRatio(dpr);
 
-    this.controls = new MapControls(this.camera, this.renderer.domElement);
-    this.controls.screenSpacePanning = false;
-    this.controls.enableRotate = false;
-    this.controls.enableZoom = false;
-    this.controls.enableDamping = true;
-
-    this.controls.update();
+    this.controls = new Controls(this);
 
     this.raycaster = new THREE.Raycaster();
     this.mouse = new THREE.Vector2();
