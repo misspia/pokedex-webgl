@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { toRadians, clamp } from '../../utils';
+import { toRadians, clamp } from '../utils';
 
 export default class Floor {
   constructor({ size = 1000, mouse }) {

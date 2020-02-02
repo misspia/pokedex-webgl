@@ -1,6 +1,6 @@
 import * as THREE from 'three';
-import fragmentShader from './entryListItem.frag';
-import vertexShader from './entryListItem.vert';
+import fragmentShader from './shaders/entryListItem.frag';
+import vertexShader from './shaders/entryListItem.vert';
 
 export default class EntryListItem {
   constructor({

@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { MapControls } from 'three/examples/jsm/controls/OrbitControls';
-import { toRadians } from '../../utils';
+import { toRadians } from '../utils';
 
 export default class SceneManager {
   constructor(canvas = {}) {

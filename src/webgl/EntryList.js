@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
-import { toRadians } from '../../utils';
-import EntryListItem from '../EntryListItem/EntryListItem';
+import { toRadians } from '../utils';
+import EntryListItem from './EntryListItem';
 
 const ENTRIES_PER_ROW = 12;
 const ENTRY_WIDTH = 6;

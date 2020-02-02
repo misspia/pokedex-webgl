@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import * as THREE from 'three';
 
-import SceneManager from '../SceneManager/SceneManager';
-import EntryList from '../EntryList/EntryList';
-import { SkyBox, Lights } from '../Environment';
-import * as S from './SelectionCanvas.styles';
+import { SkyBox, Lights, EntryList, SceneManager } from '../../webgl';
+import * as S from './Canvas.styles';
 
-export default class SelectionCanvas extends Component {
+export default class Canvas extends Component {
   static defaultProps = {
     entries: [],
     selectEntry: () => { },
