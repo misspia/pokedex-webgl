@@ -30,7 +30,7 @@ export default class EntryList {
     this.createList(list);
   }
   createList(list) {
-    list.splice(3);
+    list.splice(151);
     let x = 0;
     let z = 0;
 
