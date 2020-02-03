@@ -13,10 +13,9 @@ const GRID_HEIGHT = ENTRY_HEIGHT + ENTRY_PADDING;
 
 
 export default class EntryList {
-  constructor(list, setLoadingComplete) {
+  constructor(list, ) {
     this.entries = [];
     this.numEntriesLoaded = 0;
-    this.setLoadingComplete = setLoadingComplete;
 
     this.mesh = new THREE.Group();
     this.bbox = new THREE.Box3();
@@ -30,7 +29,7 @@ export default class EntryList {
     this.createList(list);
   }
   createList(list) {
-    list.splice(3);
+    list.splice(30);
     let x = 0;
     let z = 0;
 
@@ -39,7 +38,6 @@ export default class EntryList {
         id,
         name,
         spriteUrl,
-        onLoadComplete: () => this.markEntryLoaded(),
         width: ENTRY_WIDTH,
         height: ENTRY_HEIGHT,
       });
@@ -72,14 +70,6 @@ export default class EntryList {
   selectEntry(id) {
     const entry = this.entries.find(item => item.id === id);
     entry.setActiveState(true);
-  }
-  markEntryLoaded() {
-    this.numEntriesLoaded++;
-
-    if (this.numEntriesLoaded === this.entries.length) {
-      this.setLoadingComplete();
-      this.calcBounds();
-    }
   }
 }
 

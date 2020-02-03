@@ -32,10 +32,8 @@ export default class Canvas extends Component {
     this.skyBox = new SkyBox({ size: 1000, mouse: this.SM.mouse });
     this.SM.add(this.skyBox.group);
 
-    this.entryList = new EntryList(
-      this.props.entries,
-      this.props.setLoadingComplete
-    );
+    this.entryList = new EntryList(this.props.entries);
+
     this.skyBox.add(this.entryList.mesh);
     this.entryList.getCenter();
 
@@ -51,8 +49,7 @@ export default class Canvas extends Component {
     );
     this.SM.controls.update(this.entryList.bounds);
 
-
-    this.skyBox.tilt();
+    this.skyBox.tilt(this.SM.camera.position);
     requestAnimationFrame(() => this.draw());
   }
   onClick() {
