@@ -13,7 +13,12 @@ const GlobalStyle = createGlobalStyle`
     font-family: ${Fonts.family};
     font-weight: ${Fonts.weightRegular};
     color: ${Colors.black};
-
+    height: 100%;
+    width: 100%;
+  }
+  #app {
+    height: 100%;
+    width: 100%;
   }
 
   html {
@@ -24,6 +29,7 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 function App() {
+  console.edebug(process.env.API_HOST);
   return (
     <ApolloProvider client={client}>
       <GlobalStyle />
