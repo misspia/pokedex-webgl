@@ -32,10 +32,8 @@ export default class Canvas extends Component {
     this.skyBox = new SkyBox({ size: 1000, mouse: this.SM.mouse });
     this.SM.add(this.skyBox.group);
 
-    this.entryList = new EntryList(
-      this.props.entries,
-      this.props.setLoadingComplete
-    );
+    this.entryList = new EntryList(this.props.entries);
+
     this.skyBox.add(this.entryList.mesh);
     this.entryList.getCenter();
 
@@ -49,21 +47,9 @@ export default class Canvas extends Component {
     this.SM.intersections = this.SM.raycaster.intersectObjects(
       this.entryList.mesh.children
     );
-    this.SM.controls.update();
-    const { minX, maxX, minZ, maxZ } = this.entryList.bounds;
-    const x = Math.min(maxX, Math.max(minX, this.SM.camera.position.x));
-    const z = Math.min(maxZ, Math.max(minZ, this.SM.camera.position.z));
+    this.SM.controls.update(this.entryList.bounds);
 
-    if (this.SM.camera.position.x <= minX || this.SM.camera.position.x >= maxX) {
-      this.SM.controls.target.x = x;
-    }
-    if (this.SM.camera.position.z <= minZ || this.SM.camera.position.z >= maxZ) {
-      this.SM.controls.target.z = z;
-    }
-    this.SM.controls.update();
-
-
-    this.skyBox.tilt();
+    this.skyBox.tilt(this.SM.camera.position);
     requestAnimationFrame(() => this.draw());
   }
   onClick() {

@@ -1,7 +1,31 @@
 import * as THREE from 'three';
 import { toRadians, clamp } from '../utils';
 
-export default class Floor {
+THREE.Object3D.prototype.rotateAroundWorldAxis = function () {
+
+  // rotate object around axis in world space (the axis passes through point)
+  // axis is assumed to be normalized
+  // assumes object does not have a rotated parent
+
+  var q = new THREE.Quaternion();
+
+  return function rotateAroundWorldAxis(point, axis, angle) {
+
+    q.setFromAxisAngle(axis, angle);
+
+    this.applyQuaternion(q);
+
+    this.position.sub(point);
+    this.position.applyQuaternion(q);
+    this.position.add(point);
+
+    return this;
+
+  }
+
+}();
+
+export default class SkyBox {
   constructor({ size = 1000, mouse }) {
     this.mouse = mouse;
 
@@ -32,19 +56,19 @@ export default class Floor {
     this.group.add(obj);
   }
   tilt() {
-    const xVelocity = getVelocity(this.mouse.x);
-    const zVelocity = getVelocity(this.mouse.y);
+    // const xVelocity = getVelocity(this.mouse.x);
+    // const zVelocity = getVelocity(this.mouse.y);
 
-    this.group.rotation.x = clamp(
-      this.group.rotation.x + xVelocity,
-      MIN_TILT,
-      MAX_TILT
-    );
-    this.group.rotation.z = clamp(
-      this.group.rotation.z + zVelocity,
-      MIN_TILT,
-      MAX_TILT
-    );
+    // this.group.rotation.x = clamp(
+    //   this.group.rotation.x + xVelocity,
+    //   MIN_TILT,
+    //   MAX_TILT
+    // );
+    // this.group.rotation.z = clamp(
+    //   this.group.rotation.z + zVelocity,
+    //   MIN_TILT,
+    //   MAX_TILT
+    // );
   }
 }
 
