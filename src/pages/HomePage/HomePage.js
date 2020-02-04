@@ -42,6 +42,7 @@ export default function HomePage({
   return (
     <S.Wrapper>
       <LoadingOverlay isActive={loading || isLoading} progress={loadingProgress} />
+      {/* <LoadingOverlay isActive={true} progress={0.5} /> */}
       {error && `ERROR: ${JSON.stringify(error)}`}
       <Profile
         id={id}

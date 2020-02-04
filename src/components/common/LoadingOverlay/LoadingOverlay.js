@@ -1,33 +1,47 @@
 import React, { useEffect, useRef } from 'react';
 import * as S from './LoadingOverlay.styles';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { TweenLite } from 'gsap';
+import { Images } from '../../../themes';
+import * as Animations from './LoadingOverlay.animations';
 
 export default function LoadingOverlay({
   isActive = false,
   progress = null,
 }) {
-  const wrapperEl = useRef(null);
+  const wrapperRef = useRef(null);
+  const spriteRef = useRef(null);
+  const spriteImgRef = useRef(null);
+  const textRef = useRef(null);
+
+  useEffect(() => {
+    if (isActive) {
+      Animations.roll(spriteRef.current, spriteImgRef.current);
+    }
+  }, [isActive]);
 
   useEffect(() => {
     if (!isActive) {
-      TweenLite.to(wrapperEl.current, 0.5, {
-        autoAlpha: 0,
-        display: 'none',
-        delay: 1,
-      })
+      Animations.fadeOut(wrapperRef.current, textRef.current);
     } else {
-      TweenLite.to(wrapperEl.current, 0.5, {
-        autoAlpha: 1,
-        display: 'flex',
-      })
+      Animations.fadeIn(wrapperRef.current);
     }
   }, [isActive]);
 
   return (
-    <S.Wrapper ref={wrapperEl}>
-      Loading: {progress && `${Math.round(progress * 100)}%`} ...
-
+    <S.Wrapper ref={wrapperRef}>
+      <S.AnimationWrapper>
+        <S.Sprite ref={spriteRef}>
+          <S.Image
+            ref={spriteImgRef}
+            src={Images.loadingSprite}
+          />
+        </S.Sprite>
+      </S.AnimationWrapper>
+      <S.Bar>
+        <S.Progress percent={(1 - progress) * 100}></S.Progress>
+      </S.Bar>
+      <S.Text ref={textRef}>
+        {Math.round(progress * 100)}%
+      </S.Text>
     </S.Wrapper>
   )
 }
