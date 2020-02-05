@@ -35,6 +35,7 @@ export default function HomePage({
       setIsLoading(false);
     }
     DefaultLoadingManager.onProgress = (_url, numLoaded, total) => {
+      console.debug(`Progress: ${numLoaded} / ${total}`, `Currently loading: ${url}`);
       setLoadingProgress(numLoaded / total);
     }
 
