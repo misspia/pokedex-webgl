@@ -32,25 +32,18 @@ export default function HomePage({
 
   useEffect(() => {
     DefaultLoadingManager.onLoad = () => {
-      console.debug('loading complete')
       setIsLoading(false);
     }
 
-    DefaultLoadingManager.onError = (url) => {
-      console.debug('[ERROR]', url)
-    }
-
-    DefaultLoadingManager.onStart = () => {
-      console.debug('Load start');
-    }
-
     DefaultLoadingManager.onProgress = (url, numLoaded, total) => {
-      console.debug(`Progress: ${numLoaded} / ${total}`, `Currently loading: ${url}`);
+      // console.debug(`Progress: ${numLoaded} / ${total}`, `Currently loading: ${url}`);
+      // console.debug(`onProgress: ${numLoaded} / ${total}`);
       setLoadingProgress(numLoaded / total);
     }
 
   }, []);
-  console.debug('[is webgl loading]', isLoading, '[is graqphql loading]', loading, data)
+
+  console.debug(loadingProgress)
   return (
     <S.Wrapper>
       <LoadingOverlay isActive={loading || isLoading} progress={loadingProgress} />

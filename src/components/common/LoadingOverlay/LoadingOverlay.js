@@ -27,6 +27,7 @@ export default function LoadingOverlay({
     }
   }, [isActive]);
 
+  console.debug('[progress]', progress, 'isActive', isActive)
   return (
     <S.Wrapper ref={wrapperRef}>
       <S.AnimationWrapper>

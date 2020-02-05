@@ -68,6 +68,7 @@ export function fadeIn(wrapper) {
 
 export function fadeOut(wrapper, text) {
   const tl = new TimelineLite();
+  console.debug('[FADE OUT]', wrapper, text, tl);
   tl
     .from(text, 0.2, {
       y: 0,
