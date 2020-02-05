@@ -1,4 +1,6 @@
-import { TweenMax } from 'gsap';
+import { TweenMax, CSSPlugin } from 'gsap';
+
+const css = CSSPlugin;
 
 const xDistance = 100;
 const viewDuration = 0.4;

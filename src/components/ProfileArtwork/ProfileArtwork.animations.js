@@ -1,4 +1,6 @@
-import { TweenMax } from 'gsap';
+import { TweenMax, CSSPlugin } from 'gsap';
+
+const css = CSSPlugin;
 
 export const enter = (wrapper, image) => {
   TweenMax.fromTo(wrapper, 0.7,

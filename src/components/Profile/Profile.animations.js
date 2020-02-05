@@ -1,4 +1,6 @@
-import { TweenMax } from 'gsap';
+import { TweenMax, CSSPlugin } from 'gsap';
+
+const css = CSSPlugin;
 
 export const swapTabViews = (activeView, inActiveView) => {
   TweenMax.to(inActiveView, 0.7, {

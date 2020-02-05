@@ -1,4 +1,6 @@
-import { TweenMax, TimelineLite } from 'gsap';
+import { TweenMax, TimelineLite, CSSPlugin } from 'gsap';
+
+const css = CSSPlugin;
 
 export function roll(sprite, spriteImg) {
   const rollDuration = [0.3, 0.4, 0.4, 0.4];
