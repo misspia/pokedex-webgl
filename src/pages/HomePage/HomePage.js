@@ -32,8 +32,14 @@ export default function HomePage({
 
   useEffect(() => {
     DefaultLoadingManager.onLoad = () => {
+      console.debug('loading complete')
       setIsLoading(false);
     }
+
+    DefaultLoadingManager.onError = (url) => {
+      console.debug('[ERROR]', url)
+    }
+
     DefaultLoadingManager.onStart = () => {
       console.debug('Load start');
     }
@@ -44,6 +50,7 @@ export default function HomePage({
     }
 
   }, []);
+  console.debug('[is webgl loading]', isLoading, '[is graqphql loading]', loading, data)
   return (
     <S.Wrapper>
       <LoadingOverlay isActive={loading || isLoading} progress={loadingProgress} />
