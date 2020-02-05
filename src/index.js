@@ -29,7 +29,6 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 function App() {
-  console.debug('api', process.env.API_HOST);
   return (
     <ApolloProvider client={client}>
       <GlobalStyle />

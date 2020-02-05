@@ -58,10 +58,7 @@ export const Bar = styled.div`
 export const Progress = styled.div`
   border-radius: 0.5em;
   height: 100%;
-  width: ${props => {
-    // console.debug('[style]', props)
-    return props.percent
-  }}%;
+  width: ${props => props.percent}%;
   background-color: ${Colors.black};
   transition: 0.3s all;
 `;

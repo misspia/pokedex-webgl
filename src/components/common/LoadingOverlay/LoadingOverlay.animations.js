@@ -1,4 +1,4 @@
-import { TweenLite, TimelineLite } from 'gsap';
+import { TweenMax, TimelineLite } from 'gsap';
 
 export function roll(sprite, spriteImg) {
   const rollDuration = [0.3, 0.4, 0.4, 0.4];
@@ -60,7 +60,7 @@ export function roll(sprite, spriteImg) {
 }
 
 export function fadeIn(wrapper) {
-  TweenLite.to(wrapper, 0.5, {
+  TweenMax.to(wrapper, 0.5, {
     autoAlpha: 1,
     display: 'flex',
   })
@@ -68,7 +68,6 @@ export function fadeIn(wrapper) {
 
 export function fadeOut(wrapper, text) {
   const tl = new TimelineLite();
-  console.debug('[FADE OUT]', wrapper, text, tl);
   tl
     .from(text, 0.2, {
       y: 0,

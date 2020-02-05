@@ -36,14 +36,11 @@ export default function HomePage({
     }
 
     DefaultLoadingManager.onProgress = (url, numLoaded, total) => {
-      // console.debug(`Progress: ${numLoaded} / ${total}`, `Currently loading: ${url}`);
-      // console.debug(`onProgress: ${numLoaded} / ${total}`);
       setLoadingProgress(numLoaded / total);
     }
 
   }, []);
 
-  console.debug(loadingProgress)
   return (
     <S.Wrapper>
       <LoadingOverlay isActive={loading || isLoading} progress={loadingProgress} />

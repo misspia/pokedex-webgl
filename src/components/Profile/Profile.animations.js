@@ -1,11 +1,11 @@
-import { TweenLite } from 'gsap';
+import { TweenMax } from 'gsap';
 
 export const swapTabViews = (activeView, inActiveView) => {
-  TweenLite.to(inActiveView, 0.7, {
+  TweenMax.to(inActiveView, 0.7, {
     autoAlpha: 0,
     display: 'none',
     onComplete: () => {
-      TweenLite.to(activeView, 0.7, {
+      TweenMax.to(activeView, 0.7, {
         autoAlpha: 1,
         display: 'flex',
       });
@@ -14,14 +14,14 @@ export const swapTabViews = (activeView, inActiveView) => {
 };
 
 export const reveal = (wrapper) => {
-  TweenLite.to(wrapper, 0.7, {
+  TweenMax.to(wrapper, 0.7, {
     autoAlpha: 1,
     display: 'flex',
   });
 }
 
 export const hide = (wrapper) => {
-  TweenLite.to(wrapper, 0.7, {
+  TweenMax.to(wrapper, 0.7, {
     autoAlpha: 0,
     display: 'none',
   });

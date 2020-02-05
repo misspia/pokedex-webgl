@@ -1,7 +1,7 @@
-import { TweenLite } from 'gsap';
+import { TweenMax } from 'gsap';
 
 export const enter = (wrapper, image) => {
-  TweenLite.fromTo(wrapper, 0.7,
+  TweenMax.fromTo(wrapper, 0.7,
     {
       autoAlpha: 0,
       y: -200,
@@ -10,7 +10,7 @@ export const enter = (wrapper, image) => {
       autoAlpha: 1,
       y: 0,
       onComplete: () => {
-        TweenLite.fromTo(image, 0.7,
+        TweenMax.fromTo(image, 0.7,
           {
             autoAlpha: 0,
           },

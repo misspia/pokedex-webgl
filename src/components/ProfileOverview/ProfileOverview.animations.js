@@ -1,10 +1,10 @@
-import { TweenLite } from 'gsap';
+import { TweenMax } from 'gsap';
 
 const xDistance = 100;
 const viewDuration = 0.4;
 
 export const revealView = (view) => {
-  TweenLite.fromTo(view, viewDuration, {
+  TweenMax.fromTo(view, viewDuration, {
     autoAlpha: 0,
     x: -xDistance,
   }, {
@@ -14,7 +14,7 @@ export const revealView = (view) => {
 };
 
 export const hideView = (view, onComplete) => {
-  TweenLite.fromTo(view, viewDuration, {
+  TweenMax.fromTo(view, viewDuration, {
     autoAlpha: 1,
     x: 0,
   }, {

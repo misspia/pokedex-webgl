@@ -1,4 +1,4 @@
-import { TweenLite } from 'gsap';
+import { TweenMax } from 'gsap';
 
 export const enter = (nodes) => {
 

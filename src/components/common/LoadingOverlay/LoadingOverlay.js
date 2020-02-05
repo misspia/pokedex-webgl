@@ -19,7 +19,6 @@ export default function LoadingOverlay({
   }, [isActive]);
 
   useEffect(() => {
-    console.debug('is loading overlay active', isActive, wrapperRef)
     if (!isActive) {
       Animations.fadeOut(wrapperRef.current, textRef.current);
     } else {
@@ -27,7 +26,6 @@ export default function LoadingOverlay({
     }
   }, [isActive]);
 
-  console.debug('[progress]', progress, 'isActive', isActive)
   return (
     <S.Wrapper ref={wrapperRef}>
       <S.AnimationWrapper>
