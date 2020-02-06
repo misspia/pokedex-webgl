@@ -3,7 +3,7 @@ import { Colors } from '../../../themes';
 
 export const Wrapper = styled.div`
   z-index: 999;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;

@@ -39,7 +39,7 @@ export default class Canvas extends Component {
     this.entryList.calcBounds();
 
 
-    this.canvas.current.addEventListener('click', (e) => this.onClick(e), { passive: true });
+    this.canvas.current.addEventListener('mousedown', (e) => this.onClick(e), { passive: true });
 
     this.draw();
   }
