@@ -8,13 +8,20 @@ export default class Controls {
       this.context.camera,
       this.context.renderer.domElement
     );
+    this.controls.enableDamping = true;
+    this.controls.dampingFactor = 0.05;
+
     this.controls.screenSpacePanning = false;
     this.controls.enableRotate = false;
     this.controls.enableZoom = false;
-    this.controls.enableDamping = true;
+    this.controls.maxPolarAngle = Math.PI / 2;
+
+    this.controls.minAzimuthAngle = -Math.PI;
+    this.controls.maxAzimuthAngle = Math.PI;
 
     this.controls.update();
   }
+
   update(bounds) {
     const { minX, maxX, minZ, maxZ } = bounds;
     const x = clamp(this.context.camera.position.x, minX, maxX);

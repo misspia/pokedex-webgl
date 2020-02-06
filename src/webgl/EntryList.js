@@ -18,7 +18,6 @@ export default class EntryList {
     this.numEntriesLoaded = 0;
 
     this.mesh = new THREE.Group();
-    this.bbox = new THREE.Box3();
     this.bounds = {
       minX: 0,
       maxX: 0,
@@ -29,7 +28,7 @@ export default class EntryList {
     this.createList(list);
   }
   createList(list) {
-    list.splice(151);
+    list.splice(51);
     let x = 0;
     let z = 0;
 
@@ -55,15 +54,16 @@ export default class EntryList {
     })
   }
   getCenter() {
-    return this.bbox.setFromObject(this.mesh).getCenter(this.mesh.position).multiplyScalar(-1);
+    return new THREE.Box3().setFromObject(this.mesh).getCenter(this.mesh.position).multiplyScalar(-1);
   }
 
   calcBounds() {
+    const bbox = new THREE.Box3().setFromObject(this.mesh);
     this.bounds = {
-      minX: this.bbox.min.x,
-      maxX: this.bbox.max.x,
-      minZ: this.bbox.min.y,
-      maxZ: this.bbox.max.y,
+      minX: bbox.min.x,
+      maxX: bbox.max.x,
+      minZ: bbox.min.z,
+      maxZ: bbox.max.z,
     }
   }
 

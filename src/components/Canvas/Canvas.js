@@ -36,6 +36,8 @@ export default class Canvas extends Component {
 
     this.skyBox.add(this.entryList.mesh);
     this.entryList.getCenter();
+    this.entryList.calcBounds();
+
 
     this.canvas.current.addEventListener('click', (e) => this.onClick(e), { passive: true });
 
