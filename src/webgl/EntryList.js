@@ -13,7 +13,7 @@ const GRID_HEIGHT = ENTRY_HEIGHT + ENTRY_PADDING;
 
 
 export default class EntryList {
-  constructor(list, ) {
+  constructor() {
     this.entries = [];
     this.numEntriesLoaded = 0;
 
@@ -24,7 +24,8 @@ export default class EntryList {
       minY: 0,
       maxY: 0,
     }
-
+  }
+  load(list) {
     this.createList(list);
   }
   createList(list) {

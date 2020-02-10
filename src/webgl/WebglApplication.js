@@ -7,7 +7,18 @@ export default class WebglApplication {
   init(canvas) {
     this.webglMain.setup(canvas);
   }
-  load() {
+  load(list) {
+    this.webglMain.load(list);
+  }
 
+  selectEntry(id) {
+    this.webglMain.selectEntry(id);
+  }
+
+  onCanvasClick(selectEntry = (id) => { }) {
+    this.webglMain.onClick(selectEntry);
+  }
+  draw() {
+    this.webglMain.draw();
   }
 }

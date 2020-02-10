@@ -10,7 +10,7 @@ export default class SceneManager {
     this.renderer = {};
 
 
-    this.controls = new Controls(this);
+    this.controls = {};
     this.raycaster = new THREE.Raycaster();
     this.mouse = new THREE.Vector2();
     this.cameraVelocity = new THREE.Vector2();
@@ -19,8 +19,8 @@ export default class SceneManager {
     this.intersections = [];
 
   }
-  init() {
-    this.canvas = canvas.current;
+  initializeScene(canvas) {
+    this.canvas = canvas;
     this.scene = new THREE.Scene();
 
     const height = window.innerHeight;
@@ -45,6 +45,8 @@ export default class SceneManager {
     this.renderer.setClearColor(0xffffff);
     const dpr = Math.min(1.5, window.devicePixelRatio);
     this.renderer.setPixelRatio(dpr);
+
+    this.controls = new Controls(this);
 
     this.resize();
 
