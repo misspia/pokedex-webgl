@@ -3,7 +3,23 @@ import { toRadians } from '../utils';
 import Controls from './Controls';
 
 export default class SceneManager {
-  constructor(canvas = {}) {
+  constructor() {
+    this.canvas = {};
+    this.scene = {};
+    this.camera = {};
+    this.renderer = {};
+
+
+    this.controls = new Controls(this);
+    this.raycaster = new THREE.Raycaster();
+    this.mouse = new THREE.Vector2();
+    this.cameraVelocity = new THREE.Vector2();
+    this.cameraTranslateVelocity = 0.1;
+    this.cameraTranslateThreshold = 0.2;
+    this.intersections = [];
+
+  }
+  init() {
     this.canvas = canvas.current;
     this.scene = new THREE.Scene();
 
@@ -30,20 +46,10 @@ export default class SceneManager {
     const dpr = Math.min(1.5, window.devicePixelRatio);
     this.renderer.setPixelRatio(dpr);
 
-    this.controls = new Controls(this);
-
-    this.raycaster = new THREE.Raycaster();
-    this.mouse = new THREE.Vector2();
-    this.cameraVelocity = new THREE.Vector2();
-    this.cameraTranslateVelocity = 0.1;
-    this.cameraTranslateThreshold = 0.2;
-    this.intersections = [];
-
     this.resize();
 
     window.addEventListener('resize', (e) => this.resize(e), { passive: true });
     this.canvas.addEventListener('mousemove', (e) => this.onMouseMove(e), { passive: true });
-
   }
 
   unmount = () => {
