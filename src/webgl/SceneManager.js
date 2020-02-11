@@ -3,8 +3,24 @@ import { toRadians } from '../utils';
 import Controls from './Controls';
 
 export default class SceneManager {
-  constructor(canvas = {}) {
-    this.canvas = canvas.current;
+  constructor() {
+    this.canvas = {};
+    this.scene = {};
+    this.camera = {};
+    this.renderer = {};
+
+
+    this.controls = {};
+    this.raycaster = new THREE.Raycaster();
+    this.mouse = new THREE.Vector2();
+    this.cameraVelocity = new THREE.Vector2();
+    this.cameraTranslateVelocity = 0.1;
+    this.cameraTranslateThreshold = 0.2;
+    this.intersections = [];
+
+  }
+  initializeScene(canvas) {
+    this.canvas = canvas;
     this.scene = new THREE.Scene();
 
     const height = window.innerHeight;
@@ -17,7 +33,7 @@ export default class SceneManager {
       0.1,
       1000
     );
-    this.camera.position.set(-5, 13, -8);
+    this.camera.position.set(-50, 13, -50);
     this.camera.rotation.set(toRadians(-90), 0, 0);
 
     this.renderer = new THREE.WebGLRenderer({
@@ -26,24 +42,16 @@ export default class SceneManager {
       alpha: false,
       stencil: false,
     });
-    this.renderer.setClearColor(0xffffff);
+    this.renderer.setClearColor(0xeeeeee);
     const dpr = Math.min(1.5, window.devicePixelRatio);
     this.renderer.setPixelRatio(dpr);
 
     this.controls = new Controls(this);
 
-    this.raycaster = new THREE.Raycaster();
-    this.mouse = new THREE.Vector2();
-    this.cameraVelocity = new THREE.Vector2();
-    this.cameraTranslateVelocity = 0.1;
-    this.cameraTranslateThreshold = 0.2;
-    this.intersections = [];
-
     this.resize();
 
     window.addEventListener('resize', (e) => this.resize(e), { passive: true });
     this.canvas.addEventListener('mousemove', (e) => this.onMouseMove(e), { passive: true });
-
   }
 
   unmount = () => {

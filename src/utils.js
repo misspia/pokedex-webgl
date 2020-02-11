@@ -1,5 +1,9 @@
 export const fullCircleRadians = 2 * Math.PI;
 
+export const calcCircumference = (radius) => (
+  2 * Math.PI * radius
+);
+
 export const toRadians = (degrees) => (
   degrees * Math.PI / 180
 );

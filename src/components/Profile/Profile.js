@@ -106,7 +106,10 @@ export default function Profile({
             <S.CloseButton onClick={onClose}>
               <FontAwesomeIcon icon={Icons.close} />
             </S.CloseButton>
-            <ProfileOverview {...overview} chain={chain} />
+            <ProfileOverview
+              {...overview}
+              chain={chain}
+            />
           </>
       }
     </S.Wrapper>
