@@ -1,38 +1,32 @@
-import { MapControls } from 'three/examples/jsm/controls/OrbitControls';
+import { MapControls, OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { clamp } from '../utils';
 
 export default class Controls {
   constructor(context) {
     this.context = context
-    this.controls = new MapControls(
+    this.controls = new OrbitControls(
       this.context.camera,
-      this.context.renderer.domElement
+      this.context.renderer.domElement,
     );
-    this.controls.enableDamping = true;
-    this.controls.dampingFactor = 0.05;
+    // this.controls = new MapControls(
+    //   this.context.camera,
+    //   this.context.renderer.domElement
+    // );
+    // this.controls.enableDamping = true;
+    // this.controls.dampingFactor = 0.05;
 
-    this.controls.screenSpacePanning = false;
-    this.controls.enableRotate = false;
-    this.controls.enableZoom = false;
-    this.controls.maxPolarAngle = Math.PI / 2;
+    // this.controls.screenSpacePanning = false;
+    // this.controls.enableRotate = false;
+    // this.controls.enableZoom = false;
+    // this.controls.maxPolarAngle = Math.PI / 2;
 
-    this.controls.minAzimuthAngle = -Math.PI;
-    this.controls.maxAzimuthAngle = Math.PI;
+    // this.controls.minAzimuthAngle = -Math.PI;
+    // this.controls.maxAzimuthAngle = Math.PI;
 
     this.controls.update();
   }
 
-  update(bounds) {
-    const { minX, maxX, minZ, maxZ } = bounds;
-    const x = clamp(this.context.camera.position.x, minX, maxX);
-    const z = clamp(this.context.camera.position.z, minZ, maxZ);
+  update() {
 
-    if (this.context.camera.position.x <= minX || this.context.camera.position.x >= maxX) {
-      this.controls.target.x = x;
-    }
-    if (this.context.camera.position.z <= minZ || this.context.camera.position.z >= maxZ) {
-      this.controls.target.z = z;
-    }
-    this.controls.update();
   }
 }

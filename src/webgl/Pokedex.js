@@ -1,8 +1,7 @@
 import * as THREE from 'three';
 import SceneManager from './SceneManager';
-import SkyBox from './SkyBox';
 import Lights from './Lights';
-import EntryList from './EntryList';
+import CardCarousel from './CardCarousel';
 
 export default class Pokedex extends SceneManager {
   setup(canvas) {
@@ -16,26 +15,21 @@ export default class Pokedex extends SceneManager {
     this.add(this.lights.directional);
     this.add(this.lights.ambient);
 
-    this.skyBox = new SkyBox({ size: 1000, mouse: this.mouse });
-    this.add(this.skyBox.group);
-
-    this.entryList = new EntryList();
+    this.carousel = new CardCarousel();
   }
 
   load(list) {
-    this.entryList.load(list);
-    this.skyBox.add(this.entryList.mesh);
-    this.entryList.getCenter();
-    this.entryList.calcBounds();
+    this.carousel.load(list);
+    this.add(this.carousel.mesh);
   }
 
   selectEntry(id) {
-    this.entryList.selectEntry(id);
+    this.carousel.selectEntry(id);
   }
 
   onClick(selectEntry = () => { }) {
     this.intersections = this.raycaster.intersectObjects(
-      this.entryList.mesh.children
+      this.carousel.mesh.children
     );
     const intersection = this.intersections[0];
 
@@ -44,18 +38,17 @@ export default class Pokedex extends SceneManager {
     }
     const { name: id } = intersection.object;
     selectEntry(id); // debounce + same id check
-    this.entryList.selectEntry(id);
+    this.carousel.selectEntry(id);
   }
 
   draw() {
     this.renderer.render(this.scene, this.camera);
     this.raycaster.setFromCamera(this.mouse, this.camera);
     this.intersections = this.raycaster.intersectObjects(
-      this.entryList.mesh.children
+      this.carousel.mesh.children
     );
-    this.controls.update(this.entryList.bounds);
+    this.carousel.update();
 
-    this.skyBox.tilt(this.camera.position);
     requestAnimationFrame(() => this.draw());
   }
 

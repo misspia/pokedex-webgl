@@ -33,7 +33,7 @@ export default class SceneManager {
       0.1,
       1000
     );
-    this.camera.position.set(-5, 13, -8);
+    this.camera.position.set(-50, 13, -50);
     this.camera.rotation.set(toRadians(-90), 0, 0);
 
     this.renderer = new THREE.WebGLRenderer({
@@ -42,7 +42,7 @@ export default class SceneManager {
       alpha: false,
       stencil: false,
     });
-    this.renderer.setClearColor(0xffffff);
+    this.renderer.setClearColor(0xeeeeee);
     const dpr = Math.min(1.5, window.devicePixelRatio);
     this.renderer.setPixelRatio(dpr);
 
