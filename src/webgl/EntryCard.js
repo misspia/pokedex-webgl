@@ -39,8 +39,7 @@ export default class EntryListItem {
     this.back = new THREE.Mesh(geometry, backMaterial);
     this.back.position.z = -0.01;
 
-    // this.mesh = new THREE.Mesh(geometry, material);
-    this.mesh = new THREE.Group();
+    this.mesh = new THREE.Object3D();
     this.mesh.add(this.front);
     this.mesh.add(this.back);
 

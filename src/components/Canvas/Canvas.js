@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import WebglAppication from '../../webgl/WebglApplication';
 import * as S from './Canvas.styles';
 
@@ -7,7 +7,7 @@ export default class Canvas extends Component {
     entries: [],
     selectEntry: () => { },
     id: null,
-    setLoadingComplete: () => { },
+    isRotating: true,
   };
   constructor(props) {
     super(props);
@@ -30,6 +30,14 @@ export default class Canvas extends Component {
       ),
       { passive: true }
     );
+  }
+
+  componentDidUpdate() {
+    if (this.props.isRotating) {
+      this.webgl.playCarousel();
+    } else {
+      this.webgl.pauseCarousel();
+    }
   }
 
   render() {
