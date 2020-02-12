@@ -78,8 +78,10 @@ export default class EntryList {
     entry.setActiveState(true);
   }
 
-  update() {
-    this.mesh.rotation.y += ROTATION_VELOCITY;
+  update(isRotating) {
+    if (isRotating) {
+      this.mesh.rotation.y += ROTATION_VELOCITY;
+    }
   }
 }
 

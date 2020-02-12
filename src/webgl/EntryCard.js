@@ -1,6 +1,6 @@
 import * as THREE from 'three';
-import fragmentShader from './shaders/entryListItem.frag';
-import vertexShader from './shaders/entryListItem.vert';
+import fragmentShader from './shaders/cardFront.frag';
+import vertexShader from './shaders/cardFront.vert';
 
 export default class EntryListItem {
   constructor({
@@ -14,13 +14,13 @@ export default class EntryListItem {
     this.name = name;
     this.isActive = false;
 
-    const geometry = new THREE.PlaneGeometry(width, height, 5, 5);
+    const geometry = new THREE.PlaneGeometry(width, height, 2, 2);
 
     const spriteTexture = new THREE.TextureLoader().load(spriteUrl);
     spriteTexture.minFilter = THREE.LinearFilter;
 
-    const material = new THREE.RawShaderMaterial({
-      side: THREE.DoubleSide,
+    const frontMaterial = new THREE.RawShaderMaterial({
+      side: THREE.FrontSide,
       transparent: false,
       fragmentShader,
       vertexShader,
@@ -30,9 +30,20 @@ export default class EntryListItem {
       },
     });
 
-    this.mesh = new THREE.Mesh(geometry, material);
+    const backMaterial = new THREE.MeshBasicMaterial({
+      color: 0xff0000,
+      side: THREE.BackSide,
+    });
+
+    this.front = new THREE.Mesh(geometry, frontMaterial);
+    this.back = new THREE.Mesh(geometry, backMaterial);
+    this.back.position.z = -0.01;
+
+    this.mesh = new THREE.Object3D();
+    this.mesh.add(this.front);
+    this.mesh.add(this.back);
+
     this.mesh.name = id;
-    this.mesh.castShadow = true;
   }
   setPosition(x = 0, y = 0, z = 0) {
     this.mesh.position.set(x, y, z);

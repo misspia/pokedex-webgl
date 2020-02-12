@@ -30,3 +30,4 @@ export const swapView = (currView, prevView) => {
   hideView(prevView, () => revealView(currView));
 };
 
+

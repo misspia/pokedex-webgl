@@ -83,6 +83,6 @@ export function fadeOut(wrapper, text) {
     })
     .to(wrapper, 0.3, {
       autoAlpha: 0,
-      delay: 2,
+      delay: 1,
     });
 }

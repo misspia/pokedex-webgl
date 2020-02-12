@@ -18,6 +18,15 @@ export default class WebglApplication {
   onCanvasClick(selectEntry = (id) => { }) {
     this.webglMain.onClick(selectEntry);
   }
+
+  playCarousel() {
+    this.webglMain.isCarouselRotating = true;
+  }
+
+  pauseCarousel() {
+    this.webglMain.isCarouselRotating = false;
+  }
+
   draw() {
     this.webglMain.draw();
   }

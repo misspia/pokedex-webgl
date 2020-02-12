@@ -38,13 +38,11 @@ export default function HomePage({
     DefaultLoadingManager.onProgress = (url, numLoaded, total) => {
       setLoadingProgress(numLoaded / total);
     }
-
   }, []);
 
   return (
     <S.Wrapper>
       <LoadingOverlay isActive={loading || isLoading} progress={loadingProgress} />
-      {/* <LoadingOverlay isActive={true} progress={0.5} /> */}
       {error && `ERROR: ${JSON.stringify(error)}`}
       <Profile
         id={id}
@@ -60,7 +58,7 @@ export default function HomePage({
             setId(id);
             setIsProfileActive(true);
           }}
-          setLoadingComplete={() => setIsLoading(false)}
+          isRotating={!isProfileActive}
         />
       }
     </S.Wrapper>
