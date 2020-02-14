@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import fragmentShader from './shaders/cardFront.frag';
 import vertexShader from './shaders/cardFront.vert';
 import { TweenMax, TimelineMax } from 'gsap';
+import { Colors } from '../themes';
 
 export default class EntryListItem {
   constructor({
@@ -32,6 +33,7 @@ export default class EntryListItem {
         uSpriteTexture: { type: 't', value: spriteTexture },
         uContentVisibility: { type: 'f', value: 1, },
         uBGVisibility: { type: 'f', value: 1, },
+        uTypeColor: { type: 'v3', value: Colors.typesVector.fire },
       },
     });
 
