@@ -2,6 +2,7 @@ precision highp float;
 
 uniform sampler2D uSpriteTexture;
 uniform float uContentVisibility;
+uniform float uBGVisibility;
 
 varying vec2 vUv;
 
@@ -13,12 +14,12 @@ void main() {
 
   vec4 color;
   if(spriteTexture.a == 1.0) {
+    spriteTexture.rgb *= vec3(uContentVisibility);
     color = spriteTexture;
   } else {
+    bgColor.rgb *= vec3(uBGVisibility);
     color = bgColor;
   }
-
-  color.a * uContentVisibility;
 
   gl_FragColor = color;
 }
