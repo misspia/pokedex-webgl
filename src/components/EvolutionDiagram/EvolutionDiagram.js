@@ -47,7 +47,7 @@ export default function EvolutionDiagram({
 
   return (
     <S.Wrapper isEeveeChain={isEeveeChain}>
-      <LoadingOverlay isActive={isLoading} />
+      {/* <LoadingOverlay isActive={isLoading} /> */}
       <S.Row>
         <S.Col>
           <EvolutionNode

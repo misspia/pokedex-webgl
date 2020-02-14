@@ -1,6 +1,7 @@
 precision highp float;
 
 uniform sampler2D uSpriteTexture;
+uniform float uContentVisibility;
 
 varying vec2 vUv;
 
@@ -16,6 +17,8 @@ void main() {
   } else {
     color = bgColor;
   }
+
+  color.a * uContentVisibility;
 
   gl_FragColor = color;
 }
