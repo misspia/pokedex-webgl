@@ -7,7 +7,7 @@ export default class Canvas extends Component {
     entries: [],
     selectEntry: () => { },
     id: null,
-    isRotating: true,
+    isProfileActive: true,
   };
   constructor(props) {
     super(props);
@@ -33,7 +33,7 @@ export default class Canvas extends Component {
   }
 
   componentDidUpdate() {
-    if (this.props.isRotating) {
+    if (!this.props.isProfileActive) {
       this.webgl.playCarousel();
     } else {
       this.webgl.pauseCarousel();

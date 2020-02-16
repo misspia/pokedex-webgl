@@ -69,7 +69,7 @@ export default function ProfileOverview({
 
   return (
     <S.Wrapper>
-      <LoadingOverlay isActive={isLoading} />
+      {/* <LoadingOverlay isActive={isLoading} /> */}
       <S.Header type={types[0]}>
         <S.Title>
           No. {id} {name}

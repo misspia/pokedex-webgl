@@ -15,6 +15,7 @@ const GET_ALL_POKEMON = gql`
       id
       name
       spriteUrl
+      types
     }
   }
 `;
@@ -58,7 +59,7 @@ export default function HomePage({
             setId(id);
             setIsProfileActive(true);
           }}
-          isRotating={!isProfileActive}
+          isProfileActive={isProfileActive}
         />
       }
     </S.Wrapper>

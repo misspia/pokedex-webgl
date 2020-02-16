@@ -1,37 +1,44 @@
 import * as THREE from 'three';
 import fragmentShader from './shaders/cardFront.frag';
 import vertexShader from './shaders/cardFront.vert';
+import { Colors } from '../themes';
 
 export default class EntryListItem {
   constructor({
     id = 0,
     name = '',
     spriteUrl = '',
+    types = [],
     height = 5,
     width = 5,
   }) {
     this.id = id;
     this.name = name;
     this.isActive = false;
-
     const geometry = new THREE.PlaneGeometry(width, height, 2, 2);
 
     const spriteTexture = new THREE.TextureLoader().load(spriteUrl);
     spriteTexture.minFilter = THREE.LinearFilter;
 
+    const mainType = types[0];
     const frontMaterial = new THREE.RawShaderMaterial({
       side: THREE.FrontSide,
       transparent: false,
       fragmentShader,
       vertexShader,
       flatShading: true,
+      transparent: true,
+      uniforms: this.uniforms,
       uniforms: {
         uSpriteTexture: { type: 't', value: spriteTexture },
+        uContentVisibility: { type: 'f', value: 0, },
+        uBGVisibility: { type: 'f', value: 0, },
+        uTypeColor: { type: 'v3', value: Colors.typesVector[mainType] },
       },
     });
 
     const backMaterial = new THREE.MeshBasicMaterial({
-      color: 0xff0000,
+      color: 0x111111,
       side: THREE.BackSide,
     });
 
@@ -45,6 +52,15 @@ export default class EntryListItem {
 
     this.mesh.name = id;
   }
+
+  get frontUniforms() {
+    return this.front.material.uniforms;
+  }
+
+  get backUniforms() {
+    return this.back.material;
+  }
+
   setPosition(x = 0, y = 0, z = 0) {
     this.mesh.position.set(x, y, z);
   }
