@@ -1,5 +1,4 @@
 import Pokedex from './Pokedex';
-import AnimationController from './AnimationController';
 
 export default class WebglApplication {
   constructor() {

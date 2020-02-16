@@ -59,7 +59,7 @@ export default function HomePage({
             setId(id);
             setIsProfileActive(true);
           }}
-          isRotating={!isProfileActive}
+          isProfileActive={isProfileActive}
         />
       }
     </S.Wrapper>

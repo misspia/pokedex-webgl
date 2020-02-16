@@ -18,9 +18,11 @@ void main() {
     spriteTexture.rgb = mix(spriteTexture.rgb, uTypeColor, uContentVisibility);
     color = spriteTexture;
   } else {
-    bgColor.rgb = mix(bgColor.rgb, uTypeColor, uBGVisibility);
+    // bgColor.rgb = mix(bgColor.rgb, uTypeColor, uBGVisibility);
     color = bgColor;
   }
+
+  color.rgb = mix(color.rgb, bgColor.rgb, uBGVisibility);
 
   gl_FragColor = color;
 }

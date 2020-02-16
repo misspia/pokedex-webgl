@@ -29,7 +29,7 @@ export default class EntryList {
   }
 
   createList(list) {
-    list.splice(20);
+    list.splice(151);
 
     list.forEach(({ id, name, spriteUrl, types }, index) => {
       const entry = new EntryCard({

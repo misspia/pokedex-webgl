@@ -20,6 +20,7 @@ export default class Pokedex extends SceneManager {
     this.isCarouselRotating = true;
 
     this.animator = new AnimationController(this);
+    this.card = {};
   }
 
   load(list) {
@@ -42,10 +43,11 @@ export default class Pokedex extends SceneManager {
       return;
     }
 
-    const { name: id } = intersection.object.parent;
-    const card = this.carousel.getEntryCardById(id);
 
-    this.animator.activateCard(card)
+    const { name: id } = intersection.object.parent;
+    this.card = this.carousel.getEntryCardById(id);
+
+    this.animator.activateCard(this.card)
       .then(() => {
         selectEntry(id); // debounce + same id check
         this.carousel.selectEntry(id);
@@ -62,5 +64,4 @@ export default class Pokedex extends SceneManager {
 
     requestAnimationFrame(() => this.draw());
   }
-
 }
