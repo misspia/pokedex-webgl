@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import SceneManager from './SceneManager';
 import Lights from './Lights';
 import CardCarousel from './CardCarousel';
+import AnimationController from './AnimationController';
 
 export default class Pokedex extends SceneManager {
   setup(canvas) {
@@ -17,6 +18,8 @@ export default class Pokedex extends SceneManager {
 
     this.carousel = new CardCarousel();
     this.isCarouselRotating = true;
+
+    this.animator = new AnimationController(this);
   }
 
   load(list) {
@@ -38,11 +41,16 @@ export default class Pokedex extends SceneManager {
     if (!intersection) {
       return;
     }
-    const { name: id } = intersection.object.parent;
-    selectEntry(id); // debounce + same id check
-    this.carousel.selectEntry(id);
-  }
 
+    const { name: id } = intersection.object.parent;
+    const card = this.carousel.getEntryCardById(id);
+
+    this.animator.activateCard(card)
+      .then(() => {
+        selectEntry(id); // debounce + same id check
+        this.carousel.selectEntry(id);
+      });
+  }
 
   draw() {
     this.renderer.render(this.scene, this.camera);

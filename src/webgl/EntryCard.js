@@ -1,7 +1,6 @@
 import * as THREE from 'three';
 import fragmentShader from './shaders/cardFront.frag';
 import vertexShader from './shaders/cardFront.vert';
-import { TweenMax, TimelineMax } from 'gsap';
 import { Colors } from '../themes';
 
 export default class EntryListItem {
@@ -9,18 +8,19 @@ export default class EntryListItem {
     id = 0,
     name = '',
     spriteUrl = '',
+    types = [],
     height = 5,
     width = 5,
   }) {
     this.id = id;
     this.name = name;
     this.isActive = false;
-
     const geometry = new THREE.PlaneGeometry(width, height, 2, 2);
 
     const spriteTexture = new THREE.TextureLoader().load(spriteUrl);
     spriteTexture.minFilter = THREE.LinearFilter;
 
+    const mainType = types[0];
     const frontMaterial = new THREE.RawShaderMaterial({
       side: THREE.FrontSide,
       transparent: false,
@@ -31,9 +31,9 @@ export default class EntryListItem {
       uniforms: this.uniforms,
       uniforms: {
         uSpriteTexture: { type: 't', value: spriteTexture },
-        uContentVisibility: { type: 'f', value: 1, },
-        uBGVisibility: { type: 'f', value: 1, },
-        uTypeColor: { type: 'v3', value: Colors.typesVector.fire },
+        uContentVisibility: { type: 'f', value: 0, },
+        uBGVisibility: { type: 'f', value: 0, },
+        uTypeColor: { type: 'v3', value: Colors.typesVector[mainType] },
       },
     });
 
@@ -52,6 +52,15 @@ export default class EntryListItem {
 
     this.mesh.name = id;
   }
+
+  get frontUniforms() {
+    return this.front.material.uniforms;
+  }
+
+  get backUniforms() {
+    return this.back.material;
+  }
+
   setPosition(x = 0, y = 0, z = 0) {
     this.mesh.position.set(x, y, z);
   }
@@ -60,14 +69,5 @@ export default class EntryListItem {
   }
   setActiveState(isActive) {
     this.isActive = isActive;
-
-    const tl = new TimelineMax({ delay: 0.2 });
-    tl
-      .to(this.front.material.uniforms.uContentVisibility, 0.8, {
-        value: 0,
-      })
-      .to(this.front.material.uniforms.uBGVisibility, 0.8, {
-        value: 0,
-      })
   }
 }

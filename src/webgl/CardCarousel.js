@@ -31,11 +31,12 @@ export default class EntryList {
   createList(list) {
     list.splice(20);
 
-    list.forEach(({ id, name, spriteUrl }, index) => {
+    list.forEach(({ id, name, spriteUrl, types }, index) => {
       const entry = new EntryCard({
         id,
         name,
         spriteUrl,
+        types,
         width: ENTRY_WIDTH,
         height: ENTRY_HEIGHT,
       });
@@ -76,6 +77,10 @@ export default class EntryList {
   selectEntry(id) {
     const entry = this.entries.find(item => item.id === id);
     entry.setActiveState(true);
+  }
+
+  getEntryCardById(id) {
+    return this.entries.find((entry) => entry.id === id);
   }
 
   update(isRotating) {

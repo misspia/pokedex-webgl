@@ -15,6 +15,7 @@ const GET_ALL_POKEMON = gql`
       id
       name
       spriteUrl
+      types
     }
   }
 `;
@@ -44,11 +45,11 @@ export default function HomePage({
     <S.Wrapper>
       <LoadingOverlay isActive={loading || isLoading} progress={loadingProgress} />
       {error && `ERROR: ${JSON.stringify(error)}`}
-      {/* <Profile
+      <Profile
         id={id}
         active={isProfileActive}
         onClose={() => setIsProfileActive(false)}
-      /> */}
+      />
       {
         data &&
         <Cavnas

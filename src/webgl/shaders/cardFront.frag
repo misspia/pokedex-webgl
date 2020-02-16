@@ -11,15 +11,14 @@ varying vec2 vUv;
 // https://codepen.io/prisoner849/pen/OeJGjB?editors=0010
 void main() {
   vec4 bgColor = vec4(1.0, 1.0, 1.0, 1.0);
-  vec3 transitionColor = uTypeColor * vec3(uContentVisibility);
   vec4 spriteTexture = texture2D(uSpriteTexture, vec2(vUv.x, vUv.y * 1.5 - 0.25));
 
   vec4 color;
   if(spriteTexture.a == 1.0) {
-    spriteTexture.rgb *= transitionColor;
+    spriteTexture.rgb = mix(spriteTexture.rgb, uTypeColor, uContentVisibility);
     color = spriteTexture;
   } else {
-    bgColor.rgb *= vec3(uBGVisibility);
+    bgColor.rgb = mix(bgColor.rgb, uTypeColor, uBGVisibility);
     color = bgColor;
   }
 
