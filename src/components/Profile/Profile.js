@@ -1,66 +1,22 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useContext } from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import WebglContext from '../../webgl/WebglContext';
 import { Icons } from '../../themes';
 import ProfileOverview from '../ProfileOverview';
+import { GET_POKEMON_BY_ID, GET_EVOLUTION_BY_CHAIN_ID } from './Profile.gql';
 import * as S from './Profile.styles';
 import * as Animations from './Profile.animations';
 
-const GET_POKEMON_BY_ID = gql`
-  query getPokemonById($id: PokemonId!) {
-    GetPokemonById(id: $id) {
-      id
-      name
-      chainId
-      types
-      height
-      weight
-      baseExperience
-      abilities
-      stats {
-        key
-        value
-      }
-      artworkUrl
-    }
-  }
-`;
-
-const GET_EVOLUTION_BY_CHAIN_ID = gql`
-  query getEvolutionByChainId($chainId: PositiveInt!) {
-    GetEvolutionByChainId(chainId: $chainId) {
-      chain {
-        id
-        name
-        types
-        artworkUrl
-        evolvesFromId
-        evolutionTrigger
-        triggerItem
-        minimumLevel
-        gender
-        location
-        heldItem
-        timeOfDay
-        knownMove
-        mimimumHappiness
-        minimumBeauty
-        minimumAffection
-        relativePhysicalStats
-        needsOverworldRain
-        turnUpsideDown
-      }
-    }
-  }
-`;
 
 export default function Profile({
   onClose = () => { },
   active = false,
   id = null,
 }) {
+  const context = useContext(WebglContext);
+
   const {
     loading: pokemonLoading,
     error: pokemonError,
@@ -103,7 +59,10 @@ export default function Profile({
             {evolutionError && 'ERROR: ' + JSON.stringify(evolutionError)}
           </> :
           <>
-            <S.CloseButton onClick={onClose}>
+            <S.CloseButton onClick={() => {
+              onClose();
+              context.webgl.deactivateEntry();
+            }}>
               <FontAwesomeIcon icon={Icons.close} />
             </S.CloseButton>
             <ProfileOverview

@@ -1,5 +1,5 @@
 import { DefaultLoadingManager } from 'three';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext, useRef } from 'react';
 import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
 
@@ -8,6 +8,7 @@ import Cavnas from '../../components/Canvas';
 import Profile from '../../components/Profile';
 import { LoadingOverlay } from '../../components/common';
 import { clone } from '../../utils';
+import WebglContext from '../../webgl/WebglContext';
 
 const GET_ALL_POKEMON = gql`
   query getAllPokemon {
@@ -25,6 +26,7 @@ export default function HomePage({
   location,
   match,
 }) {
+  const context = useContext(WebglContext);
   const [id, setId] = useState(3);
   const [isLoading, setIsLoading] = useState(true);
   const [loadingProgress, setLoadingProgress] = useState(0);
@@ -54,12 +56,10 @@ export default function HomePage({
         data &&
         <Cavnas
           entries={clone(data.GetAllPokemon)}
-          id={id}
           selectEntry={id => {
             setId(id);
             setIsProfileActive(true);
           }}
-          isProfileActive={isProfileActive}
         />
       }
     </S.Wrapper>

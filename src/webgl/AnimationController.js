@@ -6,6 +6,8 @@ export default class AnimationController {
   }
   activateCard(card) {
     return new Promise((resolve) => {
+      this.context.carousel.pauseRotation();
+
       const tl = new TimelineMax({ delay: 0.2 });
       tl
         .to(card.frontUniforms.uContentVisibility, 0.8, {
@@ -19,16 +21,17 @@ export default class AnimationController {
         });
     })
   }
-  deactrivateCard() {
+  deactrivateCard(card) {
     const tl = new TimelineMax({ delay: 0.2 });
     return new Promise((resolve) => {
       tl
-        .to(this.front.material.uniforms.uBGVisibility, 0.8, {
+        .to(card.frontUniforms.uBGVisibility, 0.8, {
           value: 0,
         })
-        .to(this.front.material.uniforms.uContentVisibility, 0.8, {
+        .to(card.frontUniforms.uContentVisibility, 0.8, {
           value: 0,
           onComplete: () => {
+            this.context.carousel.resumeRotation();
             resolve();
           }
         });

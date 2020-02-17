@@ -15,16 +15,12 @@ export default class WebglApplication {
     this.webglMain.selectEntry(id);
   }
 
+  deactivateEntry() {
+    this.webglMain.deactivateEntry();
+  }
+
   onCanvasClick(selectEntry = (id) => { }) {
     this.webglMain.onClick(selectEntry);
-  }
-
-  playCarousel() {
-    this.webglMain.isCarouselRotating = true;
-  }
-
-  pauseCarousel() {
-    this.webglMain.isCarouselRotating = false;
   }
 
   draw() {
