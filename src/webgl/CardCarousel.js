@@ -16,11 +16,12 @@ const ANGLE_INCREMENT = fullCircleRadians / ENTRIES_PER_ROW;
 
 const ROTATION_VELOCITY = 0.001;
 
-export default class EntryList {
+export default class CardCarousel {
   constructor() {
     this.entries = [];
     this.numEntriesLoaded = 0;
     this.centerCoord = new THREE.Vector3();
+    this.isRotating = true;
 
     this.mesh = new THREE.Group();
   }
@@ -83,8 +84,16 @@ export default class EntryList {
     return this.entries.find((entry) => entry.id === id);
   }
 
-  update(isRotating) {
-    if (isRotating) {
+  resumeRotation() {
+    this.isRotating = true;
+  }
+
+  pauseRotation() {
+    this.isRotating = false;
+  }
+
+  update() {
+    if (this.isRotating) {
       this.mesh.rotation.y += ROTATION_VELOCITY;
     }
   }

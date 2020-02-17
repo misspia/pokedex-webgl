@@ -54,6 +54,13 @@ export default class Pokedex extends SceneManager {
       });
   }
 
+  deactivateEntry() {
+    this.animator.deactrivateCard(this.card)
+      .then(() => {
+        this.card = {};
+      });
+  }
+
   draw() {
     this.renderer.render(this.scene, this.camera);
     this.raycaster.setFromCamera(this.mouse, this.camera);

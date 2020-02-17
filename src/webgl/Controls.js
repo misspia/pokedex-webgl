@@ -25,7 +25,6 @@ export default class Controls {
 
     this.controls.update();
   }
-
   update() {
 
   }
