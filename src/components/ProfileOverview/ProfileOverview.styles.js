@@ -48,7 +48,7 @@ export const InnerWrapper = styled.div`
 
 const mainContentWidth = '30em';
 
-export const Content = styled.div`
+export const Card = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;

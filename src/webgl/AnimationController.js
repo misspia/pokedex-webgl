@@ -36,17 +36,18 @@ export default class AnimationController {
     const tl = new TimelineMax({ delay: 0.2 });
     return new Promise((resolve) => {
       tl
-        .to(card.mesh.rotation, 1, {
+        .add('spin')
+        .to(card.mesh.rotation, 0.7, {
           z: 0,
-        })
-        .to(card.mesh.scale, 1, {
+        }, 'spin')
+        .to(card.mesh.scale, 0.5, {
           y: 1,
           x: 1,
-        })
-        .to(card.frontUniforms.uBGVisibility, 0.8, {
+        }, 'spin')
+        .to(card.frontUniforms.uBGVisibility, 0.4, {
           value: 0,
         })
-        .to(card.frontUniforms.uContentVisibility, 0.8, {
+        .to(card.frontUniforms.uContentVisibility, 0.5, {
           value: 0,
           onComplete: () => {
             this.context.carousel.resumeRotation();
