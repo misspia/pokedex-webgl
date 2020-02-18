@@ -7,7 +7,6 @@ export default class AnimationController {
   activateCard(card) {
     return new Promise((resolve) => {
       this.context.carousel.pauseRotation();
-      console.debug(card.mesh)
 
       const tl = new TimelineMax({
         delay: 0.2,
