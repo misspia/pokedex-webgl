@@ -1,4 +1,4 @@
-import { TweenMax, CSSPlugin } from 'gsap';
+import { TweenMax, TimelineMax, Back, CSSPlugin } from 'gsap';
 
 const css = CSSPlugin;
 
@@ -16,15 +16,23 @@ export const swapTabViews = (activeView, inActiveView) => {
 };
 
 export const reveal = (wrapper) => {
-  TweenMax.to(wrapper, 0.7, {
-    autoAlpha: 1,
-    display: 'flex',
-  });
+  const tl = new TimelineMax();
+  tl.from(wrapper, 0.7, {
+    autoAlpha: 0,
+    backgroundColor: 'rgba(255, 255, 255, 0)',
+  })
+    .to(wrapper, 0.5, {
+      autoAlpha: 1,
+      backgroundColor: 'rgba(255, 255, 255, 1)',
+      ease: Back.easeOut(1.7),
+    })
+    .to(wrapper, 0.5, {
+      backgroundColor: 'rgba(255, 255, 255, 0.7)',
+    })
 }
 
 export const hide = (wrapper) => {
   TweenMax.to(wrapper, 0.7, {
     autoAlpha: 0,
-    display: 'none',
   });
 };

@@ -33,7 +33,7 @@ export default class SceneManager {
       0.1,
       1000
     );
-    this.camera.position.set(-50, 13, -50);
+    this.camera.position.set(-50, -15, -50);
     this.camera.rotation.set(toRadians(-90), 0, 0);
 
     this.renderer = new THREE.WebGLRenderer({

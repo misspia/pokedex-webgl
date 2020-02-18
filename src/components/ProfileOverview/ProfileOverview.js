@@ -32,6 +32,8 @@ export default function ProfileOverview({
   artworkUrl = '',
   chain = [],
 }) {
+  const cardRef = useRef(null);
+  const tabsRef = useRef(null);
   const evolutionRef = useRef(null);
   const statsRef = useRef(null);
   const summaryRef = useRef(null);
@@ -55,6 +57,10 @@ export default function ProfileOverview({
       }
     }
   };
+
+  useEffect(() => {
+    Animations.enter(cardRef.current, tabsRef.current);
+  }, []);
 
   useEffect(() => {
     const currRef = getRef(activeTab).current;
@@ -81,7 +87,7 @@ export default function ProfileOverview({
           onLoad={() => setIsLoading(false)}
           customStyles={S.artworkStyles}
         />
-        <S.Content type={types[0]}>
+        <S.Card ref={cardRef} type={types[0]}>
           <S.View ref={statsRef}>
             <StatsBox stats={stats} />
           </S.View>
@@ -99,8 +105,8 @@ export default function ProfileOverview({
               <EvolutionDiagram chain={chain} />
             </S.EvolutionBox>
           </S.View>
-        </S.Content>
-        <S.Tabs>
+        </S.Card>
+        <S.Tabs ref={tabsRef}>
           {navTabs.map(tab => (
             <S.Tab
               key={tab}
