@@ -1,6 +1,7 @@
 export default {
-  CARD_HOVER: 'cardhover',
-  CARD_CLICK: 'cardclick',
-  ACTIVATE_ENTRY: 'activateentry',
-  DEACTIVATE_ENTRY: 'deactivateentry',
+  CARD_HOVER: 'cardHover',
+  CARD_CLICK: 'cardClick',
+  ACTIVATE_ENTRY: 'activateEntry',
+  DEACTIVATE_ENTRY: 'deactivateEntry',
+  DEACTIVATE_ENTRY_COMPLETE: 'deactivateEntryComplete'
 };

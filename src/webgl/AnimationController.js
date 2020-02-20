@@ -6,8 +6,6 @@ export default class AnimationController {
   }
   activateCard(card) {
     return new Promise((resolve) => {
-      this.context.carousel.pauseRotation();
-
       const tl = new TimelineMax({
         delay: 0.2,
         onComplete: () => resolve(),
@@ -49,10 +47,7 @@ export default class AnimationController {
         })
         .to(card.frontUniforms.uContentVisibility, 0.5, {
           value: 0,
-          onComplete: () => {
-            this.context.carousel.resumeRotation();
-            resolve();
-          }
+          onComplete: () => resolve(),
         });
     })
   }
