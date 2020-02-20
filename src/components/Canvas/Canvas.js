@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useRef } from 'react';
+import React, { useEffect, useContext, useRef, useState } from 'react';
 import WebglContext from '../../webgl/WebglContext';
 import WebglEvents from '../../constants/webglEvents';
 import * as S from './Canvas.styles';
@@ -9,6 +9,7 @@ export default function Canvas({
 }) {
   const context = useContext(WebglContext);
   const canvasRef = useRef(null);
+  const [isPointer, setIsPointer] = useState(false);
 
   useEffect(() => {
     context.webgl.init(canvasRef.current);
@@ -21,17 +22,33 @@ export default function Canvas({
         selectEntry(e.id);
       }
     )
-
-    context.webgl.addEventListener(
-      WebglEvents.CARD_HOVER,
-      (e) => {
-        // console.debug('[mousemove listener]', e);
-      }
-    )
   }, []);
 
+  useEffect(() => {
+    context.webgl.addEventListener(
+      WebglEvents.MOUSEMOVE,
+      (e) => {
+        if (!!e.card && !isPointer) {
+          setIsPointer(true);
+          return;
+        }
+        if (!e.card && isPointer) {
+          setIsPointer(false);
+          return;
+        }
+      }
+    );
+  }, [isPointer]);
+
+  useEffect(() => {
+    console.debug('isPointer', isPointer);
+  }, [isPointer]);
+
   return (
-    <S.Canvas ref={canvasRef} />
+    <S.Canvas
+      ref={canvasRef}
+      isPointer={isPointer}
+    />
   )
 }
 

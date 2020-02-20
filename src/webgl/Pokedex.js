@@ -34,9 +34,10 @@ export default class Pokedex extends SceneManager {
       this.mouse.updateIntersection();
 
       this.eventDispatcher.dispatchEvent({
-        type: WebglEvents.CARD_HOVER,
-        intersection: this.mouse.intersection,
+        type: WebglEvents.MOUSEMOVE,
+        card: this.mouse.intersection,
       });
+
     });
 
 

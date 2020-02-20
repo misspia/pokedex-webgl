@@ -1,5 +1,5 @@
 export default {
-  CARD_HOVER: 'cardHover',
+  MOUSEMOVE: 'mousemove',
   CARD_CLICK: 'cardClick',
   ACTIVATE_ENTRY: 'activateEntry',
   DEACTIVATE_ENTRY: 'deactivateEntry',
