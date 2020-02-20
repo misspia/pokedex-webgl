@@ -1,8 +1,10 @@
 import Pokedex from './Pokedex';
+import { EventDispatcher } from 'three';
 
-export default class WebglApplication {
+export default class WebglApplication extends EventDispatcher {
   constructor() {
-    this.webglMain = new Pokedex();
+    super();
+    this.webglMain = new Pokedex(this);
   }
   init(canvas) {
     this.webglMain.setup(canvas);
@@ -11,16 +13,8 @@ export default class WebglApplication {
     this.webglMain.load(list);
   }
 
-  selectEntry(id) {
-    this.webglMain.selectEntry(id);
-  }
-
   deactivateEntry() {
-    this.webglMain.deactivateEntry();
-  }
-
-  onCanvasClick(selectEntry = (id) => { }) {
-    this.webglMain.onClick(selectEntry);
+    this.webglMain.dispatchDeactivateEntry()
   }
 
   draw() {

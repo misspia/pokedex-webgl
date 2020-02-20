@@ -1,5 +1,6 @@
 import React, { useEffect, useContext, useRef } from 'react';
 import WebglContext from '../../webgl/WebglContext';
+import WebglEvents from '../../constants/webglEvents';
 import * as S from './Canvas.styles';
 
 export default function Canvas({
@@ -14,16 +15,20 @@ export default function Canvas({
     context.webgl.load(entries);
     context.webgl.draw();
 
-    canvasRef.current.addEventListener(
-      'mousedown',
-      (e) => context.webgl.onCanvasClick(
-        (id) => selectEntry(id)
-      ),
-      { passive: true }
-    );
+    context.webgl.addEventListener(
+      WebglEvents.ACTIVATE_ENTRY,
+      (e) => {
+        selectEntry(e.id);
+      }
+    )
+
+    context.webgl.addEventListener(
+      WebglEvents.CARD_HOVER,
+      (e) => {
+        // console.debug('[mousemove listener]', e);
+      }
+    )
   }, []);
-
-
 
   return (
     <S.Canvas ref={canvasRef} />
