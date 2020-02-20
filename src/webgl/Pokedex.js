@@ -1,26 +1,26 @@
-import * as THREE from 'three';
 import SceneManager from './SceneManager';
 import Lights from './Lights';
 import CardCarousel from './CardCarousel';
 import AnimationController from './AnimationController';
+import WebglEvents from '../constants/webglEvents';
 
 export default class Pokedex extends SceneManager {
+  constructor(eventDispatcher) {
+    super();
+    this.eventDispatcher = eventDispatcher;
+  }
   setup(canvas) {
     this.initializeScene(canvas);
-
-    this.renderer.shadowMap.enabled = true;
-    this.renderer.shadowMap.soft = true;
-    this.renderer.shadowMapType = THREE.PCFSoftShadowMap;
 
     this.lights = new Lights();
     this.add(this.lights.directional);
     this.add(this.lights.ambient);
 
-    this.carousel = new CardCarousel();
-    this.isCarouselRotating = true;
-
+    this.carousel = new CardCarousel(this.eventDispatcher);
     this.animator = new AnimationController(this);
-    this.card = {};
+    this.activeCard = {};
+
+    this.setupEvents();
   }
 
   load(list) {
@@ -28,46 +28,70 @@ export default class Pokedex extends SceneManager {
     this.add(this.carousel.mesh);
   }
 
-  selectEntry(id) {
-    this.carousel.selectEntry(id);
+  setupEvents() {
+    this.canvas.addEventListener('mousemove', (e) => {
+      this.mouse.updatePosition(e);
+      this.mouse.updateIntersection();
+
+      this.eventDispatcher.dispatchEvent({
+        type: WebglEvents.MOUSEMOVE,
+        card: this.mouse.intersection,
+      });
+
+    });
+
+
+    this.canvas.addEventListener('mousedown', (e) => {
+      this.mouse.updateIntersection();
+
+      if (!this.mouse.intersection) {
+        return;
+      }
+
+      const { name: id } = this.mouse.intersection.object.parent;
+
+      this.eventDispatcher.dispatchEvent({
+        type: WebglEvents.CARD_CLICK,
+        intersection: this.mouse.intersection,
+        id,
+      });
+
+      this.activeCard = this.carousel.getEntryCardById(id);
+
+      this.animator.activateCard(this.activeCard)
+        .then(() => {
+          this.eventDispatcher.dispatchEvent({
+            type: WebglEvents.ACTIVATE_ENTRY,
+            intersection: this.mouse.intersection,
+            id,
+          })
+        })
+    });
+
+    this.eventDispatcher.addEventListener(
+      WebglEvents.DEACTIVATE_ENTRY,
+      (e) => {
+        this.animator.deactrivateCard(this.activeCard)
+          .then(() => {
+            this.activeCard = {};
+            this.eventDispatcher.dispatchEvent({
+              type: WebglEvents.DEACTIVATE_ENTRY_COMPLETE,
+            });
+          });
+      }
+    )
   }
 
-  onClick(selectEntry = () => { }) {
-    this.intersections = this.raycaster.intersectObjects(
-      this.carousel.mesh.children,
-      true
-    );
-    const intersection = this.intersections[0];
-
-    if (!intersection) {
-      return;
-    }
-
-
-    const { name: id } = intersection.object.parent;
-    this.card = this.carousel.getEntryCardById(id);
-
-    this.animator.activateCard(this.card)
-      .then(() => {
-        selectEntry(id); // debounce + same id check
-        this.carousel.selectEntry(id);
-      });
-  }
-
-  deactivateEntry() {
-    this.animator.deactrivateCard(this.card)
-      .then(() => {
-        this.card = {};
-      });
+  dispatchDeactivateEntry() {
+    this.eventDispatcher.dispatchEvent({
+      type: WebglEvents.DEACTIVATE_ENTRY,
+    });
   }
 
   draw() {
     this.renderer.render(this.scene, this.camera);
-    this.raycaster.setFromCamera(this.mouse, this.camera);
-    this.intersections = this.raycaster.intersectObjects(
-      this.carousel.mesh.children
-    );
-    this.carousel.update(this.isCarouselRotating);
+
+    this.carousel.update();
 
     requestAnimationFrame(() => this.draw());
   }

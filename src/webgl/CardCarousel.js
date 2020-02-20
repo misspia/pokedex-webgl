@@ -2,6 +2,7 @@ import * as THREE from 'three';
 
 import { fullCircleRadians, calcCircumference } from '../utils';
 import EntryCard from './EntryCard';
+import WebglEvents from '../constants/webglEvents';
 
 const RADIUS = 40;
 const ENTRY_WIDTH = 6;
@@ -17,13 +18,30 @@ const ANGLE_INCREMENT = fullCircleRadians / ENTRIES_PER_ROW;
 const ROTATION_VELOCITY = 0.001;
 
 export default class CardCarousel {
-  constructor() {
+  constructor(eventDispatcher) {
+    this.eventDispatcher = eventDispatcher;
     this.entries = [];
     this.numEntriesLoaded = 0;
     this.centerCoord = new THREE.Vector3();
     this.isRotating = true;
 
     this.mesh = new THREE.Group();
+
+
+    this.eventDispatcher.addEventListener(
+      WebglEvents.CARD_CLICK,
+      (e) => {
+        this.isRotating = false;
+      }
+    );
+
+    this.eventDispatcher.addEventListener(
+      WebglEvents.DEACTIVATE_ENTRY_COMPLETE,
+      (e) => {
+        this.isRotating = true;
+      }
+    );
+
   }
   load(list) {
     this.createList(list);
@@ -75,21 +93,8 @@ export default class CardCarousel {
     };
   }
 
-  selectEntry(id) {
-    const entry = this.entries.find(item => item.id === id);
-    entry.setActiveState(true);
-  }
-
   getEntryCardById(id) {
     return this.entries.find((entry) => entry.id === id);
-  }
-
-  resumeRotation() {
-    this.isRotating = true;
-  }
-
-  pauseRotation() {
-    this.isRotating = false;
   }
 
   update() {
