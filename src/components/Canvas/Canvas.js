@@ -40,10 +40,6 @@ export default function Canvas({
     );
   }, [isPointer]);
 
-  useEffect(() => {
-    console.debug('isPointer', isPointer);
-  }, [isPointer]);
-
   return (
     <S.Canvas
       ref={canvasRef}
