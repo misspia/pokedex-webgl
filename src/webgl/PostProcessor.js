@@ -38,7 +38,10 @@ export default class PostProcessor {
   }
   addFXAAPass(isRenderedToScreen = false) {
     const fxaaPass = new ShaderPass(FXAAShader);
-    fxaaPass.uniforms.resolution.value.set(1 / window.innerWidth, 1 / window.innerHeight)
+    fxaaPass.uniforms.resolution.value.set(
+      1 / this.context.canvas.with,
+      1 / this.context.canvas.height,
+    );
     fxaaPass.renderToScreen = isRenderedToScreen;
   }
   addRenderPass(isRenderedToScreen = false) {

@@ -89,5 +89,7 @@ export default class EntryListItem {
 
   setLayer(layer) {
     this.mesh.layers.set(layer);
+    this.front.layers.set(layer);
+    this.back.layers.set(layer);
   }
 }
