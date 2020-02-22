@@ -60,7 +60,7 @@ export default class CardCarousel {
         height: ENTRY_HEIGHT,
       };
       const entry = new EntryCard(this.context, cardParams);
-      entry.setLayer(1);
+      // entry.setLayer(1);
 
       const { x: tx, y: ty, z: tz } = this.calcListItemPosition(index);
       entry.setPosition(tx, ty, tz);

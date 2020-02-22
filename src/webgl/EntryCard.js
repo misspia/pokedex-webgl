@@ -43,7 +43,7 @@ export default class EntryListItem {
     });
 
     const backMaterial = new THREE.MeshBasicMaterial({
-      color: 0x0000ff,
+      color: 0xffffff,
       side: THREE.BackSide,
     });
 

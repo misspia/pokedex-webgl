@@ -4,6 +4,7 @@ import CardCarousel from './CardCarousel';
 import AnimationController from './AnimationController';
 import WebglEvents from '../constants/webglEvents';
 import PostProcessor from './PostProcessor';
+import Layers from '../constants/layers';
 
 export default class Pokedex extends SceneManager {
   constructor(eventDispatcher) {
@@ -108,11 +109,11 @@ export default class Pokedex extends SceneManager {
     this.renderer.autoClear = false;
     this.renderer.clear();
 
-    this.camera.layers.set(1);
+    this.camera.layers.set(Layers.BLOOM);
     this.pp.render();
 
     this.renderer.clearDepth();
-    this.camera.layers.set(0);
+    this.camera.layers.set(Layers.BASE);
 
     this.renderer.render(this.scene, this.camera);
 

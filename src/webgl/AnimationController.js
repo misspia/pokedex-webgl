@@ -1,4 +1,5 @@
 import { TimelineMax, Power2 } from 'gsap';
+import Layers from '../constants/layers';
 
 export default class AnimationController {
   constructor(context) {
@@ -8,7 +9,11 @@ export default class AnimationController {
     return new Promise((resolve) => {
       const tl = new TimelineMax({
         delay: 0.2,
-        onComplete: () => resolve(),
+        onComplete: () => {
+          card.setLayer(Layers.BLOOM);
+          resolve();
+
+        },
       });
       tl
         .to(card.frontUniforms.uContentVisibility, 0.8, {
@@ -31,8 +36,16 @@ export default class AnimationController {
     })
   }
   deactrivateCard(card) {
-    const tl = new TimelineMax({ delay: 0.2 });
     return new Promise((resolve) => {
+      const tl = new TimelineMax({
+        delay: 0.2,
+        onStart: () => {
+          card.setLayer(Layers.BASE);
+        },
+        onComplete: () => {
+          resolve();
+        }
+      });
       tl
         .add('spin')
         .to(card.mesh.rotation, 0.7, {
@@ -47,7 +60,6 @@ export default class AnimationController {
         })
         .to(card.frontUniforms.uContentVisibility, 0.5, {
           value: 0,
-          onComplete: () => resolve(),
         });
     })
   }
