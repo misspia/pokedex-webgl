@@ -4,14 +4,19 @@ import vertexShader from './shaders/cardFront.vert';
 import { Colors } from '../themes';
 
 export default class EntryListItem {
-  constructor({
-    id = 0,
-    name = '',
-    spriteUrl = '',
-    types = [],
-    height = 5,
-    width = 5,
-  }) {
+  constructor(
+    context,
+    {
+      id = 0,
+      name = '',
+      spriteUrl = '',
+      types = [],
+      height = 5,
+      width = 5,
+    }
+  ) {
+    this.context = context;
+
     this.id = id;
     this.name = name;
     this.isActive = false;
@@ -38,7 +43,7 @@ export default class EntryListItem {
     });
 
     const backMaterial = new THREE.MeshBasicMaterial({
-      color: 0x111111,
+      color: 0x0000ff,
       side: THREE.BackSide,
     });
 
@@ -53,6 +58,9 @@ export default class EntryListItem {
     this.mesh.name = id;
   }
 
+  get layers() {
+    return this.mesh.layers;
+  }
   get frontUniforms() {
     return this.front.material.uniforms;
   }
@@ -77,5 +85,9 @@ export default class EntryListItem {
   }
   setActiveState(isActive) {
     this.isActive = isActive;
+  }
+
+  setLayer(layer) {
+    this.mesh.layers.set(layer);
   }
 }

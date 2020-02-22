@@ -40,15 +40,13 @@ export default class SceneManager {
       alpha: false,
       stencil: false,
     });
-    this.renderer.setClearColor(0xeeeeee);
+    this.renderer.setClearColor(0x000000);
     const dpr = Math.min(1.5, window.devicePixelRatio);
     this.renderer.setPixelRatio(dpr);
 
     this.controls = new Controls(this);
 
     this.resize();
-
-    window.addEventListener('resize', (e) => this.resize(e), { passive: true });
   }
 
   unmount = () => {
