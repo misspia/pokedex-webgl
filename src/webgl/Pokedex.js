@@ -25,7 +25,7 @@ export default class Pokedex extends SceneManager {
     this.add(this.lights.directional);
     this.add(this.lights.ambient);
 
-    this.carousel = new CardCarousel(this);
+    this.carousel = new CardCarousel(this.eventDispatcher);
     this.animator = new AnimationController(this);
 
     this.setupEvents();

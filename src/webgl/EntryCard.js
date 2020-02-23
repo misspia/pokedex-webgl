@@ -4,19 +4,14 @@ import vertexShader from './shaders/cardFront.vert';
 import { Colors } from '../themes';
 
 export default class EntryListItem {
-  constructor(
-    context,
-    {
-      id = 0,
-      name = '',
-      spriteUrl = '',
-      types = [],
-      height = 5,
-      width = 5,
-    }
-  ) {
-    this.context = context;
-
+  constructor({
+    id = 0,
+    name = '',
+    spriteUrl = '',
+    types = [],
+    height = 5,
+    width = 5,
+  }) {
     this.id = id;
     this.name = name;
     this.isActive = false;
