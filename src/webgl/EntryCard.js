@@ -38,7 +38,7 @@ export default class EntryListItem {
     });
 
     const backMaterial = new THREE.MeshBasicMaterial({
-      color: 0x111111,
+      color: 0xffffff,
       side: THREE.BackSide,
     });
 
@@ -53,6 +53,9 @@ export default class EntryListItem {
     this.mesh.name = id;
   }
 
+  get layers() {
+    return this.mesh.layers;
+  }
   get frontUniforms() {
     return this.front.material.uniforms;
   }
@@ -77,5 +80,11 @@ export default class EntryListItem {
   }
   setActiveState(isActive) {
     this.isActive = isActive;
+  }
+
+  setLayer(layer) {
+    this.mesh.layers.set(layer);
+    this.front.layers.set(layer);
+    this.back.layers.set(layer);
   }
 }

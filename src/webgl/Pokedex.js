@@ -3,22 +3,30 @@ import Lights from './Lights';
 import CardCarousel from './CardCarousel';
 import AnimationController from './AnimationController';
 import WebglEvents from '../constants/webglEvents';
+import PostProcessor from './PostProcessor';
+import Layers from '../constants/layers';
 
 export default class Pokedex extends SceneManager {
   constructor(eventDispatcher) {
     super();
     this.eventDispatcher = eventDispatcher;
+    this.pp = new PostProcessor(this);
+    this.lights = new Lights();
+    this.carousel = {};
+    this.animator = {};
+    this.activeCard = {};
   }
+
   setup(canvas) {
     this.initializeScene(canvas);
 
-    this.lights = new Lights();
+    this.pp.setup();
+
     this.add(this.lights.directional);
     this.add(this.lights.ambient);
 
     this.carousel = new CardCarousel(this.eventDispatcher);
     this.animator = new AnimationController(this);
-    this.activeCard = {};
 
     this.setupEvents();
   }
@@ -29,6 +37,11 @@ export default class Pokedex extends SceneManager {
   }
 
   setupEvents() {
+    window.addEventListener('resize', (e) => {
+      this.resize(e);
+      this.pp.resize(e)
+    }, { passive: true });
+
     this.canvas.addEventListener('mousemove', (e) => {
       this.mouse.updatePosition(e);
       this.mouse.updateIntersection();
@@ -89,10 +102,21 @@ export default class Pokedex extends SceneManager {
   }
 
   draw() {
-    this.renderer.render(this.scene, this.camera);
-
+    requestAnimationFrame(() => this.draw());
     this.carousel.update();
 
-    requestAnimationFrame(() => this.draw());
+    this.renderer.autoClear = false;
+    this.renderer.clear();
+
+    this.camera.layers.set(Layers.BLOOM);
+    this.pp.render();
+
+    this.renderer.clearDepth();
+    this.camera.layers.set(Layers.BASE);
+
+    this.renderer.render(this.scene, this.camera);
+
+
+
   }
 }

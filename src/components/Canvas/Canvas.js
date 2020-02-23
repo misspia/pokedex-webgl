@@ -9,11 +9,13 @@ export default function Canvas({
 }) {
   const context = useContext(WebglContext);
   const canvasRef = useRef(null);
+  const guiRef = useRef(null);
   const [isPointer, setIsPointer] = useState(false);
 
   useEffect(() => {
     context.webgl.init(canvasRef.current);
     context.webgl.load(entries);
+    // context.webgl.createGUI(guiRef.current);
     context.webgl.draw();
 
     context.webgl.addEventListener(
@@ -41,10 +43,13 @@ export default function Canvas({
   }, [isPointer]);
 
   return (
-    <S.Canvas
-      ref={canvasRef}
-      isPointer={isPointer}
-    />
+    <>
+      <S.Gui ref={guiRef}></S.Gui>
+      <S.Canvas
+        ref={canvasRef}
+        isPointer={isPointer}
+      />
+    </>
   )
 }
 

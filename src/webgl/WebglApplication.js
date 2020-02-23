@@ -1,5 +1,6 @@
-import Pokedex from './Pokedex';
 import { EventDispatcher } from 'three';
+import Pokedex from './Pokedex';
+import createGUI from '../utils/createGUI';
 
 export default class WebglApplication extends EventDispatcher {
   constructor() {
@@ -15,6 +16,10 @@ export default class WebglApplication extends EventDispatcher {
 
   deactivateEntry() {
     this.webglMain.dispatchDeactivateEntry()
+  }
+
+  createGUI(container) {
+    createGUI(this.webglMain, container);
   }
 
   draw() {

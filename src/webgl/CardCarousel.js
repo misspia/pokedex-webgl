@@ -51,14 +51,15 @@ export default class CardCarousel {
     list.splice(151);
 
     list.forEach(({ id, name, spriteUrl, types }, index) => {
-      const entry = new EntryCard({
+      const cardParams = {
         id,
         name,
         spriteUrl,
         types,
         width: ENTRY_WIDTH,
         height: ENTRY_HEIGHT,
-      });
+      };
+      const entry = new EntryCard(cardParams);
 
       const { x: tx, y: ty, z: tz } = this.calcListItemPosition(index);
       entry.setPosition(tx, ty, tz);

@@ -1,14 +1,15 @@
-import { TimelineMax, Power2 } from 'gsap';
+import { TimelineMax, Power2, Power4 } from 'gsap';
+import Layers from '../constants/layers';
 
 export default class AnimationController {
   constructor(context) {
     this.context = context;
+    this.pp = context.pp;
   }
   activateCard(card) {
     return new Promise((resolve) => {
       const tl = new TimelineMax({
         delay: 0.2,
-        onComplete: () => resolve(),
       });
       tl
         .to(card.frontUniforms.uContentVisibility, 0.8, {
@@ -27,13 +28,37 @@ export default class AnimationController {
           y: 0.33,
           x: 0.5,
           ease: Power2.easeOut,
-        }, 'spin');
+          onComplete: () => {
+            card.setLayer(Layers.BLOOM);
+          }
+        }, 'spin')
+        .to(this.pp.bloom, 2, {
+          onStart: () => {
+            resolve();
+          },
+          strength: 24,
+          radius: 1.5,
+          threshold: 0,
+          ease: Power4.easeOut,
+        })
     })
   }
   deactrivateCard(card) {
-    const tl = new TimelineMax({ delay: 0.2 });
     return new Promise((resolve) => {
+      const tl = new TimelineMax({
+        delay: 0.2,
+        onComplete: resolve,
+      });
+
       tl
+        .to(this.pp.bloom, 0.4, {
+          strength: 0,
+          radius: 0,
+          threshold: 0,
+          onComplete: () => {
+            card.setLayer(Layers.BASE);
+          }
+        })
         .add('spin')
         .to(card.mesh.rotation, 0.7, {
           z: 0,
@@ -47,7 +72,6 @@ export default class AnimationController {
         })
         .to(card.frontUniforms.uContentVisibility, 0.5, {
           value: 0,
-          onComplete: () => resolve(),
         });
     })
   }
