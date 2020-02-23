@@ -10,6 +10,12 @@ export default class AnimationController {
     return new Promise((resolve) => {
       const tl = new TimelineMax({
         delay: 0.2,
+        onStart: () => {
+          this.context.disablePointerEvents(true)
+        },
+        onComplete: () => {
+          this.context.disablePointerEvents(false);
+        }
       });
       tl
         .to(card.frontUniforms.uContentVisibility, 0.8, {
@@ -47,7 +53,14 @@ export default class AnimationController {
     return new Promise((resolve) => {
       const tl = new TimelineMax({
         delay: 0.2,
-        onComplete: resolve,
+        onStart: () => {
+          this.context.disablePointerEvents(true);
+        },
+        onComplete: () => {
+          this.context.disablePointerEvents(false);
+          resolve();
+        },
+
       });
 
       tl

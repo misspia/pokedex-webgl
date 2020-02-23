@@ -81,4 +81,8 @@ export default class SceneManager {
   lookAt(coord = {}) {
     this.camera.lookAt(coord);
   }
+
+  disablePointerEvents(isDisabled = true) {
+    this.canvas.style.pointerEvents = isDisabled ? 'none' : 'auto';
+  }
 }
