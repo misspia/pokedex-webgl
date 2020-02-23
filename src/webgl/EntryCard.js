@@ -8,6 +8,7 @@ export default class EntryListItem {
     id = 0,
     name = '',
     spriteUrl = '',
+    anisotropy = 1,
     types = [],
     height = 5,
     width = 5,
@@ -18,6 +19,9 @@ export default class EntryListItem {
     const geometry = new THREE.PlaneGeometry(width, height, 2, 2);
 
     const spriteTexture = new THREE.TextureLoader().load(spriteUrl);
+    spriteTexture.generateMipmaps = true;
+    spriteTexture.anisotropy = anisotropy;
+
     spriteTexture.minFilter = THREE.LinearFilter;
 
     const mainType = types[0];

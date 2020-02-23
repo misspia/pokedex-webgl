@@ -25,7 +25,10 @@ export default class Pokedex extends SceneManager {
     this.add(this.lights.directional);
     this.add(this.lights.ambient);
 
-    this.carousel = new CardCarousel(this.eventDispatcher);
+    this.carousel = new CardCarousel(
+      this.eventDispatcher,
+      this.renderer.getMaxAnisotropy(),
+    );
     this.animator = new AnimationController(this);
 
     this.setupEvents();
@@ -113,7 +116,6 @@ export default class Pokedex extends SceneManager {
 
     this.renderer.clearDepth();
     this.camera.layers.set(Layers.BASE);
-
     this.renderer.render(this.scene, this.camera);
 
 
