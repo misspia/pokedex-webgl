@@ -9,46 +9,51 @@ export default class PostProcessor {
   constructor(context) {
     this.context = context;
     this.composer = {};
+    this.bloom = {};
+    this.fxaa = {};
+    this.renderPass = {};
   }
+
   setup() {
     this.composer = new EffectComposer(this.context.renderer);
+
+    this.renderPass = new RenderPass(this.context.scene, this.context.camera);
+    this.renderPass.renderToScreen = false;
+
+    this.fxaa = new ShaderPass(FXAAShader);
+    this.fxaa.uniforms.resolution.value.set(
+      1 / this.context.canvas.width,
+      1 / this.context.canvas.height,
+    );
+    this.fxaa.renderToScreen = false;
+
+    const dimensions = new THREE.Vector2(
+      this.context.canvas.width,
+      this.context.canvas.height,
+    );
+
+    this.bloom = new UnrealBloomPass(dimensions, 1.2, 0.55, 0.05);
+    this.bloom.renderToScreen = true;
+
+
+
+    this.addPass(this.renderPass);
+    this.addPass(this.fxaa);
+    this.addPass(this.bloom);
+
   }
+
   resize() {
     this.composer.setSize(
       this.context.canvas.width,
       this.context.canvas.height,
     );
   }
+
   addPass(pass) {
     this.composer.addPass(pass);
   }
-  addBloomPass(isRenderedToScreen = false) {
-    const dimensions = new THREE.Vector2(
-      this.context.canvas.width,
-      this.context.canvas.height,
-    );
-    const strength = 1.2;
-    const radius = 0.55;
-    const threshold = 0.05;
-    const bloomPass = new UnrealBloomPass(dimensions, strength, radius, threshold);
-    bloomPass.renderToScreen = isRenderedToScreen;
 
-
-    this.addPass(bloomPass);
-  }
-  addFXAAPass(isRenderedToScreen = false) {
-    const fxaaPass = new ShaderPass(FXAAShader);
-    fxaaPass.uniforms.resolution.value.set(
-      1 / this.context.canvas.with,
-      1 / this.context.canvas.height,
-    );
-    fxaaPass.renderToScreen = isRenderedToScreen;
-  }
-  addRenderPass(isRenderedToScreen = false) {
-    this.renderPass = new RenderPass(this.context.scene, this.context.camera);
-    this.renderPass.renderToScreen = isRenderedToScreen;
-    this.addPass(this.renderPass);
-  }
   render() {
     this.composer.render();
   }
