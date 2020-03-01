@@ -1,3 +1,4 @@
+import { Vector3 } from 'three';
 import { TimelineMax, Power2, Power4 } from 'gsap';
 import Layers from '../constants/layers';
 import { TweenMax } from 'gsap/gsap-core';
@@ -6,6 +7,40 @@ export default class AnimationController {
   constructor(context) {
     this.context = context;
     this.pp = context.pp;
+  }
+  startIntro() {
+    const delayMultiplier = 0.1;
+    const intros = this.context.carousel.cards.map((card, index) => (
+      this.introCard(card, index * delayMultiplier)
+    ))
+    return Promise.all(intros)
+      .then((values) => {
+        this.context.carousel.isRotating = true;
+        return values;
+      });
+  }
+  introCard(card, delay = 0) {
+    const destination = new Vector3().copy(card.mesh.position);
+    return new Promise((resolve) => {
+      const tl = new TimelineMax({
+        delay,
+        onComplete: resolve
+      });
+      tl
+        .add('reveal')
+        .fromTo(card.mesh.position, 0.2, {
+          delay: 0.1,
+          y: 100,
+        }, {
+          y: destination.y,
+        }, 'reveal')
+        .fromTo(card, 0.3, {
+          alpha: 0,
+        }, {
+          alpha: 1,
+        })
+
+    })
   }
   activateCard(card) {
     return new Promise((resolve) => {
@@ -91,7 +126,6 @@ export default class AnimationController {
   }
 
   focusCard(card) {
-    console.debug('[FOCUS]', card.id, card);
     TweenMax.to(card.mesh.scale, 0.2, {
       x: 1.1,
       y: 1.1,
@@ -99,7 +133,6 @@ export default class AnimationController {
   }
 
   unfocusCard(card) {
-    console.debug('[UNFOCUS]', card.id, card);
     TweenMax.to(card.mesh.scale, 0.2, {
       x: 1,
       y: 1,

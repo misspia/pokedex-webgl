@@ -28,7 +28,7 @@ export default class Pokedex extends SceneManager {
 
     this.carousel = new CardCarousel(
       this.eventDispatcher,
-      this.renderer.getMaxAnisotropy(),
+      this.renderer.capabilities.getMaxAnisotropy(),
     );
     this.animator = new AnimationController(this);
 
@@ -159,6 +159,13 @@ export default class Pokedex extends SceneManager {
     this.eventDispatcher.dispatchEvent({
       type: WebglEvents.DEACTIVATE_ENTRY,
     });
+  }
+
+  startIntro() {
+    this.animator.startIntro()
+      .then(() => {
+        console.debug('intro complete')
+      })
   }
 
   draw() {

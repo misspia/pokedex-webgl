@@ -20,10 +20,10 @@ const ROTATION_VELOCITY = 0.001;
 export default class CardCarousel {
   constructor(eventDispatcher) {
     this.eventDispatcher = eventDispatcher;
-    this.entries = [];
+    this.cards = [];
     this.numEntriesLoaded = 0;
     this.centerCoord = new THREE.Vector3();
-    this.isRotating = true;
+    this.isRotating = false;
 
     this.mesh = new THREE.Group();
 
@@ -66,7 +66,7 @@ export default class CardCarousel {
       entry.setRotation(rx, ry, rz);
 
       this.mesh.add(entry.mesh);
-      this.entries.push(entry);
+      this.cards.push(entry);
     })
   }
 
@@ -93,7 +93,7 @@ export default class CardCarousel {
   }
 
   getEntryCardById(id) {
-    return this.entries.find((entry) => entry.id === id);
+    return this.cards.find((entry) => entry.id === id);
   }
 
   update() {

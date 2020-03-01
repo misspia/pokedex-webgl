@@ -36,6 +36,7 @@ export default function HomePage({
   useEffect(() => {
     DefaultLoadingManager.onLoad = () => {
       setIsLoading(false);
+      context.webgl.startIntro();
     }
 
     DefaultLoadingManager.onProgress = (url, numLoaded, total) => {
