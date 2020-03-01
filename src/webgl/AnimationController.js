@@ -1,5 +1,6 @@
 import { TimelineMax, Power2, Power4 } from 'gsap';
 import Layers from '../constants/layers';
+import { TweenMax } from 'gsap/gsap-core';
 
 export default class AnimationController {
   constructor(context) {
@@ -10,6 +11,12 @@ export default class AnimationController {
     return new Promise((resolve) => {
       const tl = new TimelineMax({
         delay: 0.2,
+        onStart: () => {
+          this.context.disablePointerEvents(true)
+        },
+        onComplete: () => {
+          this.context.disablePointerEvents(false);
+        }
       });
       tl
         .to(card.frontUniforms.uContentVisibility, 0.8, {
@@ -47,7 +54,14 @@ export default class AnimationController {
     return new Promise((resolve) => {
       const tl = new TimelineMax({
         delay: 0.2,
-        onComplete: resolve,
+        onStart: () => {
+          this.context.disablePointerEvents(true);
+        },
+        onComplete: () => {
+          this.context.disablePointerEvents(false);
+          resolve();
+        },
+
       });
 
       tl
@@ -74,5 +88,22 @@ export default class AnimationController {
           value: 0,
         });
     })
+  }
+
+  focusCard(card) {
+    console.debug('[FOCUS]', card.id, card);
+    TweenMax.to(card.mesh.scale, 0.2, {
+      x: 1.1,
+      y: 1.1,
+    });
+  }
+
+  unfocusCard(card) {
+    console.debug('[UNFOCUS]', card.id, card);
+    TweenMax.to(card.mesh.scale, 0.2, {
+      x: 1,
+      y: 1,
+    });
+
   }
 }
