@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import ComponentNames from '../constants/componentNames';
 
 export default class Mouse {
   constructor(context) {
@@ -32,5 +33,8 @@ export default class Mouse {
     } else {
       this.intersection = null;
     }
+  }
+  isIntersectionCardFront() {
+    return this.intersection.object.name === ComponentNames.CARD_FRONT;
   }
 }

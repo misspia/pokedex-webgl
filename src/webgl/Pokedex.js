@@ -55,11 +55,30 @@ export default class Pokedex extends SceneManager {
         card: this.mouse.intersection,
       });
 
-      if (this.focusCard === this.mouse.intersection) {
+      if (!this.mouse.intersection) {
+        if (!!this.focusCard) {
+          this.eventDispatcher.dispatchEvent({
+            type: WebglEvents.UNFOCUS_CARD,
+            card: this.focusCard,
+          });
+
+          this.focusCard = null;
+        }
         return;
       }
 
-      if (this.focusCard && this.focusCard !== this.mouse.intersection) {
+
+      const { name: id } = this.mouse.intersection.object.parent;
+
+      if (!this.focusCard || this.focusCard.id === id) {
+        return;
+      }
+      console.debug(e);
+
+
+      if (
+        this.focusCard.id !== this.mouse.intersection.obj
+      ) {
         this.eventDispatcher.dispatchEvent({
           type: WebglEvents.UNFOCUS_CARD,
           card: this.focusCard,
@@ -80,7 +99,10 @@ export default class Pokedex extends SceneManager {
     this.canvas.addEventListener('mousedown', (e) => {
       this.mouse.updateIntersection();
 
-      if (!this.mouse.intersection) {
+      if (
+        !this.mouse.intersection
+        || !this.mouse.isIntersectionCardFront()
+      ) {
         return;
       }
 

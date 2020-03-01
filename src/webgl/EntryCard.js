@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import fragmentShader from './shaders/cardFront.frag';
 import vertexShader from './shaders/cardFront.vert';
 import { Colors } from '../themes';
+import ComponentNames from '../constants/componentNames';
 
 export default class EntryListItem {
   constructor({
@@ -49,6 +50,9 @@ export default class EntryListItem {
     this.front = new THREE.Mesh(geometry, frontMaterial);
     this.back = new THREE.Mesh(geometry, backMaterial);
     this.back.position.z = -0.01;
+
+    this.front.name = ComponentNames.CARD_FRONT;
+    this.back.name = ComponentNames.CARD_BACK;
 
     this.mesh = new THREE.Object3D();
     this.mesh.add(this.front);
