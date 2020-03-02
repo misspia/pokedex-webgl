@@ -1,7 +1,8 @@
 import { Vector3 } from 'three';
+import { TweenMax } from 'gsap/gsap-core';
 import { TimelineMax, Power2, Power4 } from 'gsap';
 import Layers from '../constants/layers';
-import { TweenMax } from 'gsap/gsap-core';
+import { RADIUS } from './CardCarousel';
 
 export default class AnimationController {
   constructor(context) {
@@ -9,37 +10,74 @@ export default class AnimationController {
     this.pp = context.pp;
   }
   startIntro() {
-    const delayMultiplier = 0.1;
-    const intros = this.context.carousel.cards.map((card, index) => (
-      this.introCard(card, index * delayMultiplier)
-    ))
-    return Promise.all(intros)
+    this.context.disablePointerEvents(true);
+
+    const delayMultiplier = 0.05;
+    const cardDuration = 0.1;
+    const totalDuration = this.context.carousel.cards.length * cardDuration;
+    const cardIntros = this.context.carousel.cards.map((card, index) => (
+      this.introCard(card, cardDuration, index * delayMultiplier)
+    ));
+    const cameraIntro = this.introCamera(totalDuration / 2);
+
+    return Promise.all([...cardIntros, cameraIntro])
       .then((values) => {
         this.context.carousel.isRotating = true;
+        this.context.disablePointerEvents(false);
         return values;
       });
   }
-  introCard(card, delay = 0) {
+  introCard(card, duration, delay = 0) {
     const destination = new Vector3().copy(card.mesh.position);
     return new Promise((resolve) => {
       const tl = new TimelineMax({
         delay,
-        onComplete: resolve
+        onComplete: () => {
+          resolve();
+        }
       });
       tl
-        .add('reveal')
-        .fromTo(card.mesh.position, 0.2, {
-          delay: 0.1,
-          y: 100,
-        }, {
-          y: destination.y,
-        }, 'reveal')
-        .fromTo(card, 0.3, {
+        .from(card, {
           alpha: 0,
-        }, {
-          alpha: 1,
         })
+        .add('reveal')
+        .fromTo(card.mesh.position, duration, {
+          x: destination.x - 20,
+          y: destination.y - 20,
+          z: destination.z - 20,
+        }, {
+          x: destination.x,
+          y: destination.y,
+          z: destination.z,
 
+        }, 'reveal')
+        .to(card, duration, {
+          alpha: 1,
+        }, 'reveal')
+
+    })
+  }
+  introCamera(duration) {
+    const radius = RADIUS + 30;
+    const params = {
+      angle: 0,
+      y: -50,
+    }
+    const centerCoord = new Vector3();
+    return new Promise((resolve) => {
+      TweenMax.to(params, duration, {
+        angle: Math.PI,
+        y: 0,
+        onUpdate: () => {
+          this.context.setCameraPosition(
+            radius * Math.cos(params.angle) + centerCoord.x,
+            params.y,
+            radius * Math.sin(params.angle) + centerCoord.z,
+          );
+          this.context.lookAt(centerCoord);
+        },
+        onComplete: resolve,
+      });
     })
   }
   activateCard(card) {

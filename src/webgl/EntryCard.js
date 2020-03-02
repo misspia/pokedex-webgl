@@ -79,9 +79,8 @@ export default class EntryListItem {
   }
 
   set alpha(alpha) {
-    console.debug()
     this.frontUniforms.alpha.value = alpha;
-    this.back.opactiy = alpha;
+    this.back.material.opacity = alpha;
   }
 
   isFront(obj) {

@@ -73,8 +73,6 @@ export default class Pokedex extends SceneManager {
       if (!this.focusCard || this.focusCard.id === id) {
         return;
       }
-      console.debug(e);
-
 
       if (
         this.focusCard.id !== this.mouse.intersection.obj

@@ -4,7 +4,7 @@ import { fullCircleRadians, calcCircumference } from '../utils';
 import EntryCard from './EntryCard';
 import WebglEvents from '../constants/webglEvents';
 
-const RADIUS = 40;
+export const RADIUS = 40;
 const ENTRY_WIDTH = 6;
 const ENTRY_HEIGHT = 9;
 
@@ -21,7 +21,6 @@ export default class CardCarousel {
   constructor(eventDispatcher) {
     this.eventDispatcher = eventDispatcher;
     this.cards = [];
-    this.numEntriesLoaded = 0;
     this.centerCoord = new THREE.Vector3();
     this.isRotating = false;
 
@@ -45,7 +44,7 @@ export default class CardCarousel {
   }
 
   load(list, anisotropy) {
-    list.splice(51);
+    list.splice(251);
 
     list.forEach(({ id, name, spriteUrl, types }, index) => {
       const cardParams = {
@@ -71,7 +70,6 @@ export default class CardCarousel {
   }
 
   calcListItemPosition(index) {
-
     const angle = ANGLE_INCREMENT * index;
     const verticalOffset = -Math.floor(index / ENTRIES_PER_ROW) * GRID_HEIGHT;
     return {
