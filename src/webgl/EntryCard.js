@@ -28,7 +28,7 @@ export default class EntryListItem {
     const mainType = types[0];
     const frontMaterial = new THREE.RawShaderMaterial({
       side: THREE.FrontSide,
-      transparent: false,
+      transparent: true,
       fragmentShader,
       vertexShader,
       flatShading: true,
@@ -39,12 +39,14 @@ export default class EntryListItem {
         uContentVisibility: { type: 'f', value: 0, },
         uBGVisibility: { type: 'f', value: 0, },
         uTypeColor: { type: 'v3', value: Colors.typesVector[mainType] },
+        alpha: { type: 'f', value: 1 },
       },
     });
 
     const backMaterial = new THREE.MeshBasicMaterial({
       color: 0xffffff,
       side: THREE.BackSide,
+      transparent: true,
     });
 
     this.front = new THREE.Mesh(geometry, frontMaterial);
@@ -70,6 +72,15 @@ export default class EntryListItem {
 
   get backUniforms() {
     return this.back.material;
+  }
+
+  set positionY(y) {
+    this.mesh.position.y = y;
+  }
+
+  set alpha(alpha) {
+    this.frontUniforms.alpha.value = alpha;
+    this.back.material.opacity = alpha;
   }
 
   isFront(obj) {

@@ -4,7 +4,7 @@ import { fullCircleRadians, calcCircumference } from '../utils';
 import EntryCard from './EntryCard';
 import WebglEvents from '../constants/webglEvents';
 
-const RADIUS = 40;
+export const RADIUS = 40;
 const ENTRY_WIDTH = 6;
 const ENTRY_HEIGHT = 9;
 
@@ -20,10 +20,9 @@ const ROTATION_VELOCITY = 0.001;
 export default class CardCarousel {
   constructor(eventDispatcher) {
     this.eventDispatcher = eventDispatcher;
-    this.entries = [];
-    this.numEntriesLoaded = 0;
+    this.cards = [];
     this.centerCoord = new THREE.Vector3();
-    this.isRotating = true;
+    this.isRotating = false;
 
     this.mesh = new THREE.Group();
 
@@ -44,8 +43,27 @@ export default class CardCarousel {
 
   }
 
+  get minY() {
+    const bbox = new THREE.Box3().setFromObject(this.mesh)
+    return bbox.min.y;
+  }
+
+  get maxY() {
+    const bbox = new THREE.Box3().setFromObject(this.mesh)
+    return bbox.max.y
+  }
+
+  get midY() {
+    const bbox = new THREE.Box3().setFromObject(this.mesh)
+    return (bbox.min.y + bbox.max.y) / 2;
+  }
+
+  get center() {
+    return new THREE.Vector3(0, this.midY, 0);
+  }
+
   load(list, anisotropy) {
-    list.splice(51);
+    list.splice(251);
 
     list.forEach(({ id, name, spriteUrl, types }, index) => {
       const cardParams = {
@@ -66,12 +84,12 @@ export default class CardCarousel {
       entry.setRotation(rx, ry, rz);
 
       this.mesh.add(entry.mesh);
-      this.entries.push(entry);
+      this.cards.push(entry);
     })
   }
 
-  calcListItemPosition(index) {
 
+  calcListItemPosition(index) {
     const angle = ANGLE_INCREMENT * index;
     const verticalOffset = -Math.floor(index / ENTRIES_PER_ROW) * GRID_HEIGHT;
     return {
@@ -93,8 +111,9 @@ export default class CardCarousel {
   }
 
   getEntryCardById(id) {
-    return this.entries.find((entry) => entry.id === id);
+    return this.cards.find((entry) => entry.id === id);
   }
+
 
   update() {
     if (this.isRotating) {

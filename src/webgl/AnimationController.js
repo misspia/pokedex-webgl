@@ -1,16 +1,88 @@
+import { Vector3 } from 'three';
+import { TweenMax } from 'gsap/gsap-core';
 import { TimelineMax, Power2, Power4 } from 'gsap';
 import Layers from '../constants/layers';
-import { TweenMax } from 'gsap/gsap-core';
+import { RADIUS } from './CardCarousel';
 
 export default class AnimationController {
   constructor(context) {
     this.context = context;
     this.pp = context.pp;
   }
+  startIntro() {
+    this.context.disablePointerEvents(true);
+
+    const delayMultiplier = 0.05;
+    const cardDuration = 0.1;
+    const totalDuration = this.context.carousel.cards.length * cardDuration;
+    const cardIntros = this.context.carousel.cards.map((card, index) => (
+      this.introCard(card, cardDuration, index * delayMultiplier)
+    ));
+    const cameraIntro = this.introCamera(totalDuration / 2);
+    return Promise.all([...cardIntros, cameraIntro])
+      .then((values) => {
+        this.context.carousel.isRotating = true;
+        this.context.disablePointerEvents(false);
+        return values;
+      });
+  }
+  introCard(card, duration, delay = 0) {
+    const destination = new Vector3().copy(card.mesh.position);
+    return new Promise((resolve) => {
+      const tl = new TimelineMax({
+        delay,
+        onComplete: () => {
+          resolve();
+        }
+      });
+      tl
+        .from(card, {
+          alpha: 0,
+        })
+        .add('reveal')
+        .fromTo(card.mesh.position, duration, {
+          x: destination.x - 20,
+          y: destination.y - 20,
+          z: destination.z - 20,
+        }, {
+          x: destination.x,
+          y: destination.y,
+          z: destination.z,
+
+        }, 'reveal')
+        .to(card, duration, {
+          alpha: 1,
+        }, 'reveal')
+
+    })
+  }
+  introCamera(duration) {
+    const radius = RADIUS + 30;
+    const params = {
+      angle: 0,
+      y: this.context.carousel.minY,
+    }
+    const centerCoord = this.context.carousel.center;
+    return new Promise((resolve) => {
+      TweenMax.to(params, duration, {
+        angle: Math.PI * 2,
+        y: this.context.carousel.midY,
+        onUpdate: () => {
+          this.context.setCameraPosition(
+            radius * Math.cos(params.angle) + centerCoord.x,
+            params.y,
+            radius * Math.sin(params.angle) + centerCoord.z,
+          );
+          this.context.lookAt(centerCoord);
+        },
+        onComplete: resolve,
+      });
+    })
+  }
   activateCard(card) {
     return new Promise((resolve) => {
       const tl = new TimelineMax({
-        delay: 0.2,
+        delay: 0.1,
         onStart: () => {
           this.context.disablePointerEvents(true)
         },
@@ -19,19 +91,19 @@ export default class AnimationController {
         }
       });
       tl
-        .to(card.frontUniforms.uContentVisibility, 0.8, {
+        .to(card.frontUniforms.uContentVisibility, 0.6, {
           value: 1,
         })
-        .to(card.frontUniforms.uBGVisibility, 0.8, {
+        .to(card.frontUniforms.uBGVisibility, 0.6, {
           value: 1,
 
         })
         .add('spin')
-        .to(card.mesh.rotation, 1, {
+        .to(card.mesh.rotation, 0.7, {
           z: -Math.PI * 6,
           ease: Power2.easeOut,
         }, 'spin')
-        .to(card.mesh.scale, 1, {
+        .to(card.mesh.scale, 0.7, {
           y: 0.33,
           x: 0.5,
           ease: Power2.easeOut,
@@ -53,7 +125,7 @@ export default class AnimationController {
   deactrivateCard(card) {
     return new Promise((resolve) => {
       const tl = new TimelineMax({
-        delay: 0.2,
+        delay: 0.1,
         onStart: () => {
           this.context.disablePointerEvents(true);
         },
@@ -91,7 +163,6 @@ export default class AnimationController {
   }
 
   focusCard(card) {
-    console.debug('[FOCUS]', card.id, card);
     TweenMax.to(card.mesh.scale, 0.2, {
       x: 1.1,
       y: 1.1,
@@ -99,7 +170,6 @@ export default class AnimationController {
   }
 
   unfocusCard(card) {
-    console.debug('[UNFOCUS]', card.id, card);
     TweenMax.to(card.mesh.scale, 0.2, {
       x: 1,
       y: 1,

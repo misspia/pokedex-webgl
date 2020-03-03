@@ -28,7 +28,7 @@ export default class Pokedex extends SceneManager {
 
     this.carousel = new CardCarousel(
       this.eventDispatcher,
-      this.renderer.getMaxAnisotropy(),
+      this.renderer.capabilities.getMaxAnisotropy(),
     );
     this.animator = new AnimationController(this);
 
@@ -73,8 +73,6 @@ export default class Pokedex extends SceneManager {
       if (!this.focusCard || this.focusCard.id === id) {
         return;
       }
-      console.debug(e);
-
 
       if (
         this.focusCard.id !== this.mouse.intersection.obj
@@ -159,6 +157,13 @@ export default class Pokedex extends SceneManager {
     this.eventDispatcher.dispatchEvent({
       type: WebglEvents.DEACTIVATE_ENTRY,
     });
+  }
+
+  startIntro() {
+    this.animator.startIntro()
+      .then(() => {
+        console.debug('intro complete')
+      })
   }
 
   draw() {

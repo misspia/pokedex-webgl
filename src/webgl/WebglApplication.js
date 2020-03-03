@@ -14,6 +14,9 @@ export default class WebglApplication extends EventDispatcher {
     this.webglMain.load(list);
   }
 
+  startIntro() {
+    this.webglMain.startIntro();
+  }
   deactivateEntry() {
     this.webglMain.dispatchDeactivateEntry()
   }
