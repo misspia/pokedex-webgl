@@ -19,7 +19,6 @@ export default class AnimationController {
       this.introCard(card, cardDuration, index * delayMultiplier)
     ));
     const cameraIntro = this.introCamera(totalDuration / 2);
-
     return Promise.all([...cardIntros, cameraIntro])
       .then((values) => {
         this.context.carousel.isRotating = true;
@@ -61,13 +60,13 @@ export default class AnimationController {
     const radius = RADIUS + 30;
     const params = {
       angle: 0,
-      y: -50,
+      y: this.context.carousel.minY,
     }
-    const centerCoord = new Vector3();
+    const centerCoord = this.context.carousel.center;
     return new Promise((resolve) => {
       TweenMax.to(params, duration, {
-        angle: Math.PI,
-        y: 0,
+        angle: Math.PI * 2,
+        y: this.context.carousel.midY,
         onUpdate: () => {
           this.context.setCameraPosition(
             radius * Math.cos(params.angle) + centerCoord.x,
@@ -83,7 +82,7 @@ export default class AnimationController {
   activateCard(card) {
     return new Promise((resolve) => {
       const tl = new TimelineMax({
-        delay: 0.2,
+        delay: 0.1,
         onStart: () => {
           this.context.disablePointerEvents(true)
         },
@@ -92,19 +91,19 @@ export default class AnimationController {
         }
       });
       tl
-        .to(card.frontUniforms.uContentVisibility, 0.8, {
+        .to(card.frontUniforms.uContentVisibility, 0.6, {
           value: 1,
         })
-        .to(card.frontUniforms.uBGVisibility, 0.8, {
+        .to(card.frontUniforms.uBGVisibility, 0.6, {
           value: 1,
 
         })
         .add('spin')
-        .to(card.mesh.rotation, 1, {
+        .to(card.mesh.rotation, 0.7, {
           z: -Math.PI * 6,
           ease: Power2.easeOut,
         }, 'spin')
-        .to(card.mesh.scale, 1, {
+        .to(card.mesh.scale, 0.7, {
           y: 0.33,
           x: 0.5,
           ease: Power2.easeOut,
@@ -126,7 +125,7 @@ export default class AnimationController {
   deactrivateCard(card) {
     return new Promise((resolve) => {
       const tl = new TimelineMax({
-        delay: 0.2,
+        delay: 0.1,
         onStart: () => {
           this.context.disablePointerEvents(true);
         },

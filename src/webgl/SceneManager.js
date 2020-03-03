@@ -45,6 +45,8 @@ export default class SceneManager {
     this.renderer.setPixelRatio(dpr);
 
     this.controls = new Controls(this);
+    this.controls.enabled = false;
+    this.dis
 
     this.resize();
   }

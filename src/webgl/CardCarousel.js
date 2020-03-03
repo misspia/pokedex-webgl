@@ -43,6 +43,25 @@ export default class CardCarousel {
 
   }
 
+  get minY() {
+    const bbox = new THREE.Box3().setFromObject(this.mesh)
+    return bbox.min.y;
+  }
+
+  get maxY() {
+    const bbox = new THREE.Box3().setFromObject(this.mesh)
+    return bbox.max.y
+  }
+
+  get midY() {
+    const bbox = new THREE.Box3().setFromObject(this.mesh)
+    return (bbox.min.y + bbox.max.y) / 2;
+  }
+
+  get center() {
+    return new THREE.Vector3(0, this.midY, 0);
+  }
+
   load(list, anisotropy) {
     list.splice(251);
 
@@ -69,6 +88,7 @@ export default class CardCarousel {
     })
   }
 
+
   calcListItemPosition(index) {
     const angle = ANGLE_INCREMENT * index;
     const verticalOffset = -Math.floor(index / ENTRIES_PER_ROW) * GRID_HEIGHT;
@@ -93,6 +113,7 @@ export default class CardCarousel {
   getEntryCardById(id) {
     return this.cards.find((entry) => entry.id === id);
   }
+
 
   update() {
     if (this.isRotating) {
