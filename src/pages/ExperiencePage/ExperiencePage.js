@@ -3,7 +3,7 @@ import React, { useEffect, useState, useContext, useRef } from 'react';
 import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
 
-import * as S from './HomePage.styles';
+import * as S from './ExperiencePage.styles';
 import Cavnas from '../../components/Canvas';
 import Profile from '../../components/Profile';
 import { LoadingOverlay } from '../../components/common';
@@ -21,7 +21,7 @@ const GET_ALL_POKEMON = gql`
   }
 `;
 
-export default function HomePage({
+export default function ExperiencePage({
   history,
   location,
   match,

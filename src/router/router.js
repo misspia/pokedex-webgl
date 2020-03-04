@@ -4,7 +4,8 @@ import * as S from './router.styles';
 import * as routes from './routes';
 import { WebglProvider } from '../webgl/WebglContext';
 
-import HomePage from '../pages/HomePage/HomePage';
+import HomePage from '../pages/ExperiencePage';
+import LandingPage from '../pages/LandingPage';
 import WebglApplication from '../webgl/WebglApplication';
 
 export default function AppRouter() {

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Colors } from '../../../themes';
 
+// https://styled-components.com/docs/api#attrs
 export const Wrapper = styled.div`
   z-index: 999;
   position: fixed;
