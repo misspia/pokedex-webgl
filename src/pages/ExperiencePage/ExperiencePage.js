@@ -1,14 +1,16 @@
 import { DefaultLoadingManager } from 'three';
-import React, { useEffect, useState, useContext, useRef } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
 
 import * as S from './ExperiencePage.styles';
+import { clone } from '../../utils';
+import { WebglContext } from '../../contexts';
+import { LoadingOverlay } from '../../components/common';
+import AppStages from '../../constants/appStages';
+import Entrance from '../../components/Entrance';
 import Cavnas from '../../components/Canvas';
 import Profile from '../../components/Profile';
-import { LoadingOverlay } from '../../components/common';
-import { clone } from '../../utils';
-import WebglContext from '../../webgl/WebglContext';
 
 const GET_ALL_POKEMON = gql`
   query getAllPokemon {
@@ -27,6 +29,7 @@ export default function ExperiencePage({
   match,
 }) {
   const context = useContext(WebglContext);
+  const [appStage, setAppStage] = useState(AppStages.INTRO);
   const [id, setId] = useState(3);
   const [isLoading, setIsLoading] = useState(true);
   const [loadingProgress, setLoadingProgress] = useState(0);
@@ -48,11 +51,16 @@ export default function ExperiencePage({
     <S.Wrapper>
       <LoadingOverlay isActive={loading || isLoading} progress={loadingProgress} />
       {error && `ERROR: ${JSON.stringify(error)}`}
+      <Entrance
+        isActive={appStage === AppStages.INTRO}
+        onEnter={() => setAppStage(AppStages.MAIN)}
+      />
       <Profile
         id={id}
         active={isProfileActive}
         onClose={() => setIsProfileActive(false)}
       />
+      >
       {
         data &&
         <Cavnas

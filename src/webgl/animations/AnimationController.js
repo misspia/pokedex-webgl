@@ -1,8 +1,8 @@
 import { Vector3 } from 'three';
 import { TweenMax } from 'gsap/gsap-core';
 import { TimelineMax, Power2, Power4 } from 'gsap';
-import Layers from '../constants/layers';
-import { RADIUS } from './CardCarousel';
+import Layers from '../../constants/layers';
+import { RADIUS } from '../CardCarousel';
 
 export default class AnimationController {
   constructor(context) {

@@ -2,7 +2,7 @@ import React from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import * as S from './router.styles';
 import * as routes from './routes';
-import { WebglProvider } from '../webgl/WebglContext';
+import { WebglProvider, AppContext, AppProvider } from '../contexts';
 
 import HomePage from '../pages/ExperiencePage';
 import LandingPage from '../pages/LandingPage';
@@ -14,13 +14,15 @@ export default function AppRouter() {
   return (
     <React.Fragment>
       <Router>
-        <WebglProvider value={{ webgl }}>
-          <S.Container>
-            <Switch>
-              <Route exact path={routes.home} component={HomePage} />
-            </Switch>
-          </S.Container>
-        </WebglProvider>
+        <AppProvider>
+          <WebglProvider value={{ webgl }}>
+            <S.Container>
+              <Switch>
+                <Route exact path={routes.home} component={HomePage} />
+              </Switch>
+            </S.Container>
+          </WebglProvider>
+        </AppProvider>
       </Router>
     </React.Fragment>
   );

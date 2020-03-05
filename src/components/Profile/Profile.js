@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useContext } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import WebglContext from '../../webgl/WebglContext';
+import { WebglContext } from '../../contexts';
 import { Icons } from '../../themes';
 import ProfileOverview from '../ProfileOverview';
 import { GET_POKEMON_BY_ID, GET_EVOLUTION_BY_CHAIN_ID } from './Profile.gql';

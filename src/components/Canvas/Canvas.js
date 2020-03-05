@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useRef, useState } from 'react';
-import WebglContext from '../../webgl/WebglContext';
+import { WebglContext } from '../../contexts';
 import WebglEvents from '../../constants/webglEvents';
 import * as S from './Canvas.styles';
 

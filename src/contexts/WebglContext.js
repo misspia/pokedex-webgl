@@ -1,7 +1,9 @@
 import { createContext } from 'react';
 
-const WebglContext = createContext({});
+const defaultValue = {
+  webgl: null,
+};
 
+export const WebglContext = createContext(defaultValue);
 export const WebglProvider = WebglContext.Provider;
 export const WebglConsumer = WebglContext.Consumer;
-export default WebglContext;
