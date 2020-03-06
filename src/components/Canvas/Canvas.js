@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useRef, useState } from 'react';
-import { WebglContext } from '../../contexts';
+import { AppContext } from '../../contexts';
 import WebglEvents from '../../constants/webglEvents';
 import * as S from './Canvas.styles';
 
@@ -7,7 +7,7 @@ export default function Canvas({
   entries = [],
   selectEntry = () => { },
 }) {
-  const context = useContext(WebglContext);
+  const context = useContext(AppContext);
   const canvasRef = useRef(null);
   const guiRef = useRef(null);
   const [isPointer, setIsPointer] = useState(false);

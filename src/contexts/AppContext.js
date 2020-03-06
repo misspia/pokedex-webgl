@@ -1,5 +1,5 @@
 import { Component, createContext } from 'react';
-import AppStages from '../constants/appStages';
+import Stages from '../constants/stages';
 
 export const AppContext = createContext({});
 export const AppConsumer = AppContext.Consumer;
@@ -8,22 +8,29 @@ export class AppProvider extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      stage: AppStages.INTRO,
+      stage: Stages.ENTRANCE,
+      webgl: null,
     };
   }
   setStage(stage) {
     this.setState({ stage });
   }
 
+  setWebgl(webgl) {
+    this.setState({ webgl });
+  }
+
   render() {
-    const { stage } = this.state;
-    const { setStage } = this;
+    const { stage, webgl } = this.state;
+    const { setStage, setWebgl } = this;
 
     return (
       <AppContext.Provider
         value={{
           stage,
+          webgl,
           setStage,
+          setWebgl,
         }}
       >
         {this.props.children}

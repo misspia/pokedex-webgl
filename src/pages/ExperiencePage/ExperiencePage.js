@@ -5,9 +5,9 @@ import { useQuery } from '@apollo/react-hooks';
 
 import * as S from './ExperiencePage.styles';
 import { clone } from '../../utils';
-import { WebglContext } from '../../contexts';
+import { AppContext } from '../../contexts';
 import { LoadingOverlay } from '../../components/common';
-import AppStages from '../../constants/appStages';
+import Stages from '../../constants/stages';
 import Entrance from '../../components/Entrance';
 import Cavnas from '../../components/Canvas';
 import Profile from '../../components/Profile';
@@ -28,8 +28,7 @@ export default function ExperiencePage({
   location,
   match,
 }) {
-  const context = useContext(WebglContext);
-  const [appStage, setAppStage] = useState(AppStages.INTRO);
+  const context = useContext(AppContext);
   const [id, setId] = useState(3);
   const [isLoading, setIsLoading] = useState(true);
   const [loadingProgress, setLoadingProgress] = useState(0);
@@ -42,7 +41,7 @@ export default function ExperiencePage({
       context.webgl.startIntro();
     }
 
-    DefaultLoadingManager.onProgress = (url, numLoaded, total) => {
+    DefaultLoadingManager.onProgress = (_url, numLoaded, total) => {
       setLoadingProgress(numLoaded / total);
     }
   }, []);
@@ -51,9 +50,7 @@ export default function ExperiencePage({
     <S.Wrapper>
       <LoadingOverlay isActive={loading || isLoading} progress={loadingProgress} />
       {error && `ERROR: ${JSON.stringify(error)}`}
-      <Entrance
-        isActive={appStage === AppStages.INTRO}
-        onEnter={() => setAppStage(AppStages.MAIN)}
+      <Entrance onEnter={() => context.setStage(Stages.MAIN)}
       />
       <Profile
         id={id}
