@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { Colors } from '../../../themes';
 
-// https://styled-components.com/docs/api#attrs
 export const Wrapper = styled.div`
   z-index: 999;
   position: fixed;
@@ -56,10 +55,13 @@ export const Bar = styled.div`
   justify-content: center;
 `;
 
-export const Progress = styled.div`
+export const Progress = styled.div.attrs(props => ({
+  style: {
+    width: `${props.percent}%`,
+  },
+}))`
   border-radius: 0.5em;
   height: 100%;
-  width: ${props => props.percent}%;
   background-color: ${Colors.black};
   transition: 0.3s all;
 `;

@@ -1,5 +1,6 @@
+import { Vector3 } from 'three';
 import { TweenMax } from 'gsap/gsap-core';
-import { TimeLineMax } from 'gsap';
+import { TimelineMax } from 'gsap';
 import { RADIUS } from '../CardCarousel';
 
 export default class IntroAnimator {
@@ -7,15 +8,16 @@ export default class IntroAnimator {
     this.context = context;
   }
   enter() {
-    his.context.disablePointerEvents(true);
+    this.context.disablePointerEvents(true);
 
     const delayMultiplier = 0.05;
     const cardDuration = 0.1;
     const totalDuration = this.context.carousel.cards.length * cardDuration;
+
     const cardIntros = this.context.carousel.cards.map((card, index) => (
-      this.introCard(card, cardDuration, index * delayMultiplier)
+      this.cardEntrance(card, cardDuration, index * delayMultiplier)
     ));
-    const cameraIntro = this.introCamera(totalDuration / 2);
+    const cameraIntro = this.cameraEntrance(totalDuration / 2);
     return Promise.all([...cardIntros, cameraIntro])
       .then((values) => {
         this.context.carousel.isRotating = true;
@@ -52,9 +54,7 @@ export default class IntroAnimator {
     return new Promise((resolve) => {
       const tl = new TimelineMax({
         delay,
-        onComplete: () => {
-          resolve();
-        }
+        onComplete: resolve
       });
       tl
         .from(card, {

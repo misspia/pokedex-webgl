@@ -1,8 +1,6 @@
-import { Vector3 } from 'three';
 import { TweenMax } from 'gsap/gsap-core';
 import { TimelineMax, Power2, Power4 } from 'gsap';
 import Layers from '../../constants/layers';
-import { RADIUS } from '../CardCarousel';
 import IntroAnimator from './IntroAnimator';
 import EntranceAnimator from './EntranceAnimator';
 
@@ -15,7 +13,7 @@ export default class AnimationController {
     this.pp = context.pp;
   }
   startIntro() {
-    this.introAnimator.enter();
+    return this.introAnimator.enter();
   }
   activateCard(card) {
     return new Promise((resolve) => {

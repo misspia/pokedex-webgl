@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useContext } from 'react';
 import { AppContext } from '../../contexts';
 import Stages from '../../constants/stages';
 import * as S from './Entrance.styles';
-import Animations from './Entrance.animations';
+import * as Animations from './Entrance.animations';
 
 export default function Entrance({
   isActive = () => { },
@@ -13,9 +13,9 @@ export default function Entrance({
 
   useEffect(() => {
     if (context.stage === Stages.ENTRANCE) {
-      Animations.reveal(wrapper.current);
+      Animations.reveal(wrapperRef.current);
     } else {
-      Animations.hide(wrapper.current);
+      Animations.hide(wrapperRef.current);
     }
   }, [context.stage]);
 

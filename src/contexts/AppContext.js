@@ -1,4 +1,4 @@
-import { Component, createContext } from 'react';
+import React, { Component, createContext } from 'react';
 import Stages from '../constants/stages';
 
 export const AppContext = createContext({});
@@ -8,9 +8,15 @@ export class AppProvider extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      stage: Stages.ENTRANCE,
-      webgl: null,
+      stage: props.value.stage,
+      webgl: props.value.webgl,
     };
+  }
+  static defaultProps = {
+    value: {
+      webgl: null,
+      stage: Stages.ENTRANCE,
+    }
   }
   setStage(stage) {
     this.setState({ stage });
