@@ -38,7 +38,6 @@ export default function ExperiencePage({
   useEffect(() => {
     DefaultLoadingManager.onLoad = () => {
       setIsLoading(false);
-      context.webgl.startIntro();
     }
 
     DefaultLoadingManager.onProgress = (_url, numLoaded, total) => {
@@ -50,14 +49,13 @@ export default function ExperiencePage({
     <S.Wrapper>
       <LoadingOverlay isActive={loading || isLoading} progress={loadingProgress} />
       {error && `ERROR: ${JSON.stringify(error)}`}
-      <Entrance onEnter={() => context.setStage(Stages.MAIN)}
+      <Entrance onEnter={() => context.setStage(Stages.INTRO)}
       />
       <Profile
         id={id}
         active={isProfileActive}
         onClose={() => setIsProfileActive(false)}
       />
-      >
       {
         data &&
         <Cavnas

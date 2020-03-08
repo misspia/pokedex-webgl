@@ -18,11 +18,11 @@ export class AppProvider extends Component {
       stage: Stages.ENTRANCE,
     }
   }
-  setStage(stage) {
+  setStage = (stage) => {
     this.setState({ stage });
   }
 
-  setWebgl(webgl) {
+  setWebgl = (webgl) => {
     this.setState({ webgl });
   }
 

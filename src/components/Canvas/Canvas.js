@@ -1,6 +1,7 @@
 import React, { useEffect, useContext, useRef, useState } from 'react';
 import { AppContext } from '../../contexts';
 import WebglEvents from '../../constants/webglEvents';
+import Stages from '../../constants/stages';
 import * as S from './Canvas.styles';
 
 export default function Canvas({
@@ -25,6 +26,12 @@ export default function Canvas({
       }
     )
   }, []);
+
+  useEffect(() => {
+    if(context.stage === Stages.INTRO) {
+      context.webgl.startIntro();
+    }
+  }, [context.stage]);
 
   useEffect(() => {
     context.webgl.addEventListener(
