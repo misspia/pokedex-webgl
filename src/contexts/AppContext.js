@@ -19,7 +19,9 @@ export class AppProvider extends Component {
     }
   }
   setStage = (stage) => {
-    this.setState({ stage });
+    this.setState({ stage }, () => {
+      this.state.webgl.setStage(stage);
+    });
   }
 
   setWebgl = (webgl) => {

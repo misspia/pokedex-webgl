@@ -2,9 +2,10 @@ import SceneManager from './SceneManager';
 import Lights from './Lights';
 import CardCarousel from './CardCarousel';
 import AnimationController from './animations';
-import WebglEvents from '../constants/webglEvents';
+import { WebglEvents } from '../constants/events';
 import PostProcessor from './PostProcessor';
 import Layers from '../constants/layers';
+import Orb from './Orb';
 
 export default class Pokedex extends SceneManager {
   constructor(eventDispatcher) {
@@ -12,6 +13,7 @@ export default class Pokedex extends SceneManager {
     this.eventDispatcher = eventDispatcher;
     this.pp = new PostProcessor(this);
     this.lights = new Lights();
+    this.orb = new Orb(this.eventDispatcher);
     this.carousel = {};
     this.animator = {};
     this.activeCard = {};
@@ -23,6 +25,7 @@ export default class Pokedex extends SceneManager {
 
     this.pp.setup();
 
+    this.add(this.orb.mesh);
     this.add(this.lights.directional);
     this.add(this.lights.ambient);
 
@@ -159,11 +162,19 @@ export default class Pokedex extends SceneManager {
     });
   }
 
-  startIntro() {
-    this.animator.startIntro()
+  playEntrance() {
+    this.animator.playEntrance();
+  }
+
+  playIntro() {
+    this.animator.playIntro()
       .then(() => {
         console.debug('intro complete')
       })
+  }
+
+  playMain() {
+
   }
 
   draw() {
@@ -173,7 +184,7 @@ export default class Pokedex extends SceneManager {
     this.renderer.autoClear = false;
     this.renderer.clear();
 
-    this.camera.layers.set(Layers.BLOOM);
+    this.camera.layers.set(Layers.BLOOM_CARD);
     this.pp.render();
 
     this.renderer.clearDepth();

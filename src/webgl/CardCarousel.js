@@ -2,7 +2,7 @@ import * as THREE from 'three';
 
 import { fullCircleRadians, calcCircumference } from '../utils';
 import EntryCard from './EntryCard';
-import WebglEvents from '../constants/webglEvents';
+import { WebglEvents } from '../constants/events';
 
 export const RADIUS = 40;
 const ENTRY_WIDTH = 6;
@@ -40,7 +40,6 @@ export default class CardCarousel {
         this.isRotating = true;
       }
     );
-
   }
 
   get minY() {
@@ -112,6 +111,10 @@ export default class CardCarousel {
 
   getEntryCardById(id) {
     return this.cards.find((entry) => entry.id === id);
+  }
+
+  setVisible(isVisible = true) {
+    this.mesh.visible = isVisible;
   }
 
 

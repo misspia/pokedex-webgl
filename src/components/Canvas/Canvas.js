@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useRef, useState } from 'react';
 import { AppContext } from '../../contexts';
-import WebglEvents from '../../constants/webglEvents';
+import { WebglEvents } from '../../constants/events';
 import Stages from '../../constants/stages';
 import * as S from './Canvas.styles';
 
@@ -28,8 +28,16 @@ export default function Canvas({
   }, []);
 
   useEffect(() => {
-    if(context.stage === Stages.INTRO) {
-      context.webgl.startIntro();
+    if (context.stage === Stages.ENTRANCE) {
+      context.webgl.playEntrance();
+    }
+
+    if (context.stage === Stages.INTRO) {
+      context.webgl.playIntro();
+    }
+
+    if (context.stage === Stages.MAIN) {
+      context.webgl.playMain();
     }
   }, [context.stage]);
 

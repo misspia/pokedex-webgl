@@ -7,7 +7,11 @@ export default class IntroAnimator {
   constructor(context) {
     this.context = context;
   }
-  enter() {
+  destroy() {
+
+  }
+
+  play() {
     this.context.disablePointerEvents(true);
 
     const delayMultiplier = 0.05;

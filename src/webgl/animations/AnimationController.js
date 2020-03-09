@@ -3,17 +3,30 @@ import { TimelineMax, Power2, Power4 } from 'gsap';
 import Layers from '../../constants/layers';
 import IntroAnimator from './IntroAnimator';
 import EntranceAnimator from './EntranceAnimator';
+import MainAnimator from './MainAnimator';
 
 export default class AnimationController {
   constructor(context) {
     this.context = context;
     this.entranceAnimator = new EntranceAnimator(this.context);
     this.introAnimator = new IntroAnimator(this.context);
+    this.mainAnimator = new MainAnimator(this.context);
 
     this.pp = context.pp;
   }
-  startIntro() {
-    return this.introAnimator.enter();
+  playEntrance() {
+    this.context.carousel.setVisible(false);
+    return this.entranceAnimator.play();
+  }
+
+  playIntro() {
+    this.context.carousel.setVisible(true);
+    return this.introAnimator.play();
+  }
+
+  playMain() {
+    this.context.carousel.setVisible(true);
+    return this.mainAnimator.play();
   }
   activateCard(card) {
     return new Promise((resolve) => {
@@ -44,7 +57,7 @@ export default class AnimationController {
           x: 0.5,
           ease: Power2.easeOut,
           onComplete: () => {
-            card.setLayer(Layers.BLOOM);
+            card.setLayer(Layers.BLOOM_CARD);
           }
         }, 'spin')
         .to(this.pp.bloom, 2, {
