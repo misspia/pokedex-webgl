@@ -6,6 +6,9 @@ import { WebglEvents } from '../constants/events';
 import PostProcessor from './PostProcessor';
 import Layers from '../constants/layers';
 import Orb from './Orb';
+import { EntranceStage, IntroStage, MainStage } from './stages';
+import Stages from '../constants/stages';
+
 
 export default class Pokedex extends SceneManager {
   constructor(eventDispatcher) {
@@ -15,9 +18,9 @@ export default class Pokedex extends SceneManager {
     this.lights = new Lights();
     this.orb = new Orb(this.eventDispatcher);
     this.carousel = {};
-    this.animator = {};
     this.activeCard = {};
     this.focusCard = null;
+    this.stage = {};
   }
 
   setup(canvas) {
@@ -33,7 +36,6 @@ export default class Pokedex extends SceneManager {
       this.eventDispatcher,
       this.renderer.capabilities.getMaxAnisotropy(),
     );
-    this.animator = new AnimationController(this);
 
     this.setupEvents();
   }
@@ -43,138 +45,45 @@ export default class Pokedex extends SceneManager {
     this.add(this.carousel.mesh);
   }
 
+  setStage(stage) {
+    if (this.stage.destroy) {
+      this.stage.destroy();
+    }
+    switch (stage) {
+      case Stages.ENTRANCE: {
+        this.stage = new EntranceStage(this);
+        this.stage.init();
+        break;
+      }
+      case Stages.INTRO: {
+        this.stage = new IntroStage(this);
+        this.stage.init();
+        break;
+      }
+      case Stages.MAIN: {
+        this.stage = new MainStage(this);
+        this.stage.init();
+        break;
+      }
+      default: {
+        console.debug(`unrecognized stage: ${stage}`);
+      }
+    }
+
+  }
+
   setupEvents() {
     window.addEventListener('resize', (e) => {
       this.resize(e);
       this.pp.resize(e)
     }, { passive: true });
 
-    this.canvas.addEventListener('mousemove', (e) => {
-      this.mouse.updatePosition(e);
-      this.mouse.updateIntersection();
-
-      this.eventDispatcher.dispatchEvent({
-        type: WebglEvents.MOUSEMOVE,
-        card: this.mouse.intersection,
-      });
-
-      if (!this.mouse.intersection) {
-        if (!!this.focusCard) {
-          this.eventDispatcher.dispatchEvent({
-            type: WebglEvents.UNFOCUS_CARD,
-            card: this.focusCard,
-          });
-
-          this.focusCard = null;
-        }
-        return;
-      }
-
-
-      const { name: id } = this.mouse.intersection.object.parent;
-
-      if (!this.focusCard || this.focusCard.id === id) {
-        return;
-      }
-
-      if (
-        this.focusCard.id !== this.mouse.intersection.obj
-      ) {
-        this.eventDispatcher.dispatchEvent({
-          type: WebglEvents.UNFOCUS_CARD,
-          card: this.focusCard,
-        });
-      }
-      if (this.mouse.intersection) {
-        const { name: id } = this.mouse.intersection.object.parent;
-        this.focusCard = this.carousel.getEntryCardById(id);
-
-        this.eventDispatcher.dispatchEvent({
-          type: WebglEvents.FOCUS_CARD,
-          card: this.focusCard,
-        });
-      }
-    });
-
-
-    this.canvas.addEventListener('mousedown', (e) => {
-      this.mouse.updateIntersection();
-
-      if (
-        !this.mouse.intersection
-        || !this.mouse.isIntersectionCardFront()
-      ) {
-        return;
-      }
-
-      const { name: id } = this.mouse.intersection.object.parent;
-
-      this.eventDispatcher.dispatchEvent({
-        type: WebglEvents.CARD_CLICK,
-        intersection: this.mouse.intersection,
-        id,
-      });
-
-      this.activeCard = this.carousel.getEntryCardById(id);
-
-      this.animator.activateCard(this.activeCard)
-        .then(() => {
-          this.eventDispatcher.dispatchEvent({
-            type: WebglEvents.ACTIVATE_ENTRY,
-            intersection: this.mouse.intersection,
-            id,
-          })
-        })
-    });
-
-    this.eventDispatcher.addEventListener(
-      WebglEvents.DEACTIVATE_ENTRY,
-      (e) => {
-        this.animator.deactrivateCard(this.activeCard)
-          .then(() => {
-            this.activeCard = {};
-            this.eventDispatcher.dispatchEvent({
-              type: WebglEvents.DEACTIVATE_ENTRY_COMPLETE,
-            });
-          });
-      }
-    );
-
-
-    this.eventDispatcher.addEventListener(
-      WebglEvents.FOCUS_CARD,
-      (e) => {
-        this.animator.focusCard(e.card);
-      }
-    );
-
-    this.eventDispatcher.addEventListener(
-      WebglEvents.UNFOCUS_CARD,
-      (e) => {
-        this.animator.unfocusCard(e.card);
-      }
-    )
   }
 
   dispatchDeactivateEntry() {
     this.eventDispatcher.dispatchEvent({
       type: WebglEvents.DEACTIVATE_ENTRY,
     });
-  }
-
-  playEntrance() {
-    this.animator.playEntrance();
-  }
-
-  playIntro() {
-    this.animator.playIntro()
-      .then(() => {
-        console.debug('intro complete')
-      })
-  }
-
-  playMain() {
-
   }
 
   draw() {

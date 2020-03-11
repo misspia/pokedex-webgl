@@ -28,17 +28,18 @@ export default function Canvas({
   }, []);
 
   useEffect(() => {
-    if (context.stage === Stages.ENTRANCE) {
-      context.webgl.playEntrance();
-    }
+    context.webgl.setStage(Stages.MAIN);
+    // if (context.stage === Stages.ENTRANCE) {
+    //   context.webgl.playEntrance();
+    // }
 
-    if (context.stage === Stages.INTRO) {
-      context.webgl.playIntro();
-    }
+    // if (context.stage === Stages.INTRO) {
+    //   context.webgl.playIntro();
+    // }
 
-    if (context.stage === Stages.MAIN) {
-      context.webgl.playMain();
-    }
+    // if (context.stage === Stages.MAIN) {
+    //   context.webgl.playMain();
+    // }
   }, [context.stage]);
 
   useEffect(() => {

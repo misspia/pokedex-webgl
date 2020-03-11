@@ -49,7 +49,8 @@ export default function ExperiencePage({
     <S.Wrapper>
       <LoadingOverlay isActive={loading || isLoading} progress={loadingProgress} />
       {error && `ERROR: ${JSON.stringify(error)}`}
-      <Entrance onEnter={() => context.setStage(Stages.INTRO)}
+      {/* <Entrance onEnter={() => context.setStage(Stages.INTRO)} */}
+      <Entrance onEnter={() => context.setStage(Stages.MAIN)}
       />
       <Profile
         id={id}

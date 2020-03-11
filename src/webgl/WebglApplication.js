@@ -18,7 +18,7 @@ export default class WebglApplication extends EventDispatcher {
   }
 
   setStage(stage) {
-    this.stage = stage
+    this.webglMain.setStage(stage);
     this.dispatchEvent(AppEvents.STAGE_CHANGE, { stage });
   }
 
