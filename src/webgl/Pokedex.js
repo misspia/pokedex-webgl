@@ -1,7 +1,6 @@
 import SceneManager from './SceneManager';
 import Lights from './Lights';
 import CardCarousel from './CardCarousel';
-import AnimationController from './animations';
 import { WebglEvents } from '../constants/events';
 import PostProcessor from './PostProcessor';
 import Layers from '../constants/layers';

@@ -28,18 +28,7 @@ export default function Canvas({
   }, []);
 
   useEffect(() => {
-    context.webgl.setStage(Stages.MAIN);
-    // if (context.stage === Stages.ENTRANCE) {
-    //   context.webgl.playEntrance();
-    // }
-
-    // if (context.stage === Stages.INTRO) {
-    //   context.webgl.playIntro();
-    // }
-
-    // if (context.stage === Stages.MAIN) {
-    //   context.webgl.playMain();
-    // }
+    context.webgl.setStage(context.stage);
   }, [context.stage]);
 
   useEffect(() => {
