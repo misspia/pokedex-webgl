@@ -41,7 +41,7 @@ export default class Pokedex extends SceneManager {
 
   load(list) {
     this.carousel.load(list);
-    this.add(this.carousel.mesh);
+    this.add(this.carousel.pivot);
   }
 
   setStage(stage) {

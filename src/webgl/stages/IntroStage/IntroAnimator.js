@@ -55,6 +55,7 @@ export default class IntroAnimator {
 
   cardEntrance(card, duration, delay = 0) {
     const destination = new Vector3().copy(card.mesh.position);
+    const destination2 = new Vector3().copy(card.mesh.position);
     return new Promise((resolve) => {
       const tl = new TimelineMax({
         delay,
@@ -65,19 +66,18 @@ export default class IntroAnimator {
           alpha: 0,
         })
         .add('reveal')
-        .fromTo(card.mesh.position, duration, {
-          x: destination.x - 20,
-          y: destination.y - 20,
-          z: destination.z - 20,
-        }, {
+        .fromTo(card.mesh.position, {
           x: destination.x,
           y: destination.y,
           z: destination.z,
-
+        }, {
+          x: destination2.x,
+          y: destination2.y,
+          z: destination2.z,
         }, 'reveal')
         .to(card, duration, {
-          alpha: 1,
-        }, 'reveal')
+          alpha: 1
+        })
 
     })
   }

@@ -20,7 +20,7 @@ export default class MainStage {
   }
 
   init() {
-    this.carousel.isRotating = true;
+    // this.carousel.isRotating = true;
     this.setupEvents();
   }
 
