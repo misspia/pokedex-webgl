@@ -4,7 +4,6 @@ import CardCarousel from './CardCarousel';
 import { WebglEvents } from '../constants/events';
 import PostProcessor from './PostProcessor';
 import Layers from '../constants/layers';
-import Orb from './Orb';
 import { EntranceStage, IntroStage, MainStage } from './stages';
 import Stages from '../constants/stages';
 
@@ -15,7 +14,6 @@ export default class Pokedex extends SceneManager {
     this.eventDispatcher = eventDispatcher;
     this.pp = new PostProcessor(this);
     this.lights = new Lights();
-    this.orb = new Orb(this.eventDispatcher);
     this.carousel = {};
     this.activeCard = {};
     this.focusCard = null;
@@ -27,7 +25,6 @@ export default class Pokedex extends SceneManager {
 
     this.pp.setup();
 
-    this.add(this.orb.mesh);
     this.add(this.lights.directional);
     this.add(this.lights.ambient);
 

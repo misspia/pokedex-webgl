@@ -12,7 +12,7 @@ export const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
 
-  background-color: ${Colors.whiteOverlayBackground};
+  background-color: transparent;
 
 `;
 
