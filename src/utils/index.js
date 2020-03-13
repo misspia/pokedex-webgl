@@ -29,3 +29,7 @@ export const clone = (object) => ( // arr or object
 export const clamp = (value, min, max) => (
   Math.min(Math.max(value, min), max)
 );
+
+export const remap = (min1, max1, min2, max2, value) => (
+  min2 + (max2 - min2) * (value - min1) / (max1 - min1)
+);

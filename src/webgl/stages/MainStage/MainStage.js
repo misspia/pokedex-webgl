@@ -13,6 +13,8 @@ export default class MainStage {
     this.carousel = context.carousel;
     this.activeCard = {};
     this.focusCard = null;
+
+    this.init();
   }
 
   destroy() {
@@ -129,7 +131,9 @@ export default class MainStage {
         this.animator.unfocusCard(e.card);
       }
     )
+  }
 
+  update() {
 
   }
 }

@@ -21,4 +21,10 @@ export const Enter = styled.div`
   cursor: pointer;
   text-transform: uppercase;
   letter-spacing: 1px;
+  transition: 0.3s all;
+
+  &:hover {
+    color: ${Colors.gold};
+    letter-spacing: 5px;
+  }
 `;

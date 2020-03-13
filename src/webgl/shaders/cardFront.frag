@@ -24,6 +24,5 @@ void main() {
   }
 
   color.rgb = mix(color.rgb, bgColor.rgb, uBGVisibility);
-
   gl_FragColor = vec4(color.rgb, alpha);
 }
