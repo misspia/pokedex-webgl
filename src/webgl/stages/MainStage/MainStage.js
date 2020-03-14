@@ -22,6 +22,7 @@ export default class MainStage {
   }
 
   init() {
+    this.context.carousel.setVisible(false);
     // this.carousel.isRotating = true;
     this.setupEvents();
   }

@@ -41,6 +41,7 @@ export default class IntroAnimator {
         angle: Math.PI * 2,
         y: this.context.carousel.midY,
         onUpdate: () => {
+          console.debug(this.context.camera.position)
           this.context.setCameraPosition(
             radius * Math.cos(params.angle) + centerCoord.x,
             params.y,

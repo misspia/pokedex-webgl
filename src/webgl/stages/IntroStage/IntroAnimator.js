@@ -46,6 +46,8 @@ export default class IntroAnimator {
             params.y,
             radius * Math.sin(params.angle) + centerCoord.z,
           );
+          console.debug(this.context.camera.position)
+
           this.context.lookAt(centerCoord);
         },
         onComplete: resolve,
