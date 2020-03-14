@@ -15,17 +15,14 @@ export default class AnimationController {
     this.pp = context.pp;
   }
   playEntrance() {
-    this.context.carousel.setVisible(false);
     return this.entranceAnimator.play();
   }
 
   playIntro() {
-    this.context.carousel.setVisible(true);
     return this.introAnimator.play();
   }
 
   playMain() {
-    this.context.carousel.setVisible(true);
     return this.mainAnimator.play();
   }
   activateCard(card) {

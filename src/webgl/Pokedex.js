@@ -52,7 +52,10 @@ export default class Pokedex extends SceneManager {
         break;
       }
       case Stages.INTRO: {
-        this.stage = new IntroStage(this);
+        this.stage.exit()
+          .then(() => {
+            this.stage = new IntroStage(this);
+          });
         break;
       }
       case Stages.MAIN: {

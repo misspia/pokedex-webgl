@@ -36,22 +36,25 @@ export default class IntroAnimator {
       y: this.context.carousel.minY,
     }
     const centerCoord = this.context.carousel.center;
-    return new Promise((resolve) => {
-      TweenMax.to(params, duration, {
-        angle: Math.PI * 2,
-        y: this.context.carousel.midY,
-        onUpdate: () => {
-          this.context.setCameraPosition(
-            radius * Math.cos(params.angle) + centerCoord.x,
-            params.y,
-            radius * Math.sin(params.angle) + centerCoord.z,
-          );
-          console.debug(this.context.camera.position)
+    const tl = new TimelineMax();
 
-          this.context.lookAt(centerCoord);
-        },
-        onComplete: resolve,
-      });
+    return new Promise((resolve) => {
+      this.context.setCameraPosition(0, -25, radius);
+
+      tl
+        .to(params, duration, {
+          angle: Math.PI * 2,
+          y: this.context.carousel.midY,
+          onUpdate: () => {
+            this.context.setCameraPosition(
+              radius * Math.cos(params.angle) + centerCoord.x,
+              params.y,
+              radius * Math.sin(params.angle) + centerCoord.z,
+            );
+            this.context.lookAt(centerCoord);
+          },
+          onComplete: resolve,
+        });
     })
   }
 

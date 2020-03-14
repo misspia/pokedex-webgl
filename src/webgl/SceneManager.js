@@ -78,6 +78,10 @@ export default class SceneManager {
     this.scene.add(obj);
   }
 
+  remove(obj) {
+    this.scene.remove(obj);
+  }
+
   lookAt(coord = {}) {
     this.camera.lookAt(coord);
   }
