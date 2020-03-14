@@ -3,8 +3,7 @@ import { TimelineMax } from 'gsap';
 export default class EntranceAnimator {
   constructor(context) {
     this.context = context;
-
-
+    this.stage = context.stage;
   }
   destroy() {
     window.removeEventListener('mousemove', this.onMousemove);
@@ -38,6 +37,16 @@ export default class EntranceAnimator {
     });
   }
   exit() {
-
+    const tl = new TimelineMax();
+    return new Promise(resolve => {
+      tl
+        .fromTo(this.context.stage.gate.material.uniforms.uExitProgress, {
+          value: 0.0,
+        }, {
+          value: 1.0,
+          duration: 0.5,
+          onComplete: resolve,
+        })
+    })
   }
 }

@@ -9,7 +9,6 @@ export default class IntroStage {
   }
 
   init() {
-    this.context.carousel.setVisible(true);
     this.animator.play()
       .then(() => {
         this.context.setStage(Stages.MAIN);

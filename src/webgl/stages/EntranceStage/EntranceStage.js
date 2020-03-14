@@ -3,7 +3,7 @@ import Animator from './EntranceAnimator';
 import vertexShader from '../../shaders/gate.vert';
 import fragmentShader from '../../shaders/gate.frag';
 
-export default class IntroStage {
+export default class EntranceStage {
   constructor(context) {
     this.context = context;
     this.animator = new Animator(this.context);
@@ -18,13 +18,16 @@ export default class IntroStage {
     window.removeEventListener('mousemove', this.onMouseMove);
   }
 
-  init() {
-    this.context.carousel.setVisible(false);
+  exit() {
+    return this.animator.exit();
+  }
 
+  init() {
     this.context.setCameraPosition(0, 0, 7);
     this.context.lookAt(new THREE.Vector3());
     this.createGate();
     this.context.add(this.gate);
+    this.exit();
 
     window.addEventListener('mousemove', this.onMouseMove);
   }
@@ -41,9 +44,10 @@ export default class IntroStage {
       fragmentShader,
       uniforms: {
         uMouse: { value: new THREE.Vector2(0, 0) },
-        uTime: { value: 0 },
+        uTime: { type: 'f', value: 0.0 },
+        uExitProgress: { type: 'f', value: 0.0 },
       },
-      side: THREE.DoubleSide,
+      side: THREE.FrontSide,
       transparent: true,
     });
     this.gate = new THREE.Mesh(geometry, material);

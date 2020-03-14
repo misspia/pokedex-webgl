@@ -61,6 +61,7 @@ export default class EntryListItem {
     this.mesh.add(this.back);
 
     this.mesh.name = id;
+    this.alpha = 0;
   }
 
   get layers() {
