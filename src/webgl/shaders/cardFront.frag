@@ -15,7 +15,7 @@ void main() {
   vec4 spriteTexture = texture2D(uSpriteTexture, vec2(vUv.x, vUv.y * 1.5 - 0.25));
 
   vec4 color;
-  if(spriteTexture.a == 1.0) {
+  if(spriteTexture.a > 0.9) {
     spriteTexture.rgb = mix(spriteTexture.rgb, uTypeColor, uContentVisibility);
     color = spriteTexture;
   } else {
@@ -24,6 +24,5 @@ void main() {
   }
 
   color.rgb = mix(color.rgb, bgColor.rgb, uBGVisibility);
-
   gl_FragColor = vec4(color.rgb, alpha);
 }

@@ -7,6 +7,7 @@ export default {
   black: '#000',
   blueTranslucent: 'rgba(200, 200, 255, 0.7)',
   blue: 'rgba(200, 200, 255, 1.0)',
+  gold: '#a07b27',
   shadow: 'rgba(0, 0, 0, 0.2)',
 
 

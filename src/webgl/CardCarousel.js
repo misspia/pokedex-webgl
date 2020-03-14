@@ -2,7 +2,7 @@ import * as THREE from 'three';
 
 import { fullCircleRadians, calcCircumference } from '../utils';
 import EntryCard from './EntryCard';
-import WebglEvents from '../constants/webglEvents';
+import { WebglEvents } from '../constants/events';
 
 export const RADIUS = 40;
 const ENTRY_WIDTH = 6;
@@ -24,7 +24,7 @@ export default class CardCarousel {
     this.centerCoord = new THREE.Vector3();
     this.isRotating = false;
 
-    this.mesh = new THREE.Group();
+    this.pivot = new THREE.Group();
 
 
     this.eventDispatcher.addEventListener(
@@ -40,21 +40,20 @@ export default class CardCarousel {
         this.isRotating = true;
       }
     );
-
   }
 
   get minY() {
-    const bbox = new THREE.Box3().setFromObject(this.mesh)
+    const bbox = new THREE.Box3().setFromObject(this.pivot)
     return bbox.min.y;
   }
 
   get maxY() {
-    const bbox = new THREE.Box3().setFromObject(this.mesh)
+    const bbox = new THREE.Box3().setFromObject(this.pivot)
     return bbox.max.y
   }
 
   get midY() {
-    const bbox = new THREE.Box3().setFromObject(this.mesh)
+    const bbox = new THREE.Box3().setFromObject(this.pivot)
     return (bbox.min.y + bbox.max.y) / 2;
   }
 
@@ -63,7 +62,8 @@ export default class CardCarousel {
   }
 
   load(list, anisotropy) {
-    list.splice(251);
+    // list.splice(251);
+    list.splice(2);
 
     list.forEach(({ id, name, spriteUrl, types }, index) => {
       const cardParams = {
@@ -83,19 +83,20 @@ export default class CardCarousel {
       const { x: rx, y: ry, z: rz } = this.calcListItemRotation(index);
       entry.setRotation(rx, ry, rz);
 
-      this.mesh.add(entry.mesh);
+      this.pivot.add(entry.mesh);
       this.cards.push(entry);
     })
   }
 
 
   calcListItemPosition(index) {
+    const centerCoord = this.pivot.position;
     const angle = ANGLE_INCREMENT * index;
     const verticalOffset = -Math.floor(index / ENTRIES_PER_ROW) * GRID_HEIGHT;
     return {
-      x: RADIUS * Math.cos(angle) + this.centerCoord.x,
-      y: this.centerCoord.y + verticalOffset,
-      z: RADIUS * Math.sin(angle) + this.centerCoord.z,
+      x: RADIUS * Math.cos(angle) + centerCoord.x,
+      y: centerCoord.y + verticalOffset,
+      z: RADIUS * Math.sin(angle) + centerCoord.z,
     }
   }
 
@@ -114,10 +115,14 @@ export default class CardCarousel {
     return this.cards.find((entry) => entry.id === id);
   }
 
+  setVisible(isVisible = true) {
+    this.pivot.visible = isVisible;
+  }
+
 
   update() {
     if (this.isRotating) {
-      this.mesh.rotation.y += ROTATION_VELOCITY;
+      this.pivot.rotation.y += ROTATION_VELOCITY;
     }
   }
 }

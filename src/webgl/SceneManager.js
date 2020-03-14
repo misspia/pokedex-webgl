@@ -9,9 +9,8 @@ export default class SceneManager {
     this.scene = {};
     this.camera = {};
     this.renderer = {};
-
-    this.mouse = new Mouse(this);
     this.controls = {};
+    this.mouse = new Mouse(this);
     this.cameraVelocity = new THREE.Vector2();
     this.cameraTranslateVelocity = 0.1;
     this.cameraTranslateThreshold = 0.2;
@@ -45,8 +44,7 @@ export default class SceneManager {
     this.renderer.setPixelRatio(dpr);
 
     this.controls = new Controls(this);
-    this.controls.enabled = false;
-    this.dis
+    // this.controls.enabled = false;
 
     this.resize();
   }

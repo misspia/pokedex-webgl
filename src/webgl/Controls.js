@@ -1,13 +1,10 @@
 import { MapControls, OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { clamp } from '../utils';
 
-export default class Controls {
+export default class Controls extends OrbitControls {
   constructor(context) {
-    this.context = context
-    this.controls = new OrbitControls(
-      this.context.camera,
-      this.context.renderer.domElement,
-    );
+    super(context.camera, context.renderer.domElement);
+    this.context = context;
     // this.controls = new MapControls(
     //   this.context.camera,
     //   this.context.renderer.domElement
@@ -23,7 +20,7 @@ export default class Controls {
     // this.controls.minAzimuthAngle = -Math.PI;
     // this.controls.maxAzimuthAngle = Math.PI;
 
-    this.controls.update();
+    // this.controls.update();
   }
   update() {
 

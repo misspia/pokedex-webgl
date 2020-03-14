@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import ComponentNames from '../constants/componentNames';
-
+import { remap } from '../utils';
 export default class Mouse {
   constructor(context) {
     this.context = context;
@@ -13,6 +13,13 @@ export default class Mouse {
     return {
       x: this.mouse.x,
       y: this.mouse.y,
+    };
+  }
+
+  get uv() {
+    return {
+      x: remap(-1, 1, 0, 1, this.mouse.x),
+      y: remap(-1, 1, 0, 1, this.mouse.y),
     };
   }
 

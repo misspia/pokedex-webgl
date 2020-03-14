@@ -1,14 +1,16 @@
 import { DefaultLoadingManager } from 'three';
-import React, { useEffect, useState, useContext, useRef } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
 
-import * as S from './HomePage.styles';
+import * as S from './ExperiencePage.styles';
+import { clone } from '../../utils';
+import { AppContext } from '../../contexts';
+import { LoadingOverlay } from '../../components/common';
+import Stages from '../../constants/stages';
+import Entrance from '../../components/Entrance';
 import Cavnas from '../../components/Canvas';
 import Profile from '../../components/Profile';
-import { LoadingOverlay } from '../../components/common';
-import { clone } from '../../utils';
-import WebglContext from '../../webgl/WebglContext';
 
 const GET_ALL_POKEMON = gql`
   query getAllPokemon {
@@ -21,12 +23,12 @@ const GET_ALL_POKEMON = gql`
   }
 `;
 
-export default function HomePage({
+export default function ExperiencePage({
   history,
   location,
   match,
 }) {
-  const context = useContext(WebglContext);
+  const context = useContext(AppContext);
   const [id, setId] = useState(3);
   const [isLoading, setIsLoading] = useState(true);
   const [loadingProgress, setLoadingProgress] = useState(0);
@@ -36,10 +38,9 @@ export default function HomePage({
   useEffect(() => {
     DefaultLoadingManager.onLoad = () => {
       setIsLoading(false);
-      context.webgl.startIntro();
     }
 
-    DefaultLoadingManager.onProgress = (url, numLoaded, total) => {
+    DefaultLoadingManager.onProgress = (_url, numLoaded, total) => {
       setLoadingProgress(numLoaded / total);
     }
   }, []);
@@ -48,6 +49,8 @@ export default function HomePage({
     <S.Wrapper>
       <LoadingOverlay isActive={loading || isLoading} progress={loadingProgress} />
       {error && `ERROR: ${JSON.stringify(error)}`}
+      <Entrance onEnter={() => context.setStage(Stages.INTRO)}
+      />
       <Profile
         id={id}
         active={isProfileActive}
