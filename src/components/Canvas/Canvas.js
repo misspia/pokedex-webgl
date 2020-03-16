@@ -28,10 +28,6 @@ export default function Canvas({
   }, []);
 
   useEffect(() => {
-    context.webgl.setStage(context.stage);
-  }, [context.stage]);
-
-  useEffect(() => {
     context.webgl.addEventListener(
       WebglEvents.MOUSEMOVE,
       (e) => {

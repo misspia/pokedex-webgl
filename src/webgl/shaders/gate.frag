@@ -17,14 +17,13 @@ void main() {
   vec3 spiritColor = vec3(0.8, 0.8, 1.0);
   float alpha = 1.0;
 
-  float mouseOffset = noise(uMouse) * 0.015 * remap(0.0, 1.0, -1.0, 1.0, sin(uTime * 2.5));
+  float mouseOffset = noise(uMouse) * 0.02 * remap(0.0, 1.0, -1.0, 1.0, sin(uTime * 3.0));
   vec2 mouse = uMouse + mouseOffset;
 
   float mouseDist = length(mouse - vUv);
-  float radius = 0.1;
+  float radius = 0.15;
 
-  if(mouseDist < 0.1) {
-
+  if(mouseDist < radius) {
     float mixValue = remap(0.0, 0.1, 0.0, 1.0, radius - mouseDist);
     color = mix(color, spiritColor, mixValue);
   }

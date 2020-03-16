@@ -48,12 +48,14 @@ export default class Pokedex extends SceneManager {
     }
     switch (stage) {
       case Stages.ENTRANCE: {
+        console.debug('set entrance stage')
         this.stage = new EntranceStage(this);
         break;
       }
       case Stages.INTRO: {
         this.stage.exit()
           .then(() => {
+            console.debug('set stage')
             this.stage = new IntroStage(this);
           });
         break;

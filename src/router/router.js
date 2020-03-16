@@ -10,13 +10,13 @@ import LandingPage from '../pages/LandingPage';
 import WebglApplication from '../webgl/WebglApplication';
 
 export default function AppRouter() {
-  const webgl = new WebglApplication();
-  const stage = Stages.ENTRANCE;
-
   return (
     <React.Fragment>
       <Router>
-        <AppProvider value={{ webgl, stage }}>
+        <AppProvider value={{
+          webgl: new WebglApplication(),
+          stage: Stages.ENTRANCE,
+        }}>
           <S.Container>
             <Switch>
               <Route exact path={routes.home} component={EntrancePage} />

@@ -39,7 +39,7 @@ export default class SceneManager {
       alpha: false,
       stencil: false,
     });
-    this.renderer.setClearColor(0x000000);
+    this.setClearColor(0x000000);
     const dpr = Math.min(1.5, window.devicePixelRatio);
     this.renderer.setPixelRatio(dpr);
 
@@ -88,5 +88,9 @@ export default class SceneManager {
 
   disablePointerEvents(isDisabled = true) {
     this.canvas.style.pointerEvents = isDisabled ? 'none' : 'auto';
+  }
+
+  setClearColor(hex) {
+    this.renderer.setClearColor(hex);
   }
 }

@@ -21,7 +21,10 @@ export default function Entrance({
 
   return (
     <S.Wrapper ref={wrapperRef}>
-      <S.Enter onClick={() => onEnter()}>
+      <S.Enter onClick={() => {
+        console.debug('on enter')
+        onEnter()
+      }}>
         enter
       </S.Enter>
     </S.Wrapper>
