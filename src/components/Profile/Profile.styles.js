@@ -7,7 +7,7 @@ export const Wrapper = styled.div`
   padding: 0.5em;
   box-sizing: border-box;
 
-  position: absolute;
+  position: fixed;
   left: 0;
   right: 0;
   top: 0;

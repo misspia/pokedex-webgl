@@ -14,8 +14,8 @@ export default class IntroAnimator {
   play() {
     this.context.disablePointerEvents(true);
 
-    const delayMultiplier = 0.05;
-    const cardDuration = 0.1;
+    const delayMultiplier = 0.04;
+    const cardDuration = 0.07;
     const totalDuration = this.context.carousel.cards.length * cardDuration;
 
     const cardIntros = this.context.carousel.cards.map((card, index) => (

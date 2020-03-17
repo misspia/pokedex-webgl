@@ -11,7 +11,6 @@ export default class EntranceStage {
     this.clock = new THREE.Clock();
     this.gate = {};
     this.init();
-    console.debug('entrance stage')
   }
 
 
@@ -22,9 +21,7 @@ export default class EntranceStage {
   exit() {
     return this.animator.exit()
       .then(() => {
-        this.gate.scale.set(1.5, 1.5, 1.5)
         this.context.remove(this.gate);
-        console.debug('exit')
         return;
       })
   }
@@ -35,7 +32,6 @@ export default class EntranceStage {
 
     this.context.lookAt(new THREE.Vector3());
     this.createGate();
-    // this.exit();
 
     window.addEventListener('mousemove', this.onMouseMove);
   }

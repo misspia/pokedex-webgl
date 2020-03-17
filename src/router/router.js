@@ -15,7 +15,8 @@ export default function AppRouter() {
       <Router>
         <AppProvider value={{
           webgl: new WebglApplication(),
-          stage: Stages.ENTRANCE,
+          // stage: Stages.ENTRANCE,
+          stage: null,
         }}>
           <S.Container>
             <Switch>
