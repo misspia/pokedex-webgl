@@ -72,7 +72,7 @@ export default class EntryListItem {
   }
 
   get backUniforms() {
-    return this.back.material;
+    return this.back.material.uniforms;
   }
 
   set positionY(y) {

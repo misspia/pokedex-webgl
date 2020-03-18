@@ -34,7 +34,6 @@ export default class Pokedex extends SceneManager {
     );
 
     this.setupEvents();
-    this.setStage(Stages.ENTRANCE);
   }
 
   load(list) {
@@ -85,7 +84,9 @@ export default class Pokedex extends SceneManager {
 
   draw() {
     requestAnimationFrame(() => this.draw());
-    this.stage.update();
+    if (this.stage.update) {
+      this.stage.update();
+    }
     this.carousel.update();
 
     this.renderer.autoClear = false;

@@ -7,23 +7,27 @@ import ComponentNames from '../../../constants/componentNames';
 export default class EntranceStage {
   constructor(context) {
     this.context = context;
-    this.animator = new Animator(this.context);
+    this.animator = new Animator(this);
     this.clock = new THREE.Clock();
     this.gate = {};
     this.init();
   }
 
+  get gateUniforms() {
+    return this.gate.material.uniforms;
+  }
 
   destroy() {
     window.removeEventListener('mousemove', this.onMouseMove);
   }
 
   exit() {
-    return this.animator.exit()
-      .then(() => {
-        this.context.remove(this.gate);
-        return;
-      })
+    console.debug(this.gate, 'nani')
+    return this.animator.exit(this.gate)
+    // .then(() => {
+    //   // this.context.remove(this.gate);
+    //   return;
+    // })
   }
 
   init() {
@@ -32,6 +36,8 @@ export default class EntranceStage {
 
     this.context.lookAt(new THREE.Vector3());
     this.createGate();
+
+    this.animator.enter();
 
     window.addEventListener('mousemove', this.onMouseMove);
   }
@@ -53,7 +59,8 @@ export default class EntranceStage {
       uniforms: {
         uMouse: { value: new THREE.Vector2(0, 0) },
         uTime: { type: 'f', value: 0.0 },
-        uExitProgress: { type: 'f', value: 0.0 },
+        uAlpha: { value: 0 },
+        uExitProgress: { value: 1.0 },
         uResolution: {
           type: 'v2',
           value: new THREE.Vector2(

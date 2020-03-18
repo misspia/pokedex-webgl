@@ -43,8 +43,7 @@ export default class SceneManager {
     const dpr = Math.min(1.5, window.devicePixelRatio);
     this.renderer.setPixelRatio(dpr);
 
-    this.controls = new Controls(this);
-    // this.controls.enabled = false;
+    // this.controls = new Controls(this);
 
     this.resize();
   }

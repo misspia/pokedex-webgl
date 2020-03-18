@@ -2,9 +2,9 @@ precision highp float;
 
 uniform vec2 uMouse;
 uniform float uExitProgress;
+uniform float uAlpha;
 uniform float uTime;
 varying vec2 vUv;
-varying float vDistance;
 
 #pragma glslify: noise = require('glsl-noise/simplex/2d')
 
@@ -28,5 +28,6 @@ void main() {
     color = mix(color, spiritColor, mixValue);
   }
 
-  gl_FragColor = vec4(color, alpha);
+  gl_FragColor = vec4(color, uAlpha);
+  // gl_FragColor = vec4(uExitProgress, 0.5, 0.5, alpha);
 }
