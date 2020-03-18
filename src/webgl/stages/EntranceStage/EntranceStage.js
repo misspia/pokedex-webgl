@@ -22,16 +22,15 @@ export default class EntranceStage {
   }
 
   exit() {
-    console.debug(this.gate, 'nani')
     return this.animator.exit(this.gate)
-    // .then(() => {
-    //   // this.context.remove(this.gate);
-    //   return;
-    // })
+      .then(() => {
+        this.context.remove(this.gate);
+        return;
+      })
   }
 
   init() {
-    this.context.setClearColor(0xffffff);
+    this.context.setClearColor(0x000000);
     this.context.setCameraPosition(0, 0, 7);
 
     this.context.lookAt(new THREE.Vector3());

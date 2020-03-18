@@ -39,7 +39,6 @@ export default class EntranceAnimator {
   enter() {
     return new Promise(resolve => {
       const tl = new TimelineMax();
-      console.debug(this.stage)
       tl
         .to(this.stage.gate.material.uniforms.uAlpha, 1, {
           value: 1,
@@ -54,15 +53,6 @@ export default class EntranceAnimator {
         onComplete: () => resolve(),
       });
       tl
-        // .to(gate.material.uniforms.uExitProgress, 1, {
-        //   value: 0.0,
-        // })
-        // .fromTo(gate.material.uniforms.uAlpha, {
-        //   value: 1.0,
-        // }, {
-        //   duration: 0.6,
-        //   value: 0,
-        // })
         .to(gate.material.uniforms.uAlpha, 0.6, {
           value: 0,
           onComplete: resolve,
