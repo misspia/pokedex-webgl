@@ -1,9 +1,9 @@
 import { TimelineMax } from 'gsap';
 
 export default class EntranceAnimator {
-  constructor(context) {
-    this.context = context;
-    this.stage = context.stage;
+  constructor(stage) {
+    this.stage = stage;
+    this.context = stage.context;
   }
   destroy() {
     window.removeEventListener('mousemove', this.onMousemove);
@@ -36,15 +36,25 @@ export default class EntranceAnimator {
       //   });
     });
   }
-  exit() {
-    const tl = new TimelineMax();
+  enter() {
     return new Promise(resolve => {
+      const tl = new TimelineMax();
       tl
-        .fromTo(this.context.stage.gate.material.uniforms.uExitProgress, {
-          value: 0.0,
-        }, {
-          value: 1.0,
-          duration: 0.5,
+        .to(this.stage.gate.material.uniforms.uAlpha, 1, {
+          value: 1,
+          onComplete: resolve,
+        })
+    })
+  }
+  exit(gate) {
+    return new Promise(resolve => {
+      const tl = new TimelineMax({
+        delay: 0.1,
+        onComplete: () => resolve(),
+      });
+      tl
+        .to(gate.material.uniforms.uAlpha, 0.6, {
+          value: 0,
           onComplete: resolve,
         })
     })

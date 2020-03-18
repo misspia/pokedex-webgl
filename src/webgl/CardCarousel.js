@@ -62,8 +62,8 @@ export default class CardCarousel {
   }
 
   load(list, anisotropy) {
-    list.splice(251);
-    // list.splice(22);
+    // list.splice(251);
+    list.splice(30);
 
     list.forEach(({ id, name, spriteUrl, types }, index) => {
       const cardParams = {

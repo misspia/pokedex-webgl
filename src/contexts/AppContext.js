@@ -15,7 +15,7 @@ export class AppProvider extends Component {
   static defaultProps = {
     value: {
       webgl: null,
-      stage: Stages.ENTRANCE,
+      stage: null,
     }
   }
   setStage = (stage) => {

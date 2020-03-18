@@ -71,17 +71,17 @@ export function fadeIn(wrapper) {
 export function fadeOut(wrapper, text) {
   const tl = new TimelineLite();
   tl
-    .from(text, 0.2, {
+    .from(text, {
       y: 0,
     })
     .to(text, 0.2, {
       y: -10,
     })
-    .to(text, 0.3, {
+    .to(text, 0.2, {
       y: 50,
       autoAlpha: 0,
     })
-    .to(wrapper, 0.3, {
+    .to(wrapper, 0.1, {
       autoAlpha: 0,
       delay: 1,
     });

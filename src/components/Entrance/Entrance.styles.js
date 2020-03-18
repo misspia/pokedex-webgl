@@ -16,15 +16,29 @@ export const Wrapper = styled.div`
 
 `;
 
+export const Letter = styled.div`
+
+`;
+
+
 export const Enter = styled.div`
+  font-size: 1.1em;
+  display: flex;
+  justify-content: center;
   color: ${Colors.black};
   cursor: pointer;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  transition: 0.3s all;
+
+  ${Letter} {
+    text-transform: uppercase;
+    margin: 0 3px;
+    transition: all 0.3s;
+  }
 
   &:hover {
-    color: ${Colors.gold};
-    letter-spacing: 5px;
+    ${Letter} {
+      margin: 0 5px;
+    }
+
   }
 `;
+

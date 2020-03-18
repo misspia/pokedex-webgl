@@ -1,4 +1,4 @@
-import { DefaultLoadingManager } from 'three';
+import { DefaultLoadingManager, StaticReadUsage } from 'three';
 import React, { useEffect, useState, useContext } from 'react';
 import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
@@ -38,6 +38,7 @@ export default function ExperiencePage({
   useEffect(() => {
     DefaultLoadingManager.onLoad = () => {
       setIsLoading(false);
+      context.setStage(Stages.ENTRANCE);
     }
 
     DefaultLoadingManager.onProgress = (_url, numLoaded, total) => {
@@ -49,8 +50,10 @@ export default function ExperiencePage({
     <S.Wrapper>
       <LoadingOverlay isActive={loading || isLoading} progress={loadingProgress} />
       {error && `ERROR: ${JSON.stringify(error)}`}
-      <Entrance onEnter={() => context.setStage(Stages.INTRO)}
-      />
+      {
+        context.stage === Stages.ENTRANCE &&
+        <Entrance onEnter={() => context.setStage(Stages.INTRO)} />
+      }
       <Profile
         id={id}
         active={isProfileActive}

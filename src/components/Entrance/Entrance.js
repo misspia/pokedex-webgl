@@ -1,6 +1,4 @@
-import React, { useEffect, useRef, useContext } from 'react';
-import { AppContext } from '../../contexts';
-import Stages from '../../constants/stages';
+import React, { useEffect, useRef } from 'react';
 import * as S from './Entrance.styles';
 import * as Animations from './Entrance.animations';
 
@@ -8,21 +6,28 @@ export default function Entrance({
   isActive = () => { },
   onEnter = () => { },
 }) {
-  const context = useContext(AppContext);
   const wrapperRef = useRef(null);
+  const lettersRef = useRef(null);
+
 
   useEffect(() => {
-    if (context.stage === Stages.ENTRANCE) {
-      Animations.reveal(wrapperRef.current);
-    } else {
-      Animations.hide(wrapperRef.current);
-    }
-  }, [context.stage]);
+    Animations.reveal(wrapperRef.current, lettersRef.current.children);
+  }, []);
 
   return (
     <S.Wrapper ref={wrapperRef}>
-      <S.Enter onClick={() => onEnter()}>
-        enter
+      <S.Enter
+        ref={lettersRef}
+        onClick={() => {
+          Animations
+            .hide(wrapperRef.current, lettersRef.current.children)
+            .then(() => onEnter())
+        }}>
+        <S.Letter>e</S.Letter>
+        <S.Letter>n</S.Letter>
+        <S.Letter>t</S.Letter>
+        <S.Letter>e</S.Letter>
+        <S.Letter>r</S.Letter>
       </S.Enter>
     </S.Wrapper>
   )

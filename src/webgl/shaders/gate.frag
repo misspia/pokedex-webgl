@@ -2,9 +2,9 @@ precision highp float;
 
 uniform vec2 uMouse;
 uniform float uExitProgress;
+uniform float uAlpha;
 uniform float uTime;
 varying vec2 vUv;
-varying float vDistance;
 
 #pragma glslify: noise = require('glsl-noise/simplex/2d')
 
@@ -15,21 +15,19 @@ float remap(float min1, float max1, float min2, float max2, float value) {
 void main() {
   vec3 color = vec3(0.95, 0.95, 1.0);
   vec3 spiritColor = vec3(0.8, 0.8, 1.0);
-  float alpha = 1.0;
+  float alpha = 1.0 - uExitProgress;
 
-  float mouseOffset = noise(uMouse) * 0.015 * remap(0.0, 1.0, -1.0, 1.0, sin(uTime * 2.5));
+  float mouseOffset = noise(uMouse) * 0.02 * remap(0.0, 1.0, -1.0, 1.0, sin(uTime * 3.0));
   vec2 mouse = uMouse + mouseOffset;
 
   float mouseDist = length(mouse - vUv);
-  float radius = 0.1;
+  float radius = 0.15;
 
-  if(mouseDist < 0.1) {
-
+  if(mouseDist < radius) {
     float mixValue = remap(0.0, 0.1, 0.0, 1.0, radius - mouseDist);
     color = mix(color, spiritColor, mixValue);
   }
-  color = mix(color, spiritColor, uExitProgress);
-  alpha = 1.0 - uExitProgress;
 
-  gl_FragColor = vec4(color, alpha);
+  gl_FragColor = vec4(color, uAlpha);
+  // gl_FragColor = vec4(uExitProgress, 0.5, 0.5, alpha);
 }
