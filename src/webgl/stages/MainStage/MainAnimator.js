@@ -35,11 +35,11 @@ export default class MainAnimator {
 
         })
         .add('spin')
-        .to(card.mesh.rotation, 0.7, {
+        .to(card.pivot.rotation, 0.7, {
           z: -Math.PI * 6,
           ease: Power2.easeOut,
         }, 'spin')
-        .to(card.mesh.scale, 0.7, {
+        .to(card.pivot.scale, 0.7, {
           y: 0.33,
           x: 0.5,
           ease: Power2.easeOut,
@@ -83,10 +83,10 @@ export default class MainAnimator {
           }
         })
         .add('spin')
-        .to(card.mesh.rotation, 0.7, {
+        .to(card.pivot.rotation, 0.7, {
           z: 0,
         }, 'spin')
-        .to(card.mesh.scale, 0.5, {
+        .to(card.pivot.scale, 0.5, {
           y: 1,
           x: 1,
         }, 'spin')
@@ -100,14 +100,14 @@ export default class MainAnimator {
   }
 
   focusCard(card) {
-    TweenMax.to(card.mesh.scale, 0.2, {
+    TweenMax.to(card.pivot.scale, 0.2, {
       x: 1.1,
       y: 1.1,
     });
   }
 
   unfocusCard(card) {
-    TweenMax.to(card.mesh.scale, 0.2, {
+    TweenMax.to(card.pivot.scale, 0.2, {
       x: 1,
       y: 1,
     });

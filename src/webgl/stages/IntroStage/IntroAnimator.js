@@ -25,6 +25,7 @@ export default class IntroAnimator {
     return Promise.all([...cardIntros, cameraIntro])
       .then((values) => {
         this.context.carousel.isRotating = true;
+        this.context.carousel.isCycling = true;
         this.context.disablePointerEvents(false);
         return values;
       });
@@ -59,8 +60,8 @@ export default class IntroAnimator {
   }
 
   cardEntrance(card, duration, delay = 0) {
-    const destination = new Vector3().copy(card.mesh.position);
-    const destination2 = new Vector3().copy(card.mesh.position);
+    const destination = new Vector3().copy(card.pivot.position);
+    const destination2 = new Vector3().copy(card.pivot.position);
     return new Promise((resolve) => {
       const tl = new TimelineMax({
         delay,
@@ -71,7 +72,7 @@ export default class IntroAnimator {
           alpha: 0,
         })
         .add('reveal')
-        .fromTo(card.mesh.position, {
+        .fromTo(card.pivot.position, {
           x: destination.x,
           y: destination.y,
           z: destination.z,
