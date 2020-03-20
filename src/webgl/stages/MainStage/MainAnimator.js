@@ -51,8 +51,8 @@ export default class MainAnimator {
           onStart: () => {
             resolve();
           },
-          strength: 24,
-          radius: 1.5,
+          strength: 18,
+          radius: 1.2,
           threshold: 0,
           ease: Power4.easeOut,
         })

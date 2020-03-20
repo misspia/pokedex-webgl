@@ -4,7 +4,7 @@ import { fullCircleRadians, calcCircumference } from '../utils';
 import EntryCard from './EntryCard';
 import { WebglEvents } from '../constants/events';
 
-export const RADIUS = 40;
+export const RADIUS = 30;
 const ENTRY_WIDTH = 6;
 const ENTRY_HEIGHT = 9;
 
@@ -15,8 +15,8 @@ const ENTRIES_PER_ROW = calcCircumference(RADIUS) / GRID_WIDTH;
 
 const ANGLE_INCREMENT = fullCircleRadians / ENTRIES_PER_ROW;
 
-const ROTATION_VELOCITY = 0.001;
-const CYCLE_VELOCITY = 0.1;
+const ROTATION_VELOCITY = 0.002;
+const CYCLE_VELOCITY = 0.01;
 
 export default class CardCarousel {
   constructor(eventDispatcher) {

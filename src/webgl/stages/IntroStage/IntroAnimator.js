@@ -1,5 +1,4 @@
 import { Vector3 } from 'three';
-import { TweenMax } from 'gsap/gsap-core';
 import { TimelineMax } from 'gsap';
 import { RADIUS } from '../../CardCarousel';
 
@@ -15,7 +14,7 @@ export default class IntroAnimator {
     this.context.disablePointerEvents(true);
 
     const delayMultiplier = 0.04;
-    const cardDuration = 0.07;
+    const cardDuration = 0.06;
     const totalDuration = this.context.carousel.cards.length * cardDuration;
 
     const cardIntros = this.context.carousel.cards.map((card, index) => (

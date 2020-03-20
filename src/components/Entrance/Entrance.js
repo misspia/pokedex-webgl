@@ -11,7 +11,7 @@ export default function Entrance({
 
 
   useEffect(() => {
-    Animations.reveal(wrapperRef.current, lettersRef.current.children);
+    Animations.enter(wrapperRef.current, lettersRef.current.children);
   }, []);
 
   return (
@@ -20,7 +20,7 @@ export default function Entrance({
         ref={lettersRef}
         onClick={() => {
           Animations
-            .hide(wrapperRef.current, lettersRef.current.children)
+            .exit(wrapperRef.current, lettersRef.current.children)
             .then(() => onEnter())
         }}>
         <S.Letter>e</S.Letter>
