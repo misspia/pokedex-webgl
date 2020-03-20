@@ -96,7 +96,7 @@ export default class CardCarousel {
     });
 
     const bbox = new THREE.Box3().setFromObject(this.pivot)
-    this.minY = bbox.min.y;
+    this.minY = bbox.min.y - ENTRY_PADDING;
     this.maxY = bbox.max.y;
     this.midY = (bbox.min.y + bbox.max.y) / 2;
   }
