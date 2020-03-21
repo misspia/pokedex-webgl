@@ -1,6 +1,7 @@
 import { Vector3 } from 'three';
 import { TimelineMax } from 'gsap';
 import { RADIUS } from '../../CardCarousel';
+import { randomFloatBetween } from '../../../utils';
 
 export default class IntroAnimator {
   constructor(context) {
@@ -13,24 +14,23 @@ export default class IntroAnimator {
   play() {
     this.context.disablePointerEvents(true);
 
-    const delayMultiplier = 0.04;
+    const minDelay = 0.5;
+    const maxDelay = 6;
     const cardDuration = 0.06;
-    const totalDuration = this.context.carousel.cards.length * cardDuration;
 
     const cardIntros = this.context.carousel.cards.map((card, index) => (
-      this.cardEntrance(card, cardDuration, index * delayMultiplier)
+      this.cardEntrance(card, cardDuration, randomFloatBetween(minDelay, maxDelay))
     ));
-    const cameraIntro = this.cameraEntrance(totalDuration / 2);
+    const cameraIntro = this.cameraEntrance(maxDelay / 2);
     return Promise.all([...cardIntros, cameraIntro])
       .then((values) => {
         this.context.carousel.isRotating = true;
-        this.context.carousel.isCycling = true;
         this.context.disablePointerEvents(false);
         return values;
       });
   }
   cameraEntrance(duration) {
-    const radius = RADIUS + 30;
+    const radius = RADIUS + 40;
     const params = {
       angle: 0,
       y: this.context.carousel.minY,
@@ -39,8 +39,6 @@ export default class IntroAnimator {
     const tl = new TimelineMax();
 
     return new Promise((resolve) => {
-      this.context.setCameraPosition(0, -25, radius);
-
       tl
         .to(params, duration, {
           angle: Math.PI * 2,
@@ -59,8 +57,8 @@ export default class IntroAnimator {
   }
 
   cardEntrance(card, duration, delay = 0) {
-    const destination = new Vector3().copy(card.pivot.position);
-    const destination2 = new Vector3().copy(card.pivot.position);
+    const start = new Vector3(0, this.context.carousel.midY, 0);
+    const end = new Vector3().copy(card.pivot.position);
     return new Promise((resolve) => {
       const tl = new TimelineMax({
         delay,
@@ -72,13 +70,13 @@ export default class IntroAnimator {
         })
         .add('reveal')
         .fromTo(card.pivot.position, {
-          x: destination.x,
-          y: destination.y,
-          z: destination.z,
+          x: start.x,
+          y: start.y,
+          z: start.z,
         }, {
-          x: destination2.x,
-          y: destination2.y,
-          z: destination2.z,
+          x: end.x,
+          y: end.y,
+          z: end.z,
         }, 'reveal')
         .to(card, duration, {
           alpha: 1

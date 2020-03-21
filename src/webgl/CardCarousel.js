@@ -3,20 +3,22 @@ import * as THREE from 'three';
 import { fullCircleRadians, calcCircumference } from '../utils';
 import EntryCard from './EntryCard';
 import { WebglEvents } from '../constants/events';
+import { TOTAL_ENTRIES } from '../constants/entries';
 
-export const RADIUS = 30;
-const ENTRY_WIDTH = 6;
-const ENTRY_HEIGHT = 9;
+export const RADIUS = 40;
+const NUM_ROWS = 3;
+const ENTRIES_PER_ROW = Math.ceil(TOTAL_ENTRIES / NUM_ROWS);
 
-const ENTRY_PADDING = 3;
-const GRID_WIDTH = ENTRY_WIDTH + ENTRY_PADDING;
-const GRID_HEIGHT = Math.floor(ENTRY_HEIGHT + ENTRY_PADDING);
-const ENTRIES_PER_ROW = calcCircumference(RADIUS) / GRID_WIDTH;
+const CIRCUMFERENCE = calcCircumference(RADIUS);
+const GRID_WIDTH = CIRCUMFERENCE / ENTRIES_PER_ROW;
+const ENTRY_WIDTH = GRID_WIDTH * 0.8;
+const ENTRY_HEIGHT = ENTRY_WIDTH * 1.33;
+const ENTRY_PADDING = GRID_WIDTH - ENTRY_WIDTH;
+const GRID_HEIGHT = ENTRY_HEIGHT + ENTRY_PADDING;
 
 const ANGLE_INCREMENT = fullCircleRadians / ENTRIES_PER_ROW;
 
 const ROTATION_VELOCITY = 0.002;
-const CYCLE_VELOCITY = 0.01;
 
 export default class CardCarousel {
   constructor(eventDispatcher) {
@@ -29,7 +31,6 @@ export default class CardCarousel {
     this.midY = 0;
 
     this.isRotating = false;
-    this.isCycling = false;
 
     this.pivot = new THREE.Group();
 
@@ -37,7 +38,6 @@ export default class CardCarousel {
       WebglEvents.CARD_CLICK,
       (e) => {
         this.isRotating = false;
-        this.isCycling = false;
       }
     );
 
@@ -45,33 +45,16 @@ export default class CardCarousel {
       WebglEvents.DEACTIVATE_ENTRY_COMPLETE,
       (e) => {
         this.isRotating = true;
-        this.isCycling = true;
       }
     );
   }
-
-  // get minY() {
-  //   const bbox = new THREE.Box3().setFromObject(this.pivot)
-  //   return bbox.min.y;
-  // }
-
-  // get maxY() {
-  //   const bbox = new THREE.Box3().setFromObject(this.pivot)
-  //   return bbox.max.y
-  // }
-
-  // get midY() {
-  //   const bbox = new THREE.Box3().setFromObject(this.pivot)
-  //   return (bbox.min.y + bbox.max.y) / 2;
-  // }
 
   get center() {
     return new THREE.Vector3(0, this.midY, 0);
   }
 
   load(list, anisotropy) {
-    list.splice(251);
-    // list.splice(50);
+    list.splice(TOTAL_ENTRIES);
 
     list.forEach(({ id, name, spriteUrl, types }, index) => {
       const cardParams = {
@@ -134,15 +117,6 @@ export default class CardCarousel {
   update() {
     if (this.isRotating) {
       this.pivot.rotation.y += ROTATION_VELOCITY;
-    }
-    if (this.isCycling) {
-      this.cards.forEach(card => {
-        if (card.positionY > this.maxY) {
-          card.positionY = this.minY;
-        } else {
-          card.positionY = card.positionY + CYCLE_VELOCITY;
-        }
-      });
     }
   }
 }
