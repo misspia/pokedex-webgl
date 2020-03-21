@@ -1,5 +1,5 @@
 import { Vector3 } from 'three';
-import { TimelineMax } from 'gsap';
+import { TimelineMax, Elastic } from 'gsap';
 import { RADIUS } from '../../CardCarousel';
 import { randomFloatBetween } from '../../../utils';
 
@@ -16,12 +16,12 @@ export default class IntroAnimator {
 
     const minDelay = 0.5;
     const maxDelay = 6;
-    const cardDuration = 0.06;
+    const cardDuration = 0.5;
 
-    const cardIntros = this.context.carousel.cards.map((card, index) => (
+    const cardIntros = this.context.carousel.cards.map(card => (
       this.cardEntrance(card, cardDuration, randomFloatBetween(minDelay, maxDelay))
     ));
-    const cameraIntro = this.cameraEntrance(maxDelay / 2);
+    const cameraIntro = this.cameraEntrance(maxDelay);
     return Promise.all([...cardIntros, cameraIntro])
       .then((values) => {
         this.context.carousel.isRotating = true;
@@ -30,10 +30,10 @@ export default class IntroAnimator {
       });
   }
   cameraEntrance(duration) {
-    const radius = RADIUS + 40;
+    const radius = RADIUS * 2;
     const params = {
       angle: 0,
-      y: this.context.carousel.minY,
+      y: this.context.carousel.minY * 1.3,
     }
     const centerCoord = this.context.carousel.center;
     const tl = new TimelineMax();
@@ -69,7 +69,7 @@ export default class IntroAnimator {
           alpha: 0,
         })
         .add('reveal')
-        .fromTo(card.pivot.position, {
+        .fromTo(card.pivot.position, duration, {
           x: start.x,
           y: start.y,
           z: start.z,
@@ -78,9 +78,16 @@ export default class IntroAnimator {
           y: end.y,
           z: end.z,
         }, 'reveal')
-        .to(card, duration, {
-          alpha: 1
-        })
+        .fromTo(this.card, duration, {
+          scale: 0.6,
+        }, {
+          scale: 1,
+          ease: Elastic.ease,
+        }, 'reveal')
+        .to(card, {
+          alpha: 1,
+          delay: duration / 2,
+        }, 'reveal')
 
     })
   }
