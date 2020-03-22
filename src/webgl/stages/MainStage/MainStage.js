@@ -21,6 +21,10 @@ export default class MainStage {
 
   }
 
+  exit() {
+
+  }
+
   init() {
     this.context.setClearColor(0x000000);
     this.setupEvents();

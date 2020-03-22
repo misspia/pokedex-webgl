@@ -22,18 +22,8 @@ export default class EntranceAnimator {
     window.addEventListener('mousemove', this.onMousemove);
     this.context.orb.setVisible(true);
 
-
-
     return new Promise(resolve => {
       resolve();
-      // const tl = new TimelineMax();
-      // tl
-      //   .from(this.context.petals.petals, {
-
-      //   })
-      //   .to(this.context.petals.petals, 1, {
-
-      //   });
     });
   }
   enter() {
@@ -49,14 +39,14 @@ export default class EntranceAnimator {
   exit(gate) {
     return new Promise(resolve => {
       const tl = new TimelineMax({
-        delay: 0.1,
         onComplete: () => resolve(),
       });
       tl
-        .to(gate.material.uniforms.uAlpha, 0.6, {
+        .to(gate.material.uniforms.uAlpha, 0.5, {
           value: 0,
           onComplete: resolve,
         })
     })
   }
+
 }

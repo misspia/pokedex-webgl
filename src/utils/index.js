@@ -33,3 +33,7 @@ export const clamp = (value, min, max) => (
 export const remap = (min1, max1, min2, max2, value) => (
   min2 + (max2 - min2) * (value - min1) / (max1 - min1)
 );
+
+export const randomFloatBetween = (min, max) => (
+  Math.random() * (max - min) + min
+);

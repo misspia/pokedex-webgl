@@ -16,9 +16,7 @@ export const Wrapper = styled.div`
 
 `;
 
-export const Letter = styled.div`
-
-`;
+export const Letter = styled.div``;
 
 
 export const Enter = styled.div`
@@ -29,6 +27,7 @@ export const Enter = styled.div`
   cursor: pointer;
 
   ${Letter} {
+    color: ${Colors.white};
     text-transform: uppercase;
     margin: 0 3px;
     transition: all 0.3s;
@@ -37,6 +36,7 @@ export const Enter = styled.div`
   &:hover {
     ${Letter} {
       margin: 0 5px;
+      color: ${Colors.black};
     }
 
   }

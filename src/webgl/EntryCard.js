@@ -56,16 +56,16 @@ export default class EntryListItem {
     this.front.name = ComponentNames.CARD_FRONT;
     this.back.name = ComponentNames.CARD_BACK;
 
-    this.mesh = new THREE.Object3D();
-    this.mesh.add(this.front);
-    this.mesh.add(this.back);
+    this.pivot = new THREE.Object3D();
+    this.pivot.add(this.front);
+    this.pivot.add(this.back);
 
-    this.mesh.name = id;
+    this.pivot.name = id;
     this.alpha = 0;
   }
 
   get layers() {
-    return this.mesh.layers;
+    return this.pivot.layers;
   }
   get frontUniforms() {
     return this.front.material.uniforms;
@@ -76,7 +76,11 @@ export default class EntryListItem {
   }
 
   set positionY(y) {
-    this.mesh.position.y = y;
+    this.pivot.position.y = y;
+  }
+
+  get positionY() {
+    return this.pivot.position.y;
   }
 
   set alpha(alpha) {
@@ -84,6 +88,10 @@ export default class EntryListItem {
     this.back.material.opacity = alpha;
   }
 
+  set scale(factor) {
+    this.front.scale.set(factor, factor, factor);
+    this.back.scale.set(factor, factor, factor);
+  }
   isFront(obj) {
     return obj === this.front;
   }
@@ -93,17 +101,19 @@ export default class EntryListItem {
   }
 
   setPosition(x = 0, y = 0, z = 0) {
-    this.mesh.position.set(x, y, z);
+    this.pivot.position.set(x, y, z);
   }
+
   setRotation(x = 0, y = 0, z = 0) {
-    this.mesh.rotation.set(x, y, z);
+    this.pivot.rotation.set(x, y, z);
   }
+
   setActiveState(isActive) {
     this.isActive = isActive;
   }
 
   setLayer(layer) {
-    this.mesh.layers.set(layer);
+    this.pivot.layers.set(layer);
     this.front.layers.set(layer);
     this.back.layers.set(layer);
   }

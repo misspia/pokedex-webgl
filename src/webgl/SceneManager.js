@@ -25,7 +25,7 @@ export default class SceneManager {
     const aspectRatio = width / height;
 
     this.camera = new THREE.PerspectiveCamera(
-      75,
+      55,
       aspectRatio,
       0.1,
       1000

@@ -1,6 +1,6 @@
 import { TimelineMax } from 'gsap';
 
-export function reveal(wrapper, letters) {
+export function enter(wrapper, letters) {
   return new Promise(resolve => {
     const tl = new TimelineMax({
       onComplete: resolve,
@@ -23,11 +23,9 @@ export function reveal(wrapper, letters) {
   });
 }
 
-export function hide(wrapper, letters) {
+export function exit(wrapper, letters) {
   return new Promise(resolve => {
-    const tl = new TimelineMax({
-      onComplete: resolve,
-    });
+    const tl = new TimelineMax();
     tl
       .to(letters, 0.3, {
         margin: '0 10px',
@@ -41,6 +39,7 @@ export function hide(wrapper, letters) {
       }, 0.2, '+=0.2')
       .from(wrapper, {
         autoAlpha: 1,
+        onComplete: resolve,
       })
       .to(wrapper, 0.2, {
         autoAlpha: 0,
