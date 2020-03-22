@@ -22,18 +22,8 @@ export default class EntranceAnimator {
     window.addEventListener('mousemove', this.onMousemove);
     this.context.orb.setVisible(true);
 
-
-
     return new Promise(resolve => {
       resolve();
-      // const tl = new TimelineMax();
-      // tl
-      //   .from(this.context.petals.petals, {
-
-      //   })
-      //   .to(this.context.petals.petals, 1, {
-
-      //   });
     });
   }
   enter() {
@@ -58,4 +48,5 @@ export default class EntranceAnimator {
         })
     })
   }
+
 }

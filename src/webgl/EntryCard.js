@@ -88,6 +88,10 @@ export default class EntryListItem {
     this.back.material.opacity = alpha;
   }
 
+  set scale(factor) {
+    this.front.scale.set(factor, factor, factor);
+    this.back.scale.set(factor, factor, factor);
+  }
   isFront(obj) {
     return obj === this.front;
   }

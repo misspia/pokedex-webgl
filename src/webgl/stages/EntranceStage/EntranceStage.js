@@ -4,6 +4,10 @@ import vertexShader from '../../shaders/gate.vert';
 import fragmentShader from '../../shaders/gate.frag';
 import ComponentNames from '../../../constants/componentNames';
 
+
+const CAMERA_DIST_OFFSET = 20;
+const GATE_DIST_OFFSET = 10;
+
 export default class EntranceStage {
   constructor(context) {
     this.context = context;
@@ -31,7 +35,7 @@ export default class EntranceStage {
 
   init() {
     this.context.setClearColor(0x000000);
-    this.context.setCameraPosition(0, 0, 7);
+    this.context.setCameraPosition(0, 0, CAMERA_DIST_OFFSET);
 
     this.context.lookAt(new THREE.Vector3());
     this.createGate();
@@ -73,6 +77,8 @@ export default class EntranceStage {
     });
     this.gate = new THREE.Mesh(geometry, material);
     this.gate.name = ComponentNames.GATE;
+
+    this.gate.position.z = GATE_DIST_OFFSET;
 
     this.context.add(this.gate);
   }

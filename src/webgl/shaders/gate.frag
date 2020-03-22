@@ -14,8 +14,8 @@ float remap(float min1, float max1, float min2, float max2, float value) {
 
 void main() {
   // vec3 color = vec3(0.95, 0.95, 1.0);
-  vec3 color = vec3(0.0, 0.0, 0.0);
-  vec3 spiritColor = vec3(0.8, 0.8, 1.0);
+  vec4 color = vec4(0.0, 0.0, 0.0, 0.0);
+  vec4 spiritColor = vec4(0.8, 0.8, 1.0, 1.0);
   float alpha = 0.0;
 
   float mouseOffset = noise(uMouse) * 0.02 * remap(0.0, 1.0, -1.0, 1.0, sin(uTime * 3.0));
@@ -27,8 +27,8 @@ void main() {
   if(mouseDist < radius) {
     float mixValue = remap(0.0, 0.1, 0.0, 1.0, radius - mouseDist);
     color = mix(color, spiritColor, mixValue);
-    alpha = 1.0;
+    alpha = color.a;
   }
 
-  gl_FragColor = vec4(color, alpha * uAlpha);
+  gl_FragColor = vec4(color.rgb, alpha * uAlpha);
 }

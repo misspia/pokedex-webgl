@@ -7,7 +7,12 @@ export default class IntroAnimator {
   constructor(context) {
     this.context = context;
   }
+
   destroy() {
+
+  }
+
+  exit() {
 
   }
 
