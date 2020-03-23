@@ -6,7 +6,7 @@ export default class Orb {
   constructor(eventDispatcher) {
     this.eventDispatcher = eventDispatcher;
 
-    const geometry = new THREE.SphereGeometry(1, 10, 10);
+    const geometry = new THREE.SphereGeometry(2, 12, 12);
     this.material = new THREE.RawShaderMaterial({
       fragmentShader,
       vertexShader,

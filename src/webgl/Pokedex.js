@@ -49,7 +49,6 @@ export default class Pokedex extends SceneManager {
     if (this.stage.destroy) {
       this.stage.destroy();
     }
-    console.debug(stage);
     switch (stage) {
       case Stages.ENTRANCE: {
         this.stage = new EntranceStage(this);

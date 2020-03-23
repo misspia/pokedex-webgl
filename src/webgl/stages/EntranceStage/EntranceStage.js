@@ -11,7 +11,7 @@ const GATE_DIST_OFFSET = 10;
 export default class EntranceStage {
   constructor(context) {
     this.context = context;
-    this.animator = new Animator(this);
+    this.animator = {};
     this.clock = new THREE.Clock();
     this.gate = {};
     this.init();
@@ -22,11 +22,11 @@ export default class EntranceStage {
   }
 
   destroy() {
-    window.removeEventListener('mousemove', this.onMouseMove);
+
   }
 
   exit() {
-    return this.animator.exit(this.gate)
+    return this.animator.exit()
       .then(() => {
         this.context.remove(this.gate);
         return;
@@ -41,9 +41,10 @@ export default class EntranceStage {
     this.createGate();
     this.fitGateToScreen();
 
+    this.animator = new Animator(this);
     this.animator.enter();
 
-    window.addEventListener('mousemove', this.onMouseMove);
+    // window.addEventListener('mousemove', this.onMouseMove);
   }
 
   onMouseMove = (e) => {
@@ -51,7 +52,7 @@ export default class EntranceStage {
     this.context.mouse.updateIntersection();
     const { intersection } = this.context.mouse;
     if (intersection && intersection.object.name === ComponentNames.GATE) {
-      this.gate.material.uniforms.uMouse.value = intersection.uv;
+      this.gate.material.uniforms.uPos.value = intersection.uv;
     }
   }
 
@@ -61,8 +62,10 @@ export default class EntranceStage {
       vertexShader,
       fragmentShader,
       uniforms: {
-        uMouse: { value: new THREE.Vector2(0, 0) },
-        uTime: { type: 'f', value: 0.0 },
+        uPos: { value: new THREE.Vector2(0.5, 0.5) },
+        uNoiseFactor: { value: 0.02 },
+        uRadius: { value: 0.15 },
+        uTime: { value: 0.0 },
         uAlpha: { value: 0 },
         uExitProgress: { value: 1.0 },
         uResolution: {
@@ -95,7 +98,6 @@ export default class EntranceStage {
     const scale = Math.max(height, width);
     this.gate.scale.x = scale;
     this.gate.scale.y = scale;
-    console.debug(height, width);
   }
 
   update() {
