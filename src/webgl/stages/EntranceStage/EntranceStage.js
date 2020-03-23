@@ -39,6 +39,7 @@ export default class EntranceStage {
 
     this.context.lookAt(new THREE.Vector3());
     this.createGate();
+    this.fitGateToScreen();
 
     this.animator.enter();
 
@@ -55,7 +56,7 @@ export default class EntranceStage {
   }
 
   createGate() {
-    const geometry = new THREE.PlaneGeometry(5, 5);
+    const geometry = new THREE.PlaneGeometry(1, 1);
     const material = new THREE.RawShaderMaterial({
       vertexShader,
       fragmentShader,
@@ -81,6 +82,20 @@ export default class EntranceStage {
     this.gate.position.z = GATE_DIST_OFFSET;
 
     this.context.add(this.gate);
+  }
+  fitGateToScreen() {
+    const cameraZ = this.context.camera.position.z;
+    const planeZ = this.gate.position.z;
+    const distance = cameraZ - planeZ;
+    const { aspect } = this.context.camera;
+    const vFov = this.context.camera.fov * Math.PI / 180;
+    const height = 2 * Math.tan(vFov / 2) * distance;
+    const width = height * aspect;
+
+    const scale = Math.max(height, width);
+    this.gate.scale.x = scale;
+    this.gate.scale.y = scale;
+    console.debug(height, width);
   }
 
   update() {
