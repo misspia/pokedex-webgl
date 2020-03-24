@@ -1,6 +1,6 @@
 import { Vector3 } from 'three';
 import { TimelineMax, Elastic } from 'gsap';
-import { RADIUS } from '../../CardCarousel';
+import { CAROUSEL_RADIUS } from '../../../constants/entries';
 import { randomFloatBetween } from '../../../utils';
 
 export default class IntroAnimator {
@@ -20,7 +20,7 @@ export default class IntroAnimator {
     this.context.disablePointerEvents(true);
 
     const minDelay = 0.5;
-    const maxDelay = 6;
+    const maxDelay = 3;
     const cardDuration = 0.5;
 
     const cardIntros = this.context.carousel.cards.map(card => (
@@ -35,7 +35,7 @@ export default class IntroAnimator {
       });
   }
   cameraEntrance(duration) {
-    const radius = RADIUS * 2;
+    const radius = CAROUSEL_RADIUS * 3;
     const params = {
       angle: 0,
       y: this.context.carousel.minY * 1.3,
@@ -47,7 +47,7 @@ export default class IntroAnimator {
       tl
         .to(params, duration, {
           angle: Math.PI * 2,
-          y: this.context.carousel.midY,
+          y: this.context.carousel.maxY + 10,
           onUpdate: () => {
             this.context.setCameraPosition(
               radius * Math.cos(params.angle) + centerCoord.x,

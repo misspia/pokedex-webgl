@@ -3,10 +3,10 @@ import Animator from './EntranceAnimator';
 import vertexShader from '../../shaders/gate.vert';
 import fragmentShader from '../../shaders/gate.frag';
 import ComponentNames from '../../../constants/componentNames';
+import { ORB_RADIUS } from '../../../constants/entries';
 
-
-const CAMERA_DIST_OFFSET = 20;
-const GATE_DIST_OFFSET = 10;
+const CAMERA_DIST_OFFSET = ORB_RADIUS * 3;
+const GATE_DIST_OFFSET = CAMERA_DIST_OFFSET * 0.8;
 
 export default class EntranceStage {
   constructor(context) {
@@ -14,6 +14,7 @@ export default class EntranceStage {
     this.animator = {};
     this.clock = new THREE.Clock();
     this.gate = {};
+    this.focal = new THREE.Vector3(0, this.context.orb.position.y, CAMERA_DIST_OFFSET);
     this.init();
   }
 
@@ -35,10 +36,12 @@ export default class EntranceStage {
 
   init() {
     this.context.setClearColor(0x000000);
-    this.context.setCameraPosition(0, 0, CAMERA_DIST_OFFSET);
 
-    this.context.lookAt(new THREE.Vector3());
-    this.createGate();
+
+    this.context.setCameraPosition(this.focal.x, this.focal.y, this.focal.z);
+
+    this.context.lookAt(this.focal);
+    this.createGate(this.focal);
     this.fitGateToScreen();
 
     this.animator = new Animator(this);
@@ -82,6 +85,8 @@ export default class EntranceStage {
     this.gate = new THREE.Mesh(geometry, material);
     this.gate.name = ComponentNames.GATE;
 
+    this.gate.position.x = this.focal.x;
+    this.gate.position.y = this.focal.y;
     this.gate.position.z = GATE_DIST_OFFSET;
 
     this.context.add(this.gate);

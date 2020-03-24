@@ -23,11 +23,10 @@ export const Enter = styled.div`
   font-size: 1.1em;
   display: flex;
   justify-content: center;
-  color: ${Colors.black};
   cursor: pointer;
 
   ${Letter} {
-    color: ${Colors.white};
+    color: ${Colors.black};
     text-transform: uppercase;
     margin: 0 3px;
     transition: all 0.3s;
