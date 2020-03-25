@@ -43,10 +43,7 @@ export default class EntranceAnimator {
     return new Promise(resolve => {
       const { uPos, uRadius, uAlpha, uNoiseFactor } = this.gate.material.uniforms;
       const tl = new TimelineMax({
-        onComplete: () => {
-          this.orb.setType();
-          resolve();
-        },
+        onComplete: resolve,
       });
       tl
         .to(uNoiseFactor, 0.3, {
@@ -59,22 +56,9 @@ export default class EntranceAnimator {
           value: 0.1,
           delay: 0.2
         })
-        .add('gate-orb')
         .to(uAlpha, 0.5, {
           value: 0,
-        }, 'gate-orb')
-        .to(this.orb.scale, 0.5, {
-          x: 0.5,
-          y: 0.5,
-          z: 0.5,
-        }, 'gate-orb')
-        .to(this.orb.scale, 0.3, {
-          x: 1,
-          y: 1,
-          z: 1,
-          delay: 0.2,
         })
-
     })
   }
 

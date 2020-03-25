@@ -5,7 +5,7 @@ import fragmentShader from '../shaders/gate.frag';
 import ComponentNames from '../../constants/componentNames';
 import { ORB_RADIUS } from '../../constants/entries';
 
-const CAMERA_DIST_OFFSET = ORB_RADIUS * 3;
+const CAMERA_DIST_OFFSET = ORB_RADIUS * 5;
 const GATE_DIST_OFFSET = CAMERA_DIST_OFFSET * 0.8;
 
 export default class EntranceStage {
@@ -14,7 +14,11 @@ export default class EntranceStage {
     this.animator = {};
     this.clock = new THREE.Clock();
     this.gate = {};
-    this.focal = new THREE.Vector3(0, this.context.orb.position.y, CAMERA_DIST_OFFSET);
+    this.focal = new THREE.Vector3(
+      0,
+      this.context.orb.position.y,
+      CAMERA_DIST_OFFSET
+    );
     this.init();
   }
 
@@ -30,7 +34,7 @@ export default class EntranceStage {
     return this.animator.exit()
       .then(() => {
         this.context.remove(this.gate);
-        return;
+        return this.context.orb.setType();
       })
   }
 
