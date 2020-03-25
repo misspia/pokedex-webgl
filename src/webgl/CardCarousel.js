@@ -5,7 +5,7 @@ import EntryCard from './EntryCard';
 import { WebglEvents } from '../constants/events';
 import { TOTAL_ENTRIES, CAROUSEL_RADIUS } from '../constants/entries';
 
-const NUM_ROWS = 2;
+const NUM_ROWS = 3;
 const ENTRIES_PER_ROW = Math.ceil(TOTAL_ENTRIES / NUM_ROWS);
 
 const CIRCUMFERENCE = calcCircumference(CAROUSEL_RADIUS);

@@ -1,5 +1,5 @@
-import Animtor from './IntroAnimator';
-import Stages from '../../../constants/stages';
+import Animtor from '../animators/IntroAnimator';
+import Stages from '../../constants/stages';
 export default class IntroStage {
   constructor(context) {
     this.context = context;

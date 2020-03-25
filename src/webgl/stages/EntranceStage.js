@@ -1,9 +1,9 @@
 import * as THREE from 'three';
-import Animator from './EntranceAnimator';
-import vertexShader from '../../shaders/gate.vert';
-import fragmentShader from '../../shaders/gate.frag';
-import ComponentNames from '../../../constants/componentNames';
-import { ORB_RADIUS } from '../../../constants/entries';
+import Animator from '../animators/EntranceAnimator';
+import vertexShader from '../shaders/gate.vert';
+import fragmentShader from '../shaders/gate.frag';
+import ComponentNames from '../../constants/componentNames';
+import { ORB_RADIUS } from '../../constants/entries';
 
 const CAMERA_DIST_OFFSET = ORB_RADIUS * 3;
 const GATE_DIST_OFFSET = CAMERA_DIST_OFFSET * 0.8;

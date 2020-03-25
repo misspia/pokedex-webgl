@@ -1,3 +1,3 @@
-export { default as EntranceStage } from './EntranceStage/EntranceStage';
-export { default as IntroStage } from './IntroStage/IntroStage';
-export { default as MainStage } from './MainStage/MainStage';
+export { default as EntranceStage } from './EntranceStage';
+export { default as IntroStage } from './IntroStage';
+export { default as MainStage } from './MainStage';

@@ -1,7 +1,7 @@
 import { Vector3 } from 'three';
 import { TimelineMax, Elastic } from 'gsap';
-import { CAROUSEL_RADIUS } from '../../../constants/entries';
-import { randomFloatBetween } from '../../../utils';
+import { CAROUSEL_RADIUS } from '../../constants/entries';
+import { randomFloatBetween } from '../../utils';
 
 export default class IntroAnimator {
   constructor(context) {
@@ -35,10 +35,11 @@ export default class IntroAnimator {
       });
   }
   cameraEntrance(duration) {
-    const radius = CAROUSEL_RADIUS * 3;
+    const radius = CAROUSEL_RADIUS * 2.5;
+    const yDestination = this.context.carousel.maxY + 10;
     const params = {
       angle: 0,
-      y: this.context.carousel.minY * 1.3,
+      y: this.context.carousel.minY,
     }
     const centerCoord = this.context.carousel.center;
     const tl = new TimelineMax();
@@ -47,7 +48,7 @@ export default class IntroAnimator {
       tl
         .to(params, duration, {
           angle: Math.PI * 2,
-          y: this.context.carousel.maxY + 10,
+          y: yDestination,
           onUpdate: () => {
             this.context.setCameraPosition(
               radius * Math.cos(params.angle) + centerCoord.x,
