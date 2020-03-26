@@ -46,6 +46,14 @@ export default class IntroAnimator {
 
     return new Promise((resolve) => {
       tl
+        .to(this.context.camera.position, 1, {
+          x: radius * Math.cos(params.angle) + centerCoord.x,
+          y: params.y,
+          z: radius * Math.sin(params.angle) + centerCoord.z,
+          onUpdate: () => {
+            this.context.lookAt(centerCoord);
+          }
+        })
         .to(params, duration, {
           angle: Math.PI * 2,
           y: yDestination,
@@ -71,9 +79,6 @@ export default class IntroAnimator {
         onComplete: resolve
       });
       tl
-        .from(card, {
-          alpha: 0,
-        })
         .add('reveal')
         .fromTo(card.pivot.position, duration, {
           x: start.x,
@@ -90,9 +95,10 @@ export default class IntroAnimator {
           scale: 1,
           ease: Elastic.ease,
         }, 'reveal')
-        .to(card, {
+        .fromTo(card, duration, {
+          alpha: 0,
+        }, {
           alpha: 1,
-          delay: duration / 2,
         }, 'reveal')
 
     })

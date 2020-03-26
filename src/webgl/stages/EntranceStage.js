@@ -33,14 +33,12 @@ export default class EntranceStage {
   exit() {
     return this.animator.exit()
       .then(() => {
-        this.context.remove(this.gate);
         return this.context.orb.setType();
       })
   }
 
   init() {
     this.context.setClearColor(0x000000);
-
 
     this.context.setCameraPosition(this.focal.x, this.focal.y, this.focal.z);
 

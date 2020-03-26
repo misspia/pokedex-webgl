@@ -1,6 +1,11 @@
 import * as THREE from 'three';
-import fragmentShader from './shaders/orb.frag';
-import vertexShader from './shaders/orb.vert';
+import shellFragment from './shaders/shell.frag';
+import shellVertex from './shaders/shell.vert';
+import outerCoreFragment from './shaders/outerCore.frag';
+import outerCoreVertex from './shaders/outerCore.vert';
+import innerCoreFragment from './shaders/innerCore.frag';
+import innerCoreVertex from './shaders/innerCore.vert';
+
 import { ORB_RADIUS } from '../constants/entries';
 import Animator from './animators/OrbAnimator';
 import Types from '../constants/types';
@@ -43,11 +48,11 @@ export default class Orb {
   createShell() {
     const geometry = new THREE.SphereGeometry(ORB_RADIUS, 32, 32);
     const material = new THREE.RawShaderMaterial({
-      fragmentShader,
-      vertexShader,
+      fragmentShader: shellFragment,
+      vertexShader: shellVertex,
       uniforms: {
         uTime: { value: 0 },
-        uAlpha: { value: 0.5 },
+        uAlpha: { value: 1 },
         uColor: { value: new THREE.Vector3() },
         uColorProgress: { value: 0.0 },
       },
@@ -60,8 +65,8 @@ export default class Orb {
   createOuterCore() {
     const geometry = new THREE.SphereGeometry(ORB_RADIUS * OUTER_CORE_RADIUS_FACTOR, 32, 32);
     const material = new THREE.RawShaderMaterial({
-      fragmentShader,
-      vertexShader,
+      fragmentShader: outerCoreFragment,
+      vertexShader: outerCoreVertex,
       uniforms: {
         uTime: { value: 0 },
         uAlpha: { value: 0.5 },
@@ -77,8 +82,8 @@ export default class Orb {
   createInnerCore() {
     const geometry = new THREE.SphereGeometry(ORB_RADIUS * INNER_CORE_RADIUS_FACTOR, 32, 32);
     const material = new THREE.RawShaderMaterial({
-      fragmentShader,
-      vertexShader,
+      fragmentShader: innerCoreFragment,
+      vertexShader: innerCoreVertex,
       uniforms: {
         uTime: { value: 0 },
         uAlpha: { value: 0.5 },
@@ -104,6 +109,6 @@ export default class Orb {
   }
 
   setType(type = Types.normal) {
-    this.animator.setType(type);
+    return this.animator.setType(type);
   }
 }

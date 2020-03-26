@@ -20,14 +20,19 @@ export default class OrbAnimator {
             this.shellUniforms.uColor.value = Colors.typesVector[type];
           },
         })
+        .add('shell')
         .to(this.context.shell.scale, 1, {
-          x: 1.5,
-          y: 1.5,
-          z: 1.5,
-        })
+          x: 2,
+          y: 2,
+          z: 2,
+        }, 'shell')
         .to(this.shellUniforms.uColorProgress, 1, {
           value: 1,
-        })
+        }, 'shell')
+        .to(this.shellUniforms.uAlpha, 1, {
+          value: 0.2,
+        }, 'shell')
+
     });
   }
 }
