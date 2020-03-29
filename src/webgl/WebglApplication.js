@@ -1,6 +1,6 @@
 import { EventDispatcher } from 'three';
 import Pokedex from './Pokedex';
-import createGUI from '../utils/createGUI';
+import GUI from '../utils/GUI';
 import Stages from '../constants/stages';
 import { AppEvents } from '../constants/events';
 
@@ -9,6 +9,7 @@ export default class WebglApplication extends EventDispatcher {
     super();
     this.webglMain = new Pokedex(this);
     this.stage = Stages.ENTRANCE;
+    this.gui = {};
   }
   init(canvas) {
     this.webglMain.setup(canvas);
@@ -38,7 +39,7 @@ export default class WebglApplication extends EventDispatcher {
   }
 
   createGUI(container) {
-    createGUI(this.webglMain, container);
+    this.gui = new GUI(this.webglMain, container);
   }
 
   draw() {

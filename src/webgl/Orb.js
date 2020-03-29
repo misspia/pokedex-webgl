@@ -41,6 +41,14 @@ export default class Orb {
     return this.shell.material.uniforms;
   }
 
+  get outerCoreUniforms() {
+    return this.outerCore.material.uniforms;
+  }
+
+  get innerCoreUniforms() {
+    return this.innerCore.material.uniforms;
+  }
+
   set wireframe(isWireframe) {
     this.material.wireframe = isWireframe;
   }
