@@ -1,7 +1,7 @@
 import { Vector3 } from 'three';
 import { TimelineMax, Elastic } from 'gsap';
-import { RADIUS } from '../../CardCarousel';
-import { randomFloatBetween } from '../../../utils';
+import { CAROUSEL_RADIUS } from '../../constants/entries';
+import { randomFloatBetween } from '../../utils';
 
 export default class IntroAnimator {
   constructor(context) {
@@ -20,7 +20,7 @@ export default class IntroAnimator {
     this.context.disablePointerEvents(true);
 
     const minDelay = 0.5;
-    const maxDelay = 6;
+    const maxDelay = 3;
     const cardDuration = 0.5;
 
     const cardIntros = this.context.carousel.cards.map(card => (
@@ -35,19 +35,28 @@ export default class IntroAnimator {
       });
   }
   cameraEntrance(duration) {
-    const radius = RADIUS * 2;
+    const radius = CAROUSEL_RADIUS * 2.5;
+    const yDestination = this.context.carousel.maxY + 10;
     const params = {
       angle: 0,
-      y: this.context.carousel.minY * 1.3,
+      y: this.context.carousel.minY,
     }
     const centerCoord = this.context.carousel.center;
     const tl = new TimelineMax();
 
     return new Promise((resolve) => {
       tl
+        .to(this.context.camera.position, 1, {
+          x: radius * Math.cos(params.angle) + centerCoord.x,
+          y: params.y,
+          z: radius * Math.sin(params.angle) + centerCoord.z,
+          onUpdate: () => {
+            this.context.lookAt(centerCoord);
+          }
+        })
         .to(params, duration, {
           angle: Math.PI * 2,
-          y: this.context.carousel.midY,
+          y: yDestination,
           onUpdate: () => {
             this.context.setCameraPosition(
               radius * Math.cos(params.angle) + centerCoord.x,
@@ -70,9 +79,6 @@ export default class IntroAnimator {
         onComplete: resolve
       });
       tl
-        .from(card, {
-          alpha: 0,
-        })
         .add('reveal')
         .fromTo(card.pivot.position, duration, {
           x: start.x,
@@ -89,9 +95,10 @@ export default class IntroAnimator {
           scale: 1,
           ease: Elastic.ease,
         }, 'reveal')
-        .to(card, {
+        .fromTo(card, duration, {
+          alpha: 0,
+        }, {
           alpha: 1,
-          delay: duration / 2,
         }, 'reveal')
 
     })

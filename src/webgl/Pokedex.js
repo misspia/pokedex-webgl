@@ -43,13 +43,13 @@ export default class Pokedex extends SceneManager {
   load(list) {
     this.carousel.load(list);
     this.add(this.carousel.pivot);
+    this.orb.setPosition(0, this.carousel.midY, 0);
   }
 
   setStage(stage) {
     if (this.stage.destroy) {
       this.stage.destroy();
     }
-    console.debug(stage);
     switch (stage) {
       case Stages.ENTRANCE: {
         this.stage = new EntranceStage(this);

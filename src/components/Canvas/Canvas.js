@@ -16,7 +16,7 @@ export default function Canvas({
   useEffect(() => {
     context.webgl.init(canvasRef.current);
     context.webgl.load(entries);
-    // context.webgl.createGUI(guiRef.current);
+    context.webgl.createGUI(guiRef.current);
     context.webgl.draw();
 
     context.webgl.addEventListener(

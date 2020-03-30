@@ -4,7 +4,7 @@ uniform sampler2D uSpriteTexture;
 uniform float uContentVisibility;
 uniform float uBGVisibility;
 uniform vec3 uTypeColor;
-uniform float alpha;
+uniform float uAlpha;
 
 varying vec2 vUv;
 
@@ -22,6 +22,6 @@ void main() {
   }
 
   color.rgb = mix(color.rgb, bgColor.rgb, uBGVisibility);
-  gl_FragColor = vec4(color.rgb, alpha);
+  gl_FragColor = vec4(color.rgb, uAlpha);
 }
 

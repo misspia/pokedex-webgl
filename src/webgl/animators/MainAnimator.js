@@ -1,6 +1,6 @@
 import { TweenMax } from 'gsap/gsap-core';
 import { TimelineMax, Power2, Power4 } from 'gsap';
-import Layers from '../../../constants/layers';
+import Layers from '../../constants/layers';
 
 
 export default class MainAnimator {

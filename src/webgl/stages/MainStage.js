@@ -1,5 +1,5 @@
-import { WebglEvents } from '../../../constants/events';
-import Animator from './MainAnimator';
+import { WebglEvents } from '../../constants/events';
+import Animator from '../animators/MainAnimator';
 
 export default class MainStage {
   constructor(context) {

@@ -39,7 +39,7 @@ export default class EntryListItem {
         uContentVisibility: { type: 'f', value: 0, },
         uBGVisibility: { type: 'f', value: 0, },
         uTypeColor: { type: 'v3', value: Colors.typesVector[mainType] },
-        alpha: { type: 'f', value: 1 },
+        uAlpha: { type: 'f', value: 1 },
       },
     });
 
@@ -84,7 +84,7 @@ export default class EntryListItem {
   }
 
   set alpha(alpha) {
-    this.frontUniforms.alpha.value = alpha;
+    this.frontUniforms.uAlpha.value = alpha;
     this.back.material.opacity = alpha;
   }
 

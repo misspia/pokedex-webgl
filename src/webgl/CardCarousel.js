@@ -3,13 +3,12 @@ import * as THREE from 'three';
 import { fullCircleRadians, calcCircumference } from '../utils';
 import EntryCard from './EntryCard';
 import { WebglEvents } from '../constants/events';
-import { TOTAL_ENTRIES } from '../constants/entries';
+import { TOTAL_ENTRIES, CAROUSEL_RADIUS } from '../constants/entries';
 
-export const RADIUS = 40;
 const NUM_ROWS = 3;
 const ENTRIES_PER_ROW = Math.ceil(TOTAL_ENTRIES / NUM_ROWS);
 
-const CIRCUMFERENCE = calcCircumference(RADIUS);
+const CIRCUMFERENCE = calcCircumference(CAROUSEL_RADIUS);
 const GRID_WIDTH = CIRCUMFERENCE / ENTRIES_PER_ROW;
 const ENTRY_WIDTH = GRID_WIDTH * 0.8;
 const ENTRY_HEIGHT = ENTRY_WIDTH * 1.33;
@@ -89,9 +88,9 @@ export default class CardCarousel {
     const angle = ANGLE_INCREMENT * index;
     const verticalOffset = -Math.floor(index / ENTRIES_PER_ROW) * GRID_HEIGHT;
     return {
-      x: RADIUS * Math.cos(angle) + centerCoord.x,
+      x: CAROUSEL_RADIUS * Math.cos(angle) + centerCoord.x,
       y: centerCoord.y + verticalOffset,
-      z: RADIUS * Math.sin(angle) + centerCoord.z,
+      z: CAROUSEL_RADIUS * Math.sin(angle) + centerCoord.z,
     }
   }
 
