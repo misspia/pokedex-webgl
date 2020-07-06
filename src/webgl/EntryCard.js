@@ -59,9 +59,12 @@ export default class EntryListItem {
     this.pivot = new THREE.Object3D();
     this.pivot.add(this.front);
     this.pivot.add(this.back);
+    this.front.castShadow = true;
+    this.back.castShadow = true;
+    this.pivot.castShadow = true;
 
     this.pivot.name = id;
-    this.alpha = 0;
+    this.alpha = 1;
   }
 
   get layers() {
@@ -75,12 +78,12 @@ export default class EntryListItem {
     return this.back.material.uniforms;
   }
 
-  set positionY(y) {
-    this.pivot.position.y = y;
+  get position() {
+    return this.pivot.position;
   }
 
-  get positionY() {
-    return this.pivot.position.y;
+  get rotation() {
+    return this.pivot.rotation;
   }
 
   set alpha(alpha) {

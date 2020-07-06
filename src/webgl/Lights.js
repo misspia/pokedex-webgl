@@ -7,6 +7,8 @@ export default class Lights {
     this.spot.shadow.mapSize.height = 1024;
     this.spot.position.set(0, 150, 0);
 
+    this.spotHelper = new THREE.SpotLightHelper(this.spot, 0xff0000);
+
     this.ambient = new THREE.AmbientLight(0xffffff, 0.25);
 
     this.directional = new THREE.DirectionalLight(0xffffff, 0.75);

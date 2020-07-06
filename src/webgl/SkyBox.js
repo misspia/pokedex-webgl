@@ -25,47 +25,55 @@ THREE.Object3D.prototype.rotateAroundWorldAxis = function () {
 
 }();
 
-export default class SkyBox {
-  constructor({ size = 1000, mouse }) {
+export default class Skybox {
+  constructor({
+    width = 1000,
+    height = 1000,
+    depth = 1000,
+    mouse
+  }) {
     this.mouse = mouse;
+    this.width = width;
+    this.height = height;
+    this.depth = depth;
 
-    const geometry = new THREE.BoxGeometry(size, size, size);
+    const geometry = new THREE.BoxGeometry(this.width, this.height, this.depth);
+    /**
+     * remove top face
+     */
+    geometry.faces.splice(4, 2);
+
     const material = new THREE.MeshPhongMaterial({
       color: 0xffffff,
       side: THREE.DoubleSide,
     });
-    this.mesh = new THREE.Mesh(geometry, material);
-    this.mesh.receiveShadow = true;
-    this.mesh.position.y = this.mesh.position.y = size / 2 - 0.2;
-    this.group = new THREE.Group();
-
-    this.add(this.mesh);
+    this.pivot = new THREE.Mesh(geometry, material);
+    this.pivot.receiveShadow = true;
+    this.pivot.position.y = this.pivot.position.y = this.height / 2 - 0.2;
   }
   setPosition({ x, y, z }) {
     if (x) {
-      this.mesh.position.x = x;
+      this.pivot.position.x = x;
     }
     if (y) {
-      this.mesh.position.y = y;
+      this.pivot.position.y = y;
     }
     if (z) {
-      this.mesh.position.z = z;
+      this.pivot.position.z = z;
     }
   }
-  add(obj) {
-    this.group.add(obj);
-  }
+
   tilt() {
     // const xVelocity = getVelocity(this.mouse.x);
     // const zVelocity = getVelocity(this.mouse.y);
 
-    // this.group.rotation.x = clamp(
-    //   this.group.rotation.x + xVelocity,
+    // this.pivot.rotation.x = clamp(
+    //   this.pivot.rotation.x + xVelocity,
     //   MIN_TILT,
     //   MAX_TILT
     // );
-    // this.group.rotation.z = clamp(
-    //   this.group.rotation.z + zVelocity,
+    // this.pivot.rotation.z = clamp(
+    //   this.pivot.rotation.z + zVelocity,
     //   MIN_TILT,
     //   MAX_TILT
     // );
