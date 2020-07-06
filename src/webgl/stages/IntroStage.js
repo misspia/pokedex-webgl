@@ -13,7 +13,8 @@ export default class IntroStage {
 
     this.animator.play()
       .then(() => {
-        this.context.setStage(Stages.MAIN);
+        console.debug('[complete]')
+        // this.context.setStage(Stages.MAIN);
       })
   }
 

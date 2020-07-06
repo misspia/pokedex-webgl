@@ -10,7 +10,7 @@ export default class GUI {
       container.appendChild(this.gui.domElement);
     }
     // this.createCardBloomFolder();
-    this.createOrbFolder();
+    // this.createOrbFolder();
   }
   createCardBloomFolder() {
     const folder = this.gui.addFolder('bloom');

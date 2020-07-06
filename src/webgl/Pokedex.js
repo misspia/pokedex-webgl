@@ -1,7 +1,6 @@
 import SceneManager from './SceneManager';
 import Lights from './Lights';
 import CardCarousel from './CardCarousel';
-import Orb from './Orb';
 import PostProcessor from './PostProcessor';
 
 import { WebglEvents } from '../constants/events';
@@ -16,7 +15,6 @@ export default class Pokedex extends SceneManager {
     this.eventDispatcher = eventDispatcher;
     this.pp = new PostProcessor(this);
     this.lights = new Lights();
-    this.orb = new Orb();
     this.carousel = {};
     this.activeCard = {};
     this.focusCard = null;
@@ -30,7 +28,6 @@ export default class Pokedex extends SceneManager {
 
     this.add(this.lights.directional);
     this.add(this.lights.ambient);
-    this.add(this.orb.pivot);
 
     this.carousel = new CardCarousel(
       this.eventDispatcher,
@@ -43,7 +40,6 @@ export default class Pokedex extends SceneManager {
   load(list) {
     this.carousel.load(list);
     this.add(this.carousel.pivot);
-    this.orb.setPosition(0, this.carousel.midY, 0);
   }
 
   setStage(stage) {

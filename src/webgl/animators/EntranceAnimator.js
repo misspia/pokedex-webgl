@@ -49,14 +49,14 @@ export default class EntranceAnimator {
         .to(uNoiseFactor, 0.3, {
           value: 0,
         })
-        .to(uRadius, 0.5, {
+        .to(uRadius, 0.4, {
           value: 0.2
         })
         .to(uRadius, 0.2, {
           value: 0.1,
           delay: 0.2
         })
-        .to(uAlpha, 0.5, {
+        .to(uAlpha, 0.4, {
           value: 0,
         })
     })
