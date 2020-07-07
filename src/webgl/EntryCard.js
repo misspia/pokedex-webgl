@@ -32,7 +32,6 @@ export default class EntryListItem {
       fragmentShader,
       vertexShader,
       flatShading: true,
-      transparent: true,
       uniforms: this.uniforms,
       uniforms: {
         uSpriteTexture: { type: 't', value: spriteTexture },
@@ -61,7 +60,6 @@ export default class EntryListItem {
     this.pivot.add(this.back);
     this.front.castShadow = true;
     this.back.castShadow = true;
-    this.pivot.castShadow = true;
 
     this.pivot.name = id;
     this.alpha = 1;

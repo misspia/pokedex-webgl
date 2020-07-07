@@ -1,3 +1,4 @@
+import * as THREE from 'three';
 import SceneManager from './SceneManager';
 import Lights from './Lights';
 import CardCarousel from './CardCarousel';
@@ -29,13 +30,15 @@ export default class Pokedex extends SceneManager {
 
   setup(canvas) {
     this.initializeScene(canvas);
+    this.renderer.shadowMap.enabled = true;
+    this.renderer.shadowMap.soft = true;
 
     this.pp.setup();
 
     this.add(this.lights.directional);
     this.add(this.lights.ambient);
     this.add(this.lights.spot);
-    this.add(this.lights.spotHelper);
+
 
     this.carousel = new CardCarousel(
       this.eventDispatcher,
