@@ -28,7 +28,7 @@ export default class SceneManager {
       60,
       aspectRatio,
       0.1,
-      1500
+      3000
     );
     this.camera.position.set(-50, -15, -50);
     this.camera.rotation.set(toRadians(-90), 0, 0);
@@ -39,7 +39,7 @@ export default class SceneManager {
       alpha: false,
       stencil: false,
     });
-    this.setClearColor(0x000000);
+    this.setClearColor(0xffffff);
     const dpr = Math.min(1.5, window.devicePixelRatio);
     this.renderer.setPixelRatio(dpr);
 

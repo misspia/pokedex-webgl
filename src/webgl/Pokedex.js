@@ -17,11 +17,7 @@ export default class Pokedex extends SceneManager {
     this.eventDispatcher = eventDispatcher;
     this.pp = new PostProcessor(this);
     this.lights = new Lights();
-    this.skybox = new Skybox({
-      width: 500,
-      depth: 500,
-      height: 1,
-     });
+    this.skybox = new Skybox();
     this.carousel = {};
     this.activeCard = {};
     this.focusCard = null;

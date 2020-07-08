@@ -1,6 +1,5 @@
 import { Vector3 } from 'three';
-import gsap, { TimelineMax, Elastic } from 'gsap';
-import { CAROUSEL_RADIUS } from '../../constants/entries';
+import gsap, { Power2 } from 'gsap';
 import { randomFloatBetween } from '../../utils';
 
 export default class IntroAnimator {
@@ -17,34 +16,49 @@ export default class IntroAnimator {
   }
 
   play() {
-    console.debug('PLAY INTRO')
     this.context.disablePointerEvents(true);
 
     const minDelay = 0.5;
-    const maxDelay = 3;
+    const maxDelay = 2;
     const cardDuration = 1;
 
     const cardIntros = this.context.carousel.cards.map(card => (
       this.cardEntrance(card, cardDuration, randomFloatBetween(minDelay, maxDelay))
     ));
-    const cameraIntro = this.cameraEntrance(maxDelay);
+    const cameraIntro = this.cameraEntrance(maxDelay + cardDuration);
     return Promise.all([...cardIntros, cameraIntro])
       .then((values) => {
-        this.context.carousel.isRotating = true;
+        // this.context.carousel.isRotating = true;
         this.context.disablePointerEvents(false);
         return values;
       });
   }
 
   cameraEntrance(duration) {
-    this.context.camera.lookAt(new Vector3());
+    const target = new Vector3(0, 500, 0);
+    const endTarget = new Vector3(0, 0, 0);
     return new Promise((resolve, reject) => {
-      resolve();
+      gsap.timeline({
+        onComplete: resolve,
+      })
+      .to(this.context.camera.position, 0.5, {
+        y: 50,
+      })
+      .to(target, duration, {
+        x: endTarget.x,
+        y: endTarget.y,
+        z: endTarget.z,
+        onUpdate: () => {
+          this.context.camera.lookAt(target);
+        }
+      });
     });
   }
 
   cardEntrance(card, duration, delay = 0) {
-    const start = new Vector3(0, 100, 0);
+    const start = new Vector3().copy(card.pivot.position);
+    start.y = 600;
+
     const end = new Vector3().copy(card.pivot.position);
     return new Promise((resolve) => {
       gsap.timeline({
@@ -60,6 +74,7 @@ export default class IntroAnimator {
           x: end.x,
           y: end.y,
           z: end.z,
+          ease: Power2.easeIn,
         }, 'reveal')
         .fromTo(card, 0.1, {
           alpha: 0,

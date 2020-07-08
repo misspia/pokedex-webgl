@@ -5,6 +5,7 @@ import ProfileArtwork from '../ProfileArtwork';
 import SummaryBox from '../SummaryBox';
 import StatsBox from '../StatsBox';
 import EvolutionDiagram from '../EvolutionDiagram';
+import { LoadingOverlay } from '../common';
 import { formatNationalNo } from '../../utils';
 
 const SUMMARY = 'summary';
@@ -75,7 +76,7 @@ export default function ProfileOverview({
 
   return (
     <S.Wrapper>
-      {/* <LoadingOverlay isActive={isLoading} /> */}
+      <LoadingOverlay isActive={isLoading} />
       <S.Header type={types[0]}>
         <S.Title>
           #{formatNationalNo(id)} {name}

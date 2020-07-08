@@ -26,16 +26,10 @@ THREE.Object3D.prototype.rotateAroundWorldAxis = function () {
 }();
 
 export default class Skybox {
-  constructor({
-    width = 1000,
-    height = 1000,
-    depth = 1000,
-    mouse
-  }) {
-    this.mouse = mouse;
-    this.width = width;
-    this.height = height;
-    this.depth = depth;
+  constructor() {
+    this.width = 5000;
+    this.depth = 5000;
+    this.height = 20;
 
     const geometry = new THREE.BoxGeometry(this.width, this.height, this.depth);
     /**
@@ -61,38 +55,5 @@ export default class Skybox {
     if (z) {
       this.pivot.position.z = z;
     }
-  }
-
-  tilt() {
-    // const xVelocity = getVelocity(this.mouse.x);
-    // const zVelocity = getVelocity(this.mouse.y);
-
-    // this.pivot.rotation.x = clamp(
-    //   this.pivot.rotation.x + xVelocity,
-    //   MIN_TILT,
-    //   MAX_TILT
-    // );
-    // this.pivot.rotation.z = clamp(
-    //   this.pivot.rotation.z + zVelocity,
-    //   MIN_TILT,
-    //   MAX_TILT
-    // );
-  }
-}
-
-const MAX_TILT = toRadians(3);
-const MIN_TILT = toRadians(-3);
-const TILT_VELOCITY = 0.01;
-const TILT_THRESHOLD = 0;
-
-function getVelocity(pos) {
-  if (pos > TILT_THRESHOLD) {
-    return TILT_VELOCITY;
-  }
-  if (pos < -TILT_THRESHOLD) {
-    return -TILT_VELOCITY;
-  }
-  else {
-    return 0;
   }
 }

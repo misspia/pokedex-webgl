@@ -32,7 +32,7 @@ export default class WebglApplication extends EventDispatcher {
   }
 
   playMain() {
-    // this.webglMain.playMain();
+    this.webglMain.playMain();
   }
   deactivateEntry() {
     this.webglMain.dispatchDeactivateEntry()
