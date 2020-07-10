@@ -42,11 +42,6 @@ export default class EntryListItem {
       },
     });
 
-    // const backMaterial = new THREE.MeshBasicMaterial({
-    //   color: 0xffffff,
-    //   side: THREE.BackSide,
-    //   transparent: true,
-    // });
     const backMaterial = new THREE.MeshPhongMaterial({
       color: 0xffffff,
       side: THREE.BackSide,

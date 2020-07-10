@@ -40,10 +40,14 @@ export default class EntranceAnimator {
     })
   }
   exit() {
+    this.context.disablePointerEvents(true);
     return new Promise(resolve => {
       const { uPos, uRadius, uAlpha, uNoiseFactor } = this.gate.material.uniforms;
       const tl = new TimelineMax({
-        onComplete: resolve,
+        onComplete: () => {
+          // this.context.disablePointerEvents(false);
+          resolve();
+        },
       });
       tl
         .to(uNoiseFactor, 0.3, {

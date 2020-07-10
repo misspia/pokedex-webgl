@@ -28,7 +28,6 @@ export default class IntroAnimator {
     const cameraIntro = this.cameraEntrance(maxDelay + cardDuration);
     return Promise.all([...cardIntros, cameraIntro])
       .then((values) => {
-        // this.context.carousel.isRotating = true;
         this.context.disablePointerEvents(false);
         return values;
       });
@@ -39,26 +38,26 @@ export default class IntroAnimator {
     const endTarget = new Vector3(0, 0, 0);
     return new Promise((resolve, reject) => {
       gsap.timeline({
-        delay: 0.2,
         onComplete: resolve,
         onUpdate: () => {
           this.context.camera.lookAt(target);
         },
       })
-      .to(this.context.camera.position, 0.5, {
+      .to(this.context.camera.position, 0.3, {
         y: 100,
         z: 50,
       })
-      .to(target, 1, {
+      .to(target, 0.8, {
         x: target.x,
         y: target.y,
         z: target.z,
       })
-      .to(target, duration * 1.2, {
+      .to(target, duration, {
         x: endTarget.x,
         y: endTarget.y,
         z: endTarget.z,
         ease: Power2.easeOut,
+        delay: 0.2,
       });
     });
   }

@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import SceneManager from './SceneManager';
 import Lights from './Lights';
 import CardCarousel from './CardCarousel';
-import Skybox from './Skybox';
+import Floor from './Floor';
 import PostProcessor from './PostProcessor';
 
 import { WebglEvents } from '../constants/events';
@@ -17,7 +17,7 @@ export default class Pokedex extends SceneManager {
     this.eventDispatcher = eventDispatcher;
     this.pp = new PostProcessor(this);
     this.lights = new Lights();
-    this.skybox = new Skybox();
+    this.floor = new Floor();
     this.carousel = {};
     this.activeCard = {};
     this.focusCard = null;
@@ -45,7 +45,7 @@ export default class Pokedex extends SceneManager {
   load(list) {
     this.carousel.load(list);
     this.add(this.carousel.pivot);
-    this.add(this.skybox.pivot)
+    this.add(this.floor.pivot)
   }
 
   setStage(stage) {
