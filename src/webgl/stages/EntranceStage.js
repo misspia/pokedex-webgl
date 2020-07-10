@@ -3,6 +3,7 @@ import Animator from '../animators/EntranceAnimator';
 import vertexShader from '../shaders/gate.vert';
 import fragmentShader from '../shaders/gate.frag';
 import ComponentNames from '../../constants/componentNames';
+import gsap, { Power2 } from 'gsap';
 
 export default class EntranceStage {
   constructor(context) {
@@ -27,6 +28,7 @@ export default class EntranceStage {
   }
 
   exit() {
+    window.removeEventListener('mousemove', this.onMouseMove);
     return this.animator.exit();
   }
 
@@ -35,13 +37,12 @@ export default class EntranceStage {
     this.context.camera.position.set(this.focal.x, this.focal.y, 100);
     this.context.camera.lookAt(this.focal);
 
-
     this.createGate();
 
     this.animator = new Animator(this);
     this.animator.enter();
 
-    // window.addEventListener('mousemove', this.onMouseMove);
+    window.addEventListener('mousemove', this.onMouseMove);
   }
 
   onMouseMove = (e) => {
@@ -49,7 +50,12 @@ export default class EntranceStage {
     this.context.mouse.updateIntersection();
     const { intersection } = this.context.mouse;
     if (intersection && intersection.object.name === ComponentNames.GATE) {
-      this.gate.material.uniforms.uPos.value = intersection.uv;
+      gsap.to(this.gate.material.uniforms.uPos.value, 1.2, {
+        x: intersection.uv.x,
+        y: intersection.uv.y,
+        ease: Power2.easeOut,
+      });
+
     }
   }
 

@@ -11,8 +11,7 @@ export default class IntroStage {
   init() {
     this.animator.play()
       .then(() => {
-        console.debug('[complete]')
-        // this.context.setStage(Stages.MAIN);
+        this.context.setStage(Stages.MAIN);
       })
   }
 

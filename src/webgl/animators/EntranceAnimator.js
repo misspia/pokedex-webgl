@@ -53,7 +53,7 @@ export default class EntranceAnimator {
           value: 0.2
         })
         .to(uRadius, 0.2, {
-          value: 0.1,
+          value: 0.02,
           delay: 0.2
         })
         .to(uAlpha, 0.4, {

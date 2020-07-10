@@ -27,23 +27,24 @@ THREE.Object3D.prototype.rotateAroundWorldAxis = function () {
 
 export default class Skybox {
   constructor() {
-    this.width = 5000;
-    this.depth = 5000;
-    this.height = 20;
+    this.width = 500;
+    this.depth = 500;
+    this.height = 0.1;
 
-    const geometry = new THREE.BoxGeometry(this.width, this.height, this.depth);
+    const geometry = new THREE.PlaneGeometry(this.width, this.depth);
     /**
      * remove top face
      */
-    geometry.faces.splice(4, 2);
+    // geometry.faces.splice(4, 2);
 
     const material = new THREE.MeshPhongMaterial({
       color: 0xffffff,
-      side: THREE.DoubleSide,
+      side: THREE.FrontSide,
     });
     this.pivot = new THREE.Mesh(geometry, material);
     this.pivot.receiveShadow = true;
-    this.pivot.position.y = this.pivot.position.y = this.height / 2 - 0.2;
+    // this.pivot.position.y = this.pivot.position.y = this.height / 2 - 0.2;
+    this.pivot.rotation.x -= Math.PI / 2;
   }
   setPosition({ x, y, z }) {
     if (x) {

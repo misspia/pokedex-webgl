@@ -1,4 +1,4 @@
-import { DefaultLoadingManager, StaticReadUsage } from 'three';
+import { DefaultLoadingManager } from 'three';
 import React, { useEffect, useState, useContext } from 'react';
 import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
@@ -9,7 +9,7 @@ import { AppContext } from '../../contexts';
 import { LoadingOverlay } from '../../components/common';
 import Stages from '../../constants/stages';
 import Entrance from '../../components/Entrance';
-import Cavnas from '../../components/Canvas';
+import Canvas from '../../components/Canvas';
 import Profile from '../../components/Profile';
 
 const GET_ALL_POKEMON = gql`
@@ -50,10 +50,10 @@ export default function ExperiencePage({
     <S.Wrapper>
       <LoadingOverlay isActive={loading || isLoading} progress={loadingProgress} />
       {error && `ERROR: ${JSON.stringify(error)}`}
-      {/* {
+      {
         context.stage === Stages.ENTRANCE &&
         <Entrance onEnter={() => context.setStage(Stages.INTRO)} />
-      } */}
+      }
       <Profile
         id={id}
         active={isProfileActive}
@@ -61,7 +61,7 @@ export default function ExperiencePage({
       />
       {
         data &&
-        <Cavnas
+        <Canvas
           entries={clone(data.GetAllPokemon)}
           selectEntry={id => {
             setId(id);

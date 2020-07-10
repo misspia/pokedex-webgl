@@ -35,6 +35,7 @@ export default class CardCarousel {
     this.isRotating = false;
 
     this.pivot = new THREE.Group();
+    this.bbox = new THREE.Box3();
 
     this.eventDispatcher.addEventListener(
       WebglEvents.CARD_CLICK,
@@ -51,8 +52,8 @@ export default class CardCarousel {
     );
   }
 
-  get center() {
-    return new THREE.Vector3(0, this.midY, 0);
+  getCenter(vector) {
+    return this.bbox.setFromObject(this.pivot).getCenter(vector);
   }
 
   load(list, anisotropy) {
@@ -78,7 +79,7 @@ export default class CardCarousel {
       this.cards.push(card);
     });
 
-    const bbox = new THREE.Box3().setFromObject(this.pivot)
+    const bbox = this.bbox.setFromObject(this.pivot)
     this.minY = bbox.min.y - ENTRY_PADDING;
     this.maxY = bbox.max.y;
     this.midY = (bbox.min.y + bbox.max.y) / 2;
@@ -104,9 +105,9 @@ export default class CardCarousel {
   }
 
   update() {
-    if (this.isRotating) {
-      this.pivot.rotation.y += ROTATION_VELOCITY;
-    }
+    // if (this.isRotating) {
+    //   this.pivot.rotation.y += ROTATION_VELOCITY;
+    // }
   }
 }
 
