@@ -25,10 +25,10 @@ export default class SceneManager {
     const aspectRatio = width / height;
 
     this.camera = new THREE.PerspectiveCamera(
-      55,
+      60,
       aspectRatio,
       0.1,
-      1000
+      3000
     );
     this.camera.position.set(-50, -15, -50);
     this.camera.rotation.set(toRadians(-90), 0, 0);
@@ -39,11 +39,11 @@ export default class SceneManager {
       alpha: false,
       stencil: false,
     });
-    this.setClearColor(0x000000);
+    this.setClearColor(0xffffff);
     const dpr = Math.min(1.5, window.devicePixelRatio);
     this.renderer.setPixelRatio(dpr);
 
-    // this.controls = new Controls(this);
+    this.controls = new Controls(this);
 
     this.resize();
   }

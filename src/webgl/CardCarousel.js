@@ -6,16 +6,19 @@ import { WebglEvents } from '../constants/events';
 import { TOTAL_ENTRIES, CAROUSEL_RADIUS } from '../constants/entries';
 
 const NUM_ROWS = 3;
-const ENTRIES_PER_ROW = Math.ceil(TOTAL_ENTRIES / NUM_ROWS);
+const NUM_COLS = Math.ceil(TOTAL_ENTRIES / NUM_ROWS);
 
 const CIRCUMFERENCE = calcCircumference(CAROUSEL_RADIUS);
-const GRID_WIDTH = CIRCUMFERENCE / ENTRIES_PER_ROW;
+const GRID_WIDTH = CIRCUMFERENCE / NUM_COLS;
 const ENTRY_WIDTH = GRID_WIDTH * 0.8;
 const ENTRY_HEIGHT = ENTRY_WIDTH * 1.33;
 const ENTRY_PADDING = GRID_WIDTH - ENTRY_WIDTH;
 const GRID_HEIGHT = ENTRY_HEIGHT + ENTRY_PADDING;
 
-const ANGLE_INCREMENT = fullCircleRadians / ENTRIES_PER_ROW;
+const TOTAL_WIDTH = GRID_WIDTH * NUM_COLS;
+const TOTAL_HEIGHT = GRID_HEIGHT * NUM_ROWS;
+
+const ANGLE_INCREMENT = fullCircleRadians / NUM_COLS;
 
 const ROTATION_VELOCITY = 0.002;
 
@@ -32,6 +35,7 @@ export default class CardCarousel {
     this.isRotating = false;
 
     this.pivot = new THREE.Group();
+    this.bbox = new THREE.Box3();
 
     this.eventDispatcher.addEventListener(
       WebglEvents.CARD_CLICK,
@@ -48,8 +52,8 @@ export default class CardCarousel {
     );
   }
 
-  get center() {
-    return new THREE.Vector3(0, this.midY, 0);
+  getCenter(vector) {
+    return this.bbox.setFromObject(this.pivot).getCenter(vector);
   }
 
   load(list, anisotropy) {
@@ -69,41 +73,28 @@ export default class CardCarousel {
 
       const { x: tx, y: ty, z: tz } = this.calcListItemPosition(index);
       card.setPosition(tx, ty, tz);
-
-      const { x: rx, y: ry, z: rz } = this.calcListItemRotation(index);
-      card.setRotation(rx, ry, rz);
+      card.rotation.x -= Math.PI / 2;
 
       this.pivot.add(card.pivot);
       this.cards.push(card);
     });
 
-    const bbox = new THREE.Box3().setFromObject(this.pivot)
+    const bbox = this.bbox.setFromObject(this.pivot)
     this.minY = bbox.min.y - ENTRY_PADDING;
     this.maxY = bbox.max.y;
     this.midY = (bbox.min.y + bbox.max.y) / 2;
   }
 
   calcListItemPosition(index) {
-    const centerCoord = this.pivot.position;
-    const angle = ANGLE_INCREMENT * index;
-    const verticalOffset = -Math.floor(index / ENTRIES_PER_ROW) * GRID_HEIGHT;
+    const col = index % NUM_COLS;
+    const row = (index - (index % NUM_COLS)) / NUM_COLS;
     return {
-      x: CAROUSEL_RADIUS * Math.cos(angle) + centerCoord.x,
-      y: centerCoord.y + verticalOffset,
-      z: CAROUSEL_RADIUS * Math.sin(angle) + centerCoord.z,
+      x: col * GRID_WIDTH - TOTAL_WIDTH / 2,
+      y: 2,
+      z: row * GRID_HEIGHT - TOTAL_HEIGHT / 2,
     }
   }
 
-  calcListItemRotation(index) {
-    const ANGLE_INCREMENT = fullCircleRadians / ENTRIES_PER_ROW;
-    const angleOffset = Math.PI / 2;
-    const angle = -ANGLE_INCREMENT * index;
-    return {
-      x: 0,
-      y: angleOffset + angle,
-      z: 0,
-    };
-  }
 
   getEntryCardById(id) {
     return this.cards.find((entry) => entry.id === id);
@@ -114,9 +105,9 @@ export default class CardCarousel {
   }
 
   update() {
-    if (this.isRotating) {
-      this.pivot.rotation.y += ROTATION_VELOCITY;
-    }
+    // if (this.isRotating) {
+    //   this.pivot.rotation.y += ROTATION_VELOCITY;
+    // }
   }
 }
 

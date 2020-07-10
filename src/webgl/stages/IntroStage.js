@@ -9,8 +9,6 @@ export default class IntroStage {
   }
 
   init() {
-    this.context.setClearColor(0x000000);
-
     this.animator.play()
       .then(() => {
         this.context.setStage(Stages.MAIN);

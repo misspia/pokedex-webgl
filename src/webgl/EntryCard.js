@@ -32,7 +32,6 @@ export default class EntryListItem {
       fragmentShader,
       vertexShader,
       flatShading: true,
-      transparent: true,
       uniforms: this.uniforms,
       uniforms: {
         uSpriteTexture: { type: 't', value: spriteTexture },
@@ -43,7 +42,7 @@ export default class EntryListItem {
       },
     });
 
-    const backMaterial = new THREE.MeshBasicMaterial({
+    const backMaterial = new THREE.MeshPhongMaterial({
       color: 0xffffff,
       side: THREE.BackSide,
       transparent: true,
@@ -59,9 +58,11 @@ export default class EntryListItem {
     this.pivot = new THREE.Object3D();
     this.pivot.add(this.front);
     this.pivot.add(this.back);
+    this.front.castShadow = true;
+    this.back.castShadow = true;
 
     this.pivot.name = id;
-    this.alpha = 0;
+    this.alpha = 1;
   }
 
   get layers() {
@@ -75,12 +76,12 @@ export default class EntryListItem {
     return this.back.material.uniforms;
   }
 
-  set positionY(y) {
-    this.pivot.position.y = y;
+  get position() {
+    return this.pivot.position;
   }
 
-  get positionY() {
-    return this.pivot.position.y;
+  get rotation() {
+    return this.pivot.rotation;
   }
 
   set alpha(alpha) {

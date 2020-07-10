@@ -1,7 +1,8 @@
+import * as THREE from 'three';
 import SceneManager from './SceneManager';
 import Lights from './Lights';
 import CardCarousel from './CardCarousel';
-import Orb from './Orb';
+import Floor from './Floor';
 import PostProcessor from './PostProcessor';
 
 import { WebglEvents } from '../constants/events';
@@ -16,7 +17,7 @@ export default class Pokedex extends SceneManager {
     this.eventDispatcher = eventDispatcher;
     this.pp = new PostProcessor(this);
     this.lights = new Lights();
-    this.orb = new Orb();
+    this.floor = new Floor();
     this.carousel = {};
     this.activeCard = {};
     this.focusCard = null;
@@ -25,12 +26,13 @@ export default class Pokedex extends SceneManager {
 
   setup(canvas) {
     this.initializeScene(canvas);
+    this.renderer.shadowMap.enabled = true;
+    this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
     this.pp.setup();
 
-    this.add(this.lights.directional);
     this.add(this.lights.ambient);
-    this.add(this.orb.pivot);
+    this.add(this.lights.spot);
 
     this.carousel = new CardCarousel(
       this.eventDispatcher,
@@ -43,7 +45,7 @@ export default class Pokedex extends SceneManager {
   load(list) {
     this.carousel.load(list);
     this.add(this.carousel.pivot);
-    this.orb.setPosition(0, this.carousel.midY, 0);
+    this.add(this.floor.pivot)
   }
 
   setStage(stage) {

@@ -16,8 +16,8 @@ float remap(float min1, float max1, float min2, float max2, float value) {
 }
 
 void main() {
-  vec4 color = vec4(0.0, 0.0, 0.0, 0.0);
-  vec4 spiritColor = vec4(0.8, 0.8, 1.0, 1.0);
+  vec4 color = vec4(0.9, 0.4, 0.4, 0.0);
+  vec4 spiritColor = vec4(1.0, 0.8, 0.8, 1.0);
   float alpha = 0.0;
 
   float offset = noise(uPos) * uNoiseFactor * remap(0.0, 1.0, -1.0, 1.0, sin(uTime * 3.0));
