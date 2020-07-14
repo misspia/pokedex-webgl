@@ -28,7 +28,7 @@ export default class SceneManager {
       60,
       aspectRatio,
       0.1,
-      3000
+      700
     );
     this.camera.position.set(-50, -15, -50);
     this.camera.rotation.set(toRadians(-90), 0, 0);

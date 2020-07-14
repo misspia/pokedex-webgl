@@ -52,8 +52,7 @@ export default class EntryListItem {
     this.pivot = new THREE.Object3D();
     this.pivot.add(this.front);
     this.pivot.add(this.back);
-    this.front.castShadow = true;
-    this.back.castShadow = true;
+    this.castShadow = true;
 
     this.pivot.name = id;
     this.alpha = 1;
@@ -83,6 +82,11 @@ export default class EntryListItem {
   set alpha(alpha) {
     this.frontUniforms.uAlpha.value = alpha;
     this.back.material.opacity = alpha;
+  }
+
+  set castShadow(isCastingShadow) {
+    this.front.castShadow = isCastingShadow;
+    this.back.castShadow = isCastingShadow;
   }
 
   set scale(factor) {
