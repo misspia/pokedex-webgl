@@ -78,7 +78,7 @@ export default class CardCarousel {
 
       const { x: tx, y: ty, z: tz } = this.calcListItemPosition(index);
       card.setPosition(tx, ty, tz);
-      card.rotation.x -= Math.PI / 2;
+      card.rotation.x = Math.PI / 2;
 
       this.pivot.add(card.pivot);
       this.cards.push(card);

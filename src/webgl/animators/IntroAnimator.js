@@ -20,7 +20,7 @@ export default class IntroAnimator {
 
     const minDelay = 0.3;
     const maxDelay = 2;
-    const cardDuration = 1;
+    const cardDuration = 2;
 
     const cardIntros = this.context.carousel.cards.map(card => (
       this.cardEntrance(card, cardDuration, randomFloatBetween(minDelay, maxDelay))
@@ -45,7 +45,7 @@ export default class IntroAnimator {
       })
         .to(this.context.camera.position, 0.3, {
           y: 100,
-          z: 50,
+          z: -50,
         })
         .to(target, duration * 0.5, {
           x: target.x,
@@ -69,7 +69,7 @@ export default class IntroAnimator {
     const end = new Vector3().copy(card.pivot.position);
 
     const endRotation = new Vector3().copy(card.pivot.rotation);
-    card.rotation.set(0, toRadians(180), 0);
+    card.rotation.set(0, toRadians(0), 0);
 
     return new Promise((resolve) => {
       gsap.timeline({
@@ -87,11 +87,11 @@ export default class IntroAnimator {
           z: end.z,
           ease: Power2.easeIn,
         }, 'reveal')
-        .to(card.rotation, duration * 0.1, {
+        .to(card.rotation, duration * 0.02, {
           x: endRotation.x,
           y: endRotation.y,
           z: endRotation.z,
-          delay: duration * 0.9,
+          delay: duration * 0.98,
         }, 'reveal')
         .fromTo(card, 0.1, {
           alpha: 0,

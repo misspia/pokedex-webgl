@@ -19,7 +19,6 @@ export default class CardBack {
       map: texture,
     });
     this.pivot = new THREE.Mesh(this.geometry, this.material);
-    this.pivot.rotation.z += Math.PI;
   }
 
   clone() {

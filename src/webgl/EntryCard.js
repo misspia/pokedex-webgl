@@ -17,7 +17,11 @@ export default class EntryListItem {
     this.id = id;
     this.name = name;
     this.isActive = false;
-    const geometry = new THREE.PlaneGeometry(width, height, 2, 2);
+    this.isFlipped = false;
+    this.width = width;
+    this.height = height;
+
+    const geometry = new THREE.PlaneGeometry(this.width, this.height, 2, 2);
 
     const spriteTexture = new THREE.TextureLoader().load(spriteUrl);
     spriteTexture.generateMipmaps = true;
@@ -57,7 +61,7 @@ export default class EntryListItem {
     this.pivot.name = id;
     this.alpha = 1;
 
-    this.rotation.x += Math.PI;
+    // this.rotation.x = Math.PI;
   }
 
   get layers() {
@@ -111,6 +115,10 @@ export default class EntryListItem {
 
   setActiveState(isActive) {
     this.isActive = isActive;
+  }
+
+  setFlippedState(isFlipped) {
+    this.isFlipped = isFlipped;
   }
 
   setLayer(layer) {
