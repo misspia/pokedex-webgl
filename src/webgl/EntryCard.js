@@ -60,8 +60,6 @@ export default class EntryListItem {
 
     this.pivot.name = id;
     this.alpha = 1;
-
-    // this.rotation.x = Math.PI;
   }
 
   get layers() {
