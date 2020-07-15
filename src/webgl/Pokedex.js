@@ -105,8 +105,5 @@ export default class Pokedex extends SceneManager {
     this.renderer.clearDepth();
     this.camera.layers.set(Layers.BASE);
     this.renderer.render(this.scene, this.camera);
-
-
-
   }
 }

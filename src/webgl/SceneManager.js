@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { toRadians } from '../utils';
 import Controls from './Controls';
 import Mouse from './Mouse';
+import Camera from './Camera';
 
 export default class SceneManager {
   constructor() {
@@ -24,12 +25,7 @@ export default class SceneManager {
     const width = window.innerWeight;
     const aspectRatio = width / height;
 
-    this.camera = new THREE.PerspectiveCamera(
-      60,
-      aspectRatio,
-      0.1,
-      3000
-    );
+    this.camera = new Camera(60, aspectRatio, 0.1, 700);
     this.camera.position.set(-50, -15, -50);
     this.camera.rotation.set(toRadians(-90), 0, 0);
 

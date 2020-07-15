@@ -42,6 +42,12 @@ export default class Mouse {
     }
   }
   isIntersectionCardFront() {
-    return this.intersection.object.name === ComponentNames.CARD_FRONT;
+    return this.intersection &&
+      this.intersection.object.name === ComponentNames.CARD_FRONT;
+  }
+
+  isIntersectionCardBack() {
+    return this.intersection &&
+      this.intersection.object.name === ComponentNames.CARD_BACK;
   }
 }

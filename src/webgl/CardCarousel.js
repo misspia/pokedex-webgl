@@ -4,6 +4,7 @@ import { fullCircleRadians, calcCircumference } from '../utils';
 import EntryCard from './EntryCard';
 import { WebglEvents } from '../constants/events';
 import { TOTAL_ENTRIES, CAROUSEL_RADIUS } from '../constants/entries';
+import CardBack from './CardBack';
 
 const NUM_ROWS = 3;
 const NUM_COLS = Math.ceil(TOTAL_ENTRIES / NUM_ROWS);
@@ -56,24 +57,28 @@ export default class CardCarousel {
     return this.bbox.setFromObject(this.pivot).getCenter(vector);
   }
 
-  load(list, anisotropy) {
+  load(list) {
     list.splice(TOTAL_ENTRIES);
 
+    const cardBack = new CardBack({
+      width: ENTRY_WIDTH,
+      height: ENTRY_HEIGHT,
+    });
     list.forEach(({ id, name, spriteUrl, types }, index) => {
       const cardParams = {
         id,
         name,
         spriteUrl,
         types,
-        anisotropy,
         width: ENTRY_WIDTH,
         height: ENTRY_HEIGHT,
+        backMesh: cardBack.clone(),
       };
       const card = new EntryCard(cardParams);
 
       const { x: tx, y: ty, z: tz } = this.calcListItemPosition(index);
       card.setPosition(tx, ty, tz);
-      card.rotation.x -= Math.PI / 2;
+      card.rotation.x = Math.PI / 2;
 
       this.pivot.add(card.pivot);
       this.cards.push(card);

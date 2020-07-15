@@ -9,19 +9,23 @@ export default class EntryListItem {
     id = 0,
     name = '',
     spriteUrl = '',
-    anisotropy = 1,
     types = [],
     height = 5,
     width = 5,
+    backMesh,
   }) {
     this.id = id;
     this.name = name;
     this.isActive = false;
-    const geometry = new THREE.PlaneGeometry(width, height, 2, 2);
+    this.isFlipped = false;
+    this.width = width;
+    this.height = height;
+
+    const geometry = new THREE.PlaneGeometry(this.width, this.height, 2, 2);
 
     const spriteTexture = new THREE.TextureLoader().load(spriteUrl);
     spriteTexture.generateMipmaps = true;
-    spriteTexture.anisotropy = anisotropy;
+    spriteTexture.anisotropy = 1;
 
     spriteTexture.minFilter = THREE.LinearFilter;
 
@@ -42,14 +46,8 @@ export default class EntryListItem {
       },
     });
 
-    const backMaterial = new THREE.MeshPhongMaterial({
-      color: 0xffffff,
-      side: THREE.BackSide,
-      transparent: true,
-    });
-
     this.front = new THREE.Mesh(geometry, frontMaterial);
-    this.back = new THREE.Mesh(geometry, backMaterial);
+    this.back = backMesh;
     this.back.position.z = -0.01;
 
     this.front.name = ComponentNames.CARD_FRONT;
@@ -58,8 +56,7 @@ export default class EntryListItem {
     this.pivot = new THREE.Object3D();
     this.pivot.add(this.front);
     this.pivot.add(this.back);
-    this.front.castShadow = true;
-    this.back.castShadow = true;
+    this.castShadow = true;
 
     this.pivot.name = id;
     this.alpha = 1;
@@ -89,6 +86,11 @@ export default class EntryListItem {
     this.back.material.opacity = alpha;
   }
 
+  set castShadow(isCastingShadow) {
+    this.front.castShadow = isCastingShadow;
+    this.back.castShadow = isCastingShadow;
+  }
+
   set scale(factor) {
     this.front.scale.set(factor, factor, factor);
     this.back.scale.set(factor, factor, factor);
@@ -111,6 +113,10 @@ export default class EntryListItem {
 
   setActiveState(isActive) {
     this.isActive = isActive;
+  }
+
+  setFlippedState(isFlipped) {
+    this.isFlipped = isFlipped;
   }
 
   setLayer(layer) {

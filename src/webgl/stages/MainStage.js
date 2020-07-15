@@ -39,42 +39,22 @@ export default class MainStage {
         card: this.mouse.intersection,
       });
 
-      if (!this.mouse.intersection) {
-        if (!!this.focusCard) {
-          this.eventDispatcher.dispatchEvent({
-            type: WebglEvents.UNFOCUS_CARD,
-            card: this.focusCard,
-          });
-
-          this.focusCard = null;
-        }
+      if(!this.mouse.intersection) {
         return;
       }
-
+      if(!this.mouse.isIntersectionCardBack()) {
+        return;
+      }
 
       const { name: id } = this.mouse.intersection.object.parent;
+      const card = this.carousel.getEntryCardById(id);
 
-      if (!this.focusCard || this.focusCard.id === id) {
+      if(card.isFlipped) {
         return;
       }
+      card.setFlippedState(true);
+      this.animator.flipCard(card);
 
-      if (
-        this.focusCard.id !== this.mouse.intersection.obj
-      ) {
-        this.eventDispatcher.dispatchEvent({
-          type: WebglEvents.UNFOCUS_CARD,
-          card: this.focusCard,
-        });
-      }
-      if (this.mouse.intersection) {
-        const { name: id } = this.mouse.intersection.object.parent;
-        this.focusCard = this.carousel.getEntryCardById(id);
-
-        this.eventDispatcher.dispatchEvent({
-          type: WebglEvents.FOCUS_CARD,
-          card: this.focusCard,
-        });
-      }
     });
 
 
@@ -120,20 +100,6 @@ export default class MainStage {
           });
       }
     );
-
-    this.eventDispatcher.addEventListener(
-      WebglEvents.FOCUS_CARD,
-      (e) => {
-        this.animator.focusCard(e.card);
-      }
-    );
-
-    this.eventDispatcher.addEventListener(
-      WebglEvents.UNFOCUS_CARD,
-      (e) => {
-        this.animator.unfocusCard(e.card);
-      }
-    )
   }
 
   update() {

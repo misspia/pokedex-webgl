@@ -1,5 +1,6 @@
 export default {
   loadingSprite: require('../assets/pokeball.png'),
+  cardBack: require('../assets/cardBack.jpg'),
   normal: require('../assets/normal.png'),
   fighting: require('../assets/fighting.png'),
   flying: require('../assets/flying.png'),

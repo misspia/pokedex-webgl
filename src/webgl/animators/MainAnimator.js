@@ -1,4 +1,4 @@
-import { TweenMax } from 'gsap/gsap-core';
+import gsap from 'gsap';
 import { TimelineMax, Power2, Power4 } from 'gsap';
 import Layers from '../../constants/layers';
 
@@ -99,19 +99,18 @@ export default class MainAnimator {
     })
   }
 
-  focusCard(card) {
-    TweenMax.to(card.pivot.scale, 0.2, {
-      x: 1.1,
-      y: 1.1,
+  flipCard(card) {
+    const endY = card.position.y;
+
+    gsap.timeline()
+    .to(card.position, 0.1, {
+      y: endY + card.width,
+    })
+    .to(card.rotation, 0.3, {
+      y: -Math.PI,
+    })
+    .to(card.position, 0.1, {
+      y: endY,
     });
   }
-
-  unfocusCard(card) {
-    TweenMax.to(card.pivot.scale, 0.2, {
-      x: 1,
-      y: 1,
-    });
-
-  }
-
 }
