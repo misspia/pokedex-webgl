@@ -36,7 +36,7 @@ export default class MainStage {
 
       this.eventDispatcher.dispatchEvent({
         type: WebglEvents.MOUSEMOVE,
-        card: this.mouse.intersection,
+        card: this.mouse.isIntersectionCard() ? this.mouse.intersection : null,
       });
 
       if(!this.mouse.intersection) {

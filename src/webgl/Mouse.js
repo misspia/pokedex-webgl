@@ -50,4 +50,8 @@ export default class Mouse {
     return this.intersection &&
       this.intersection.object.name === ComponentNames.CARD_BACK;
   }
+
+  isIntersectionCard() {
+    return this.isIntersectionCardBack() || this.isIntersectionCardFront();
+  }
 }
