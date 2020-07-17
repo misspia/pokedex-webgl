@@ -22,7 +22,4 @@ export default class Controls extends OrbitControls {
 
     // this.controls.update();
   }
-  update() {
-
-  }
 }

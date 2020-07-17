@@ -44,8 +44,9 @@ export default class IntroAnimator {
         },
       })
         .to(this.context.camera.position, 0.1, {
+          x: 0,
           y: 100,
-          z: -50,
+          z: -30,
         })
         .to(target, duration * 0.5, {
           x: target.x,
