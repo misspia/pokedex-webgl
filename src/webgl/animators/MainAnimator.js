@@ -1,7 +1,7 @@
 import gsap from 'gsap';
 import { Power4 } from 'gsap';
 import Layers from '../../constants/layers';
-import { Vector3, Matrix4 } from 'three';
+import { Vector3 } from 'three';
 
 
 export default class MainAnimator {
@@ -10,6 +10,9 @@ export default class MainAnimator {
     this.pp = context.pp;
     this.returnCameraPosition = new Vector3();
     this.cameraRotation = new Vector3().copy(this.context.camera.rotation);
+    this.cameraYPositionInactive = 100;
+    this.cameraYPositionActive = 60;
+    this.target = new Vector3();
   }
 
   play() {
@@ -19,12 +22,11 @@ export default class MainAnimator {
   }
 
   activateCard(card) {
-    const yOffset = 70;
-    const cameraPosition = new Vector3().copy(card.position);
-    cameraPosition.y += yOffset;
-    cameraPosition.z -= 20;
-
-    let target = new Vector3();
+    const cameraPosition = new Vector3(
+      card.position.x,
+      this.cameraYPositionActive,
+      card.position.z - 20,
+    );
 
     this.returnCameraPosition.copy(this.context.camera.position);
 
@@ -39,20 +41,20 @@ export default class MainAnimator {
         }
       })
         .add('camera')
-        .to(this.context.camera.position, 0.3, {
+        .to(this.context.controls.object.position, 0.5, {
           x: cameraPosition.x,
           y: cameraPosition.y,
           z: cameraPosition.z,
+          ease: Power4.easeOut,
         }, 'camera')
-        .to(target, 0.3, {
+        .to(this.target, 0.5, {
           x: card.position.x,
-          y: card.position.y,
+          y: 0,
           z: card.position.z,
-          // onUpdate: () => {
-          //   this.context.camera.rotation.set(0, 0, 0);
-          //   // this.context.camera.lookAt(target);
-          //   this.context.controls.update();
-          // },
+          ease: Power4.easeOut,
+          onUpdate: () => {
+            this.context.controls.target = this.target;
+          }
         }, 'camera')
         .to(card.position, 0.2, {
           y: 20,
@@ -76,7 +78,7 @@ export default class MainAnimator {
     })
   }
 
-  deactrivateCard(card) {
+  deactivateCard(card) {
     return new Promise((resolve) => {
       gsap.timeline({
         delay: 0.1,
@@ -106,14 +108,14 @@ export default class MainAnimator {
           y: card.restingYPos,
           ease: Power4.easeInOut,
         })
+        .add('camera')
         .to(this.context.camera.position, 0.3, {
-          x: this.returnCameraPosition.x,
           y: this.returnCameraPosition.y,
-          z: this.returnCameraPosition.z,
+          delay: 0.3,
           onUpdate: () => {
             this.context.controls.update();
           }
-        })
+        }, 'camera')
     })
   }
 

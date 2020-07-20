@@ -91,7 +91,7 @@ export default class MainStage {
     this.eventDispatcher.addEventListener(
       WebglEvents.DEACTIVATE_ENTRY,
       (e) => {
-        this.animator.deactrivateCard(this.activeCard)
+        this.animator.deactivateCard(this.activeCard)
           .then(() => {
             this.activeCard = {};
             this.eventDispatcher.dispatchEvent({
