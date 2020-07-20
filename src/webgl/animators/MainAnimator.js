@@ -1,12 +1,18 @@
 import gsap from 'gsap';
-import { TimelineMax, Power2, Power4 } from 'gsap';
+import { Power4 } from 'gsap';
 import Layers from '../../constants/layers';
+import { Vector3 } from 'three';
 
 
 export default class MainAnimator {
   constructor(context) {
     this.context = context;
     this.pp = context.pp;
+    this.returnCameraPosition = new Vector3();
+    this.cameraRotation = new Vector3().copy(this.context.camera.rotation);
+    this.cameraYPositionInactive = 100;
+    this.cameraYPositionActive = 60;
+    this.target = new Vector3();
   }
 
   play() {
@@ -16,8 +22,16 @@ export default class MainAnimator {
   }
 
   activateCard(card) {
+    const cameraPosition = new Vector3(
+      card.position.x,
+      this.cameraYPositionActive,
+      card.position.z - 20,
+    );
+
+    this.returnCameraPosition.copy(this.context.camera.position);
+
     return new Promise((resolve) => {
-      const tl = new TimelineMax({
+      gsap.timeline({
         delay: 0.1,
         onStart: () => {
           this.context.disablePointerEvents(true)
@@ -25,28 +39,33 @@ export default class MainAnimator {
         onComplete: () => {
           this.context.disablePointerEvents(false);
         }
-      });
-      tl
+      })
+        .add('camera')
+        .to(this.context.controls.object.position, 0.5, {
+          x: cameraPosition.x,
+          y: cameraPosition.y,
+          z: cameraPosition.z,
+          ease: Power4.easeOut,
+        }, 'camera')
+        .to(this.target, 0.5, {
+          x: card.position.x,
+          y: 0,
+          z: card.position.z,
+          ease: Power4.easeOut,
+          onUpdate: () => {
+            this.context.controls.target = this.target;
+          }
+        }, 'camera')
+        .to(card.position, 0.2, {
+          y: 20,
+          ease: Power4.easeInOut,
+        })
         .to(card.frontUniforms.uContentVisibility, 0.6, {
           value: 1,
         })
         .to(card.frontUniforms.uBGVisibility, 0.6, {
           value: 1,
-
         })
-        .add('spin')
-        .to(card.pivot.rotation, 0.7, {
-          z: -Math.PI * 6,
-          ease: Power2.easeOut,
-        }, 'spin')
-        .to(card.pivot.scale, 0.7, {
-          y: 0.33,
-          x: 0.5,
-          ease: Power2.easeOut,
-          onComplete: () => {
-            card.setLayer(Layers.BLOOM_CARD);
-          }
-        }, 'spin')
         .to(this.pp.bloom, 2, {
           onStart: () => {
             resolve();
@@ -59,9 +78,9 @@ export default class MainAnimator {
     })
   }
 
-  deactrivateCard(card) {
+  deactivateCard(card) {
     return new Promise((resolve) => {
-      const tl = new TimelineMax({
+      gsap.timeline({
         delay: 0.1,
         onStart: () => {
           this.context.disablePointerEvents(true);
@@ -70,10 +89,7 @@ export default class MainAnimator {
           this.context.disablePointerEvents(false);
           resolve();
         },
-
-      });
-
-      tl
+      })
         .to(this.pp.bloom, 0.4, {
           strength: 0,
           radius: 0,
@@ -82,20 +98,24 @@ export default class MainAnimator {
             card.setLayer(Layers.BASE);
           }
         })
-        .add('spin')
-        .to(card.pivot.rotation, 0.7, {
-          z: 0,
-        }, 'spin')
-        .to(card.pivot.scale, 0.5, {
-          y: 1,
-          x: 1,
-        }, 'spin')
         .to(card.frontUniforms.uBGVisibility, 0.4, {
           value: 0,
         })
         .to(card.frontUniforms.uContentVisibility, 0.5, {
           value: 0,
-        });
+        })
+        .to(card.position, 0.2, {
+          y: card.restingYPos,
+          ease: Power4.easeInOut,
+        })
+        .add('camera')
+        .to(this.context.camera.position, 0.3, {
+          y: this.returnCameraPosition.y,
+          delay: 0.3,
+          onUpdate: () => {
+            this.context.controls.update();
+          }
+        }, 'camera')
     })
   }
 
@@ -103,14 +123,14 @@ export default class MainAnimator {
     const endY = card.position.y;
 
     gsap.timeline()
-    .to(card.position, 0.1, {
-      y: endY + card.width,
-    })
-    .to(card.rotation, 0.3, {
-      y: -Math.PI,
-    })
-    .to(card.position, 0.1, {
-      y: endY,
-    });
+      .to(card.position, 0.1, {
+        y: endY + card.width,
+      })
+      .to(card.rotation, 0.3, {
+        y: -Math.PI,
+      })
+      .to(card.position, 0.1, {
+        y: endY,
+      });
   }
 }

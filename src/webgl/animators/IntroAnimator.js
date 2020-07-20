@@ -18,9 +18,9 @@ export default class IntroAnimator {
   play() {
     this.context.disablePointerEvents(true);
 
-    const minDelay = 0.3;
+    const minDelay = 0.1;
     const maxDelay = 2;
-    const cardDuration = 2;
+    const cardDuration = 1.8;
 
     const cardIntros = this.context.carousel.cards.map(card => (
       this.cardEntrance(card, cardDuration, randomFloatBetween(minDelay, maxDelay))
@@ -43,22 +43,22 @@ export default class IntroAnimator {
           this.context.camera.lookAt(target);
         },
       })
-        .to(this.context.camera.position, 0.3, {
+        .to(this.context.camera.position, 0.1, {
+          x: 0,
           y: 100,
-          z: -50,
+          z: -30,
         })
         .to(target, duration * 0.5, {
           x: target.x,
           y: target.y,
           z: target.z,
-          delay: 0.2,
         })
         .to(target, duration * 0.5, {
           x: endTarget.x,
           y: endTarget.y,
           z: endTarget.z,
           ease: Power2.easeOut,
-          delay: 0.2,
+          delay: 0.3,
         });
     });
   }

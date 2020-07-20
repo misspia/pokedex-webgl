@@ -20,6 +20,7 @@ export default class EntryListItem {
     this.isFlipped = false;
     this.width = width;
     this.height = height;
+    this.restingYPos = 2;
 
     const geometry = new THREE.PlaneGeometry(this.width, this.height, 2, 2);
 

@@ -16,6 +16,7 @@ export default class EntranceStage {
       500,
       0,
     );
+    this.isMousemoveDisabled = false;
     this.init();
   }
 
@@ -29,6 +30,7 @@ export default class EntranceStage {
 
   exit() {
     window.removeEventListener('mousemove', this.onMouseMove);
+    this.isMousemoveDisabled = true;
     return this.animator.exit();
   }
 
@@ -46,6 +48,9 @@ export default class EntranceStage {
   }
 
   onMouseMove = (e) => {
+    if(this.isMousemoveDisabled) {
+      return;
+    }
     this.context.mouse.updatePosition(e);
     this.context.mouse.updateIntersection();
     const { intersection } = this.context.mouse;

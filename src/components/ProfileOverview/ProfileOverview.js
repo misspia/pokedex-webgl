@@ -5,7 +5,6 @@ import ProfileArtwork from '../ProfileArtwork';
 import SummaryBox from '../SummaryBox';
 import StatsBox from '../StatsBox';
 import EvolutionDiagram from '../EvolutionDiagram';
-import { LoadingOverlay } from '../common';
 import { formatNationalNo } from '../../utils';
 
 const SUMMARY = 'summary';
@@ -38,7 +37,6 @@ export default function ProfileOverview({
   const evolutionRef = useRef(null);
   const statsRef = useRef(null);
   const summaryRef = useRef(null);
-  const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState(EVOLUTION);
   const prevActiveTab = usePrevious(activeTab);
 
@@ -76,16 +74,14 @@ export default function ProfileOverview({
 
   return (
     <S.Wrapper>
-      <LoadingOverlay isActive={isLoading} />
       <S.Header type={types[0]}>
         <S.Title>
-          #{formatNationalNo(id)} {name}
+          {formatNationalNo(id)} {name}
         </S.Title>
       </S.Header>
       <S.InnerWrapper>
         <ProfileArtwork
           src={artworkUrl}
-          onLoad={() => setIsLoading(false)}
           customStyles={S.artworkStyles}
         />
         <S.Card ref={cardRef} type={types[0]}>

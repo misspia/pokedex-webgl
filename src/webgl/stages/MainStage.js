@@ -36,7 +36,7 @@ export default class MainStage {
 
       this.eventDispatcher.dispatchEvent({
         type: WebglEvents.MOUSEMOVE,
-        card: this.mouse.intersection,
+        card: this.mouse.isIntersectionCard() ? this.mouse.intersection : null,
       });
 
       if(!this.mouse.intersection) {
@@ -91,7 +91,7 @@ export default class MainStage {
     this.eventDispatcher.addEventListener(
       WebglEvents.DEACTIVATE_ENTRY,
       (e) => {
-        this.animator.deactrivateCard(this.activeCard)
+        this.animator.deactivateCard(this.activeCard)
           .then(() => {
             this.activeCard = {};
             this.eventDispatcher.dispatchEvent({

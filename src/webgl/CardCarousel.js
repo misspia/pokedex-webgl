@@ -19,9 +19,6 @@ const GRID_HEIGHT = ENTRY_HEIGHT + ENTRY_PADDING;
 const TOTAL_WIDTH = GRID_WIDTH * NUM_COLS;
 const TOTAL_HEIGHT = GRID_HEIGHT * NUM_ROWS;
 
-const ANGLE_INCREMENT = fullCircleRadians / NUM_COLS;
-
-const ROTATION_VELOCITY = 0.002;
 
 export default class CardCarousel {
   constructor(eventDispatcher) {
@@ -76,8 +73,8 @@ export default class CardCarousel {
       };
       const card = new EntryCard(cardParams);
 
-      const { x: tx, y: ty, z: tz } = this.calcListItemPosition(index);
-      card.setPosition(tx, ty, tz);
+      const pos = this.calcListItemPosition(index);
+      card.setPosition(pos.x, card.restingYPos, pos.z);
       card.rotation.x = Math.PI / 2;
 
       this.pivot.add(card.pivot);
