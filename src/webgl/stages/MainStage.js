@@ -1,5 +1,6 @@
 import { WebglEvents } from '../../constants/events';
 import Animator from '../animators/MainAnimator';
+import { Vector3 } from 'three';
 
 export default class MainStage {
   constructor(context) {
@@ -103,6 +104,12 @@ export default class MainStage {
   }
 
   update() {
-
+    const { x, y } = this.mouse.position;
+    if(Math.abs(x) > 0.3) {
+      this.context.camera.position.x += -this.mouse.position.x + 0.5;
+    }
+    if(Math.abs(y) > 0.3) {
+      this.context.camera.position.z += this.mouse.position.y * 0.5;
+    }
   }
 }
