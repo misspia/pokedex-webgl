@@ -41,7 +41,6 @@ export default class MainAnimator {
       })
         .add('camera')
         .to(this.context.controls.object.position, 0.5, {
-        // .to(this.context.camera.position, 0.5, {
           x: cameraPosition.x,
           y: cameraPosition.y,
           z: cameraPosition.z,
@@ -53,7 +52,6 @@ export default class MainAnimator {
           z: card.position.z,
           ease: Power4.easeOut,
           onUpdate: () => {
-            // this.context.camera.lookAt(this.target);
             this.context.controls.target = this.target;
           }
         }, 'camera')

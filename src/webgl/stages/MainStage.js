@@ -1,6 +1,5 @@
 import { WebglEvents } from '../../constants/events';
 import Animator from '../animators/MainAnimator';
-import { Vector3 } from 'three';
 
 export default class MainStage {
   constructor(context) {
@@ -18,13 +17,9 @@ export default class MainStage {
     this.init();
   }
 
-  destroy() {
+  destroy() {}
 
-  }
-
-  exit() {
-
-  }
+  exit() {}
 
   init() {
     this.setupEvents();

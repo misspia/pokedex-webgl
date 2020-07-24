@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-import { fullCircleRadians, calcCircumference } from '../utils';
+import { calcCircumference } from '../utils';
 import EntryCard from './EntryCard';
 import { WebglEvents } from '../constants/events';
 import { TOTAL_ENTRIES, CAROUSEL_RADIUS } from '../constants/entries';
@@ -122,8 +122,6 @@ export default class CardCarousel {
     return z >= this.min.z && z <= this.max.z;
   }
 
-  update() {
-
-  }
+  update() {}
 }
 
