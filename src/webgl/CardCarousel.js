@@ -51,7 +51,15 @@ export default class CardCarousel {
   }
 
   getCenter(vector) {
-    return this.bbox.setFromObject(this.pivot).getCenter(vector);
+    return this.bbox.getCenter(vector);
+  }
+
+  get min() {
+    return this.bbox.min;
+  }
+
+  get max() {
+    return this.bbox.max;
   }
 
   load(list) {
@@ -81,10 +89,10 @@ export default class CardCarousel {
       this.cards.push(card);
     });
 
-    const bbox = this.bbox.setFromObject(this.pivot)
-    this.minY = bbox.min.y - ENTRY_PADDING;
-    this.maxY = bbox.max.y;
-    this.midY = (bbox.min.y + bbox.max.y) / 2;
+    this.bbox.setFromObject(this.pivot);
+    this.minY = this.min.y - ENTRY_PADDING;
+    this.maxY = this.max.y;
+    this.midY = (this.min.y + this.max.y) / 2;
   }
 
   calcListItemPosition(index) {
@@ -106,10 +114,16 @@ export default class CardCarousel {
     this.pivot.visible = isVisible;
   }
 
+  isInXBounds(x) {
+    return x >= this.min.x && x <= this.max.x;
+  }
+
+  isInZBounds(z) {
+    return z >= this.min.z && z <= this.max.z;
+  }
+
   update() {
-    // if (this.isRotating) {
-    //   this.pivot.rotation.y += ROTATION_VELOCITY;
-    // }
+
   }
 }
 
