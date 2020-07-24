@@ -11,8 +11,9 @@ export default class MainStage {
     this.animator = new Animator(context);
 
     this.carousel = context.carousel;
-    this.activeCard = {};
+    this.activeCard = null;
     this.focusCard = null;
+    this.isCardActive = false;
 
     this.init();
   }
@@ -74,6 +75,7 @@ export default class MainStage {
 
       this.activeCard = this.carousel.getEntryCardById(id);
 
+      // this.isCardActive = true;
       this.animator.activateCard(this.activeCard)
         .then(() => {
           this.eventDispatcher.dispatchEvent({
@@ -89,7 +91,7 @@ export default class MainStage {
       (e) => {
         this.animator.deactivateCard(this.activeCard)
           .then(() => {
-            this.activeCard = {};
+            this.activeCard = null;
             this.eventDispatcher.dispatchEvent({
               type: WebglEvents.DEACTIVATE_ENTRY_COMPLETE,
             });
@@ -99,6 +101,9 @@ export default class MainStage {
   }
 
   update() {
+    if(this.activeCard !== null) {
+      return;
+    }
     const { x, y } = this.mouse.position;
     const newX = this.context.camera.position.x - x * 0.5;
     const newZ = this.context.camera.position.z + y * 0.5;

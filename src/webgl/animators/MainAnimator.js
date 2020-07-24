@@ -33,7 +33,7 @@ export default class MainAnimator {
       gsap.timeline({
         delay: 0.1,
         onStart: () => {
-          this.context.disablePointerEvents(true)
+          this.context.disablePointerEvents(true);
         },
         onComplete: () => {
           this.context.disablePointerEvents(false);
