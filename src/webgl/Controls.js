@@ -1,5 +1,4 @@
 import { MapControls, OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { clamp } from '../utils';
 
 export default class Controls extends MapControls {
   constructor(context) {

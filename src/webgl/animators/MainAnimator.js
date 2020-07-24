@@ -3,7 +3,6 @@ import { Power4 } from 'gsap';
 import Layers from '../../constants/layers';
 import { Vector3 } from 'three';
 
-
 export default class MainAnimator {
   constructor(context) {
     this.context = context;

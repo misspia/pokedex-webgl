@@ -17,13 +17,9 @@ export default class MainStage {
     this.init();
   }
 
-  destroy() {
+  destroy() {}
 
-  }
-
-  exit() {
-
-  }
+  exit() {}
 
   init() {
     this.setupEvents();
@@ -103,6 +99,15 @@ export default class MainStage {
   }
 
   update() {
+    const { x, y } = this.mouse.position;
+    const newX = this.context.camera.position.x - x * 0.5;
+    const newZ = this.context.camera.position.z + y * 0.5;
 
+    if(Math.abs(x) > 0.3 && this.context.carousel.isInXBounds(newX)) {
+      this.context.camera.position.x = newX;
+    }
+    if(Math.abs(y) > 0.3 && this.context.carousel.isInZBounds(newZ)) {
+      this.context.camera.position.z = newZ;
+    }
   }
 }
