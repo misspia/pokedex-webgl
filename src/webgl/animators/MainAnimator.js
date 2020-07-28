@@ -33,14 +33,15 @@ export default class MainAnimator {
       gsap.timeline({
         delay: 0.1,
         onStart: () => {
-          this.context.disablePointerEvents(true)
+          this.context.disablePointerEvents(true);
         },
         onComplete: () => {
           this.context.disablePointerEvents(false);
         }
       })
         .add('camera')
-        .to(this.context.controls.object.position, 0.5, {
+        // .to(this.context.controls.object.position, 0.5, {
+        .to(this.context.camera.position, 0.5, {
           x: cameraPosition.x,
           y: cameraPosition.y,
           z: cameraPosition.z,
@@ -51,9 +52,11 @@ export default class MainAnimator {
           y: 0,
           z: card.position.z,
           ease: Power4.easeOut,
-          onUpdate: () => {
-            this.context.controls.target = this.target;
-          }
+          // onUpdate: () => {
+          //   // this.context.controls.target = this.target;
+          //   this.context.camera.lookAt(this.target.x, this.target.y, this.target.z);
+
+          // }
         }, 'camera')
         .to(card.position, 0.2, {
           y: 20,
@@ -112,7 +115,7 @@ export default class MainAnimator {
           y: this.returnCameraPosition.y,
           delay: 0.3,
           onUpdate: () => {
-            this.context.controls.update();
+            // this.context.controls.update();
           }
         }, 'camera')
     })
