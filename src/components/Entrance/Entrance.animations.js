@@ -1,12 +1,20 @@
-import { TimelineMax } from 'gsap';
+import gsap from 'gsap';
+
+const enablePointerEvents = (element, isEnabled) => (
+  gsap.set(element, { pointerEvents: isEnabled ? 'all' : 'none' })
+);
 
 export function enter(wrapper, letters) {
   return new Promise(resolve => {
-    const tl = new TimelineMax({
-      onComplete: resolve,
+   enablePointerEvents(wrapper, false);
+
+    gsap.timeline({
+      onComplete: () => {
+        enablePointerEvents(wrapper, true);
+        resolve();
+      },
       delay: 1,
-    });
-    tl
+    })
       .from(wrapper, {
         autoAlpha: 0,
       })
@@ -25,8 +33,13 @@ export function enter(wrapper, letters) {
 
 export function exit(wrapper, letters) {
   return new Promise(resolve => {
-    const tl = new TimelineMax();
-    tl
+    enablePointerEvents(wrapper, false);
+
+    gsap.timeline({
+      onComplete: () => {
+        enablePointerEvents(wrapper, true);
+      }
+    })
       .to(letters, 0.3, {
         margin: '0 10px',
       })
@@ -39,11 +52,10 @@ export function exit(wrapper, letters) {
       }, 0.2, '+=0.2')
       .from(wrapper, {
         autoAlpha: 1,
-        onComplete: resolve,
+        onComplete: (resolve),
       })
       .to(wrapper, 0.2, {
         autoAlpha: 0,
       })
-
   });
 }

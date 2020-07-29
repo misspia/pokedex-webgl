@@ -3,12 +3,10 @@ import * as S from './Entrance.styles';
 import * as Animations from './Entrance.animations';
 
 export default function Entrance({
-  isActive = () => { },
   onEnter = () => { },
 }) {
   const wrapperRef = useRef(null);
   const lettersRef = useRef(null);
-
 
   useEffect(() => {
     Animations.enter(wrapperRef.current, lettersRef.current.children);

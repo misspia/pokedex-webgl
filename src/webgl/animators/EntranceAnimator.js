@@ -1,5 +1,4 @@
-import { TimelineMax, Elastic } from 'gsap';
-import { Vector2 } from 'three';
+import gsap from 'gsap';
 
 export default class EntranceAnimator {
   constructor(stage) {
@@ -31,8 +30,7 @@ export default class EntranceAnimator {
   }
   enter() {
     return new Promise(resolve => {
-      const tl = new TimelineMax();
-      tl
+      gsap.timeline()
         .to(this.stage.gate.material.uniforms.uAlpha, 1, {
           value: 1,
           onComplete: resolve,
@@ -43,13 +41,14 @@ export default class EntranceAnimator {
     this.context.disablePointerEvents(true);
     return new Promise(resolve => {
       const { uPos, uRadius, uAlpha, uNoiseFactor } = this.gate.material.uniforms;
-      const tl = new TimelineMax({
-        onComplete: () => {
-          // this.context.disablePointerEvents(false);
-          resolve();
-        },
-      });
-      tl
+
+      gsap.timeline({
+        onComplete: resolve,
+      })
+        .to(uPos.value, 0.5, {
+          x: 0.5,
+          y: 0.5,
+        })
         .to(uNoiseFactor, 0.3, {
           value: 0,
         })
