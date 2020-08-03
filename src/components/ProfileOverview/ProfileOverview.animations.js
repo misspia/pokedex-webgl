@@ -1,12 +1,10 @@
-import { TweenMax, TimelineMax, Power3, CSSPlugin } from 'gsap';
+import gsap, { Power3, CSSPlugin } from 'gsap';
 
 const css = CSSPlugin;
 
 
 export const enter = (card, tabs) => {
-  const tl = new TimelineMax();
-
-  tl
+  gsap.timeline()
     .fromTo(card, 0.4,
       {
         autoAlpha: 0,
@@ -36,7 +34,7 @@ const xDistance = 100;
 const viewDuration = 0.4;
 
 export const revealView = (view) => {
-  TweenMax.fromTo(view, viewDuration, {
+  gsap.fromTo(view, viewDuration, {
     autoAlpha: 0,
     x: -xDistance,
   }, {
@@ -46,7 +44,7 @@ export const revealView = (view) => {
 };
 
 export const hideView = (view, onComplete) => {
-  TweenMax.fromTo(view, viewDuration, {
+  gsap.fromTo(view, viewDuration, {
     autoAlpha: 1,
     x: 0,
   }, {

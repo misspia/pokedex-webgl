@@ -11,13 +11,11 @@ export default function ProfileArtwork({
   const imageRef = useRef(null);
 
   useEffect(() => {
-    if (wrapperRef.current && imageRef.current) {
       Animations.enter(
         wrapperRef.current,
         imageRef.current
       );
-    }
-  }, [wrapperRef.current, imageRef.current]);
+  }, []);
 
   return (
     <S.Wrapper
