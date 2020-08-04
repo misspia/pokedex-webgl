@@ -49,7 +49,9 @@ export default function ExperiencePage({
 
     context.webgl.addEventListener(
       AppEvents.STAGE_CHANGE,
-      (stage) => context.setStage(stage)
+      (e) => {
+        context.setStage(e.stage)
+      }
     );
   }, []);
 
@@ -78,8 +80,7 @@ export default function ExperiencePage({
           }}
         />
       }
-      {/* <Mouse isVisible={!isProfileActive && context.stage === Stages.MAIN}/> */}
-      <Mouse isVisible={!isProfileActive}/>
+      <Mouse isVisible={!isProfileActive && context.stage === Stages.MAIN}/>
     </S.Wrapper>
   )
 }

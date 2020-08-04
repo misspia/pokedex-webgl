@@ -9,9 +9,9 @@ export default class IntroStage {
   }
 
   init() {
-    this.animator.play()
+    return this.animator.play()
       .then(() => {
-        this.context.setStage(Stages.MAIN);
+        this.context.eventDispatcher.setStage(Stages.MAIN);
       })
   }
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import * as S from './router.styles';
 import * as routes from './routes';
@@ -8,11 +8,13 @@ import EntrancePage from '../pages/ExperiencePage';
 import WebglApplication from '../webgl/WebglApplication';
 
 export default function AppRouter() {
+  const webgl = useRef(new WebglApplication());
   return (
     <React.Fragment>
       <Router>
         <AppProvider value={{
           webgl: new WebglApplication(),
+          // webgl: webgl.current,
           stage: null,
         }}>
           <S.Container>
