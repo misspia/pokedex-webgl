@@ -18,7 +18,11 @@ export class AppProvider extends Component {
       stage: null,
     }
   }
+
   setStage = (stage) => {
+    if(stage === this.state.stage) {
+      return;
+    }
     this.setState({ stage }, () => {
       this.state.webgl.setStage(stage);
     });

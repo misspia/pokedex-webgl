@@ -6,6 +6,7 @@ export default class Mouse {
     this.context = context;
     this.raycaster = new THREE.Raycaster();
     this.mouse = new THREE.Vector2();
+    this.mouseCSS = new THREE.Vector2();
     this.intersection = null;
   }
 
@@ -14,6 +15,13 @@ export default class Mouse {
       x: this.mouse.x,
       y: this.mouse.y,
     };
+  }
+
+  get positionCSS() {
+    return {
+      left: this.mouseCSS.x,
+      top: this.mouseCSS.y,
+    }
   }
 
   get uv() {
@@ -27,6 +35,9 @@ export default class Mouse {
     const { height, width } = this.context.canvas;
     this.mouse.x = (e.clientX / width) * 2 - 1;
     this.mouse.y = -(e.clientY / height) * 2 + 1;
+
+    this.mouseCSS.x = e.clientX;
+    this.mouseCSS.y = e.clientY;
   }
 
   updateIntersection() {

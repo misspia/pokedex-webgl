@@ -29,31 +29,13 @@ export default class MainStage {
   setupEvents() {
     this.canvas.addEventListener('mousemove', (e) => {
       this.mouse.updatePosition(e);
-      this.mouse.updateIntersection();
 
       this.eventDispatcher.dispatchEvent({
         type: WebglEvents.MOUSEMOVE,
-        card: this.mouse.isIntersectionCard() ? this.mouse.intersection : null,
+        top: this.mouse.positionCSS.top,
+        left: this.mouse.positionCSS.left,
       });
-
-      if(!this.mouse.intersection) {
-        return;
-      }
-      if(!this.mouse.isIntersectionCardBack()) {
-        return;
-      }
-
-      const { name: id } = this.mouse.intersection.object.parent;
-      const card = this.carousel.getEntryCardById(id);
-
-      if(card.isFlipped) {
-        return;
-      }
-      card.setFlippedState(true);
-      this.animator.flipCard(card);
-
     });
-
 
     this.canvas.addEventListener('mousedown', (e) => {
       this.mouse.updateIntersection();
@@ -75,7 +57,6 @@ export default class MainStage {
 
       this.activeCard = this.carousel.getEntryCardById(id);
 
-      // this.isCardActive = true;
       this.animator.activateCard(this.activeCard)
         .then(() => {
           this.eventDispatcher.dispatchEvent({
@@ -100,6 +81,26 @@ export default class MainStage {
     );
   }
 
+  updateIntersection() {
+    this.mouse.updateIntersection();
+
+    if(!this.mouse.intersection) {
+      return;
+    }
+    if(!this.mouse.isIntersectionCardBack()) {
+      return;
+    }
+
+    const { name: id } = this.mouse.intersection.object.parent;
+    const card = this.carousel.getEntryCardById(id);
+
+    if(card.isFlipped) {
+      return;
+    }
+    card.setFlippedState(true);
+    this.animator.flipCard(card);
+  }
+
   update() {
     if(this.activeCard !== null) {
       return;
@@ -114,5 +115,12 @@ export default class MainStage {
     if(Math.abs(y) > 0.3 && this.context.carousel.isInZBounds(newZ)) {
       this.context.camera.position.z = newZ;
     }
+
+    this.updateIntersection();
+
+    this.eventDispatcher.dispatchEvent({
+      type: WebglEvents.FOCUS_CARD,
+      card: this.mouse.isIntersectionCard() ? this.mouse.intersection : null,
+    });
   }
 }

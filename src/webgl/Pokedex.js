@@ -5,7 +5,7 @@ import CardCarousel from './CardCarousel';
 import Floor from './Floor';
 import PostProcessor from './PostProcessor';
 
-import { WebglEvents } from '../constants/events';
+import { WebglEvents, AppEvents } from '../constants/events';
 import Layers from '../constants/layers';
 import { EntranceStage, IntroStage, MainStage } from './stages';
 import Stages from '../constants/stages';
@@ -72,7 +72,6 @@ export default class Pokedex extends SceneManager {
         console.debug(`unrecognized stage: ${stage}`);
       }
     }
-
   }
 
   setupEvents() {

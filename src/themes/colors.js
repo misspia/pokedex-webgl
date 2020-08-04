@@ -10,6 +10,7 @@ export default {
   blue: 'rgba(200, 200, 255, 1.0)',
   gold: '#a07b27',
   shadow: 'rgba(0, 0, 0, 0.2)',
+  red: `#ff5555`,
 
 
   /**
