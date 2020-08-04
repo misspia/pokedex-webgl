@@ -5,12 +5,14 @@ import { useQuery } from '@apollo/react-hooks';
 
 import * as S from './ExperiencePage.styles';
 import { clone } from '../../utils';
+import { AppEvents } from '../../constants/events';
 import { AppContext } from '../../contexts';
 import { LoadingOverlay } from '../../components/common';
 import Stages from '../../constants/stages';
 import Entrance from '../../components/Entrance';
 import Canvas from '../../components/Canvas';
 import Profile from '../../components/Profile';
+import Mouse from '../../components/Mouse';
 
 const GET_ALL_POKEMON = gql`
   query getAllPokemon {
@@ -44,7 +46,14 @@ export default function ExperiencePage({
     DefaultLoadingManager.onProgress = (_url, numLoaded, total) => {
       setLoadingProgress(numLoaded / total);
     }
+
+    context.webgl.addEventListener(
+      AppEvents.STAGE_CHANGE,
+      (stage) => context.setStage(stage)
+    );
   }, []);
+
+  // console.debug(context.stage, Stages.MAIN)
 
   return (
     <S.Wrapper>
@@ -69,6 +78,8 @@ export default function ExperiencePage({
           }}
         />
       }
+      {/* <Mouse isVisible={!isProfileActive && context.stage === Stages.MAIN}/> */}
+      <Mouse isVisible={!isProfileActive}/>
     </S.Wrapper>
   )
 }
