@@ -55,8 +55,6 @@ export default function ExperiencePage({
     );
   }, []);
 
-  // console.debug(context.stage, Stages.MAIN)
-
   return (
     <S.Wrapper>
       <LoadingOverlay isActive={loading || isLoading} progress={loadingProgress} />

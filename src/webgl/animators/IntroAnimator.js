@@ -12,7 +12,7 @@ export default class IntroAnimator {
   }
 
   exit() {
-    console.debug('exit')
+
   }
 
   play() {
