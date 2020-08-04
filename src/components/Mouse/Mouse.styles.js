@@ -5,8 +5,8 @@ export const Wrapper = styled.div.attrs(props => ({
   style: {
     top: `${props.top}px`,
     left: `${props.left}px`,
-    width: props.isActive ? '4em' : '1em',
-    height: props.isActive ? '4em' : '1em',
+    width: props.isActive ? '5em' : '1em',
+    height: props.isActive ? '5em' : '1em',
     backgroundColor: props.isActive ? 'transparent' : Colors.red,
     display: props.isVisible ? 'block' : 'none',
   },

@@ -72,7 +72,7 @@ export default class EntranceStage {
       uniforms: {
         uPos: { value: new THREE.Vector2(0.5, 0.5) },
         uNoiseFactor: { value: 0.02 },
-        uRadius: { value: 0.08 },
+        uRadius: { value: 0.05 },
         uTime: { value: 0.0 },
         uAlpha: { value: 0 },
         uExitProgress: { value: 1.0 },

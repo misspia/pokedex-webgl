@@ -37,7 +37,6 @@ export default class MainStage {
       });
     });
 
-
     this.canvas.addEventListener('mousedown', (e) => {
       this.mouse.updateIntersection();
 

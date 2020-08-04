@@ -1,7 +1,6 @@
 import React, { useEffect, useContext, useRef, useState } from 'react';
 import { AppContext } from '../../contexts';
 import { WebglEvents } from '../../constants/events';
-import Stages from '../../constants/stages';
 import * as S from './Canvas.styles';
 
 export default function Canvas({

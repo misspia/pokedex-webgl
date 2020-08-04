@@ -15,7 +15,6 @@ export default function Mouse({
     context.webgl.addEventListener(
       WebglEvents.MOUSEMOVE,
       e => {
-        // setIsActive(!!e.card);
         setTop(e.top);
         setLeft(e.left);
       }
