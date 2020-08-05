@@ -1,12 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as S from './Mouse.styles';
-import { AppContext } from '../../contexts';
+import { useAppContext } from '../../hooks';
 import { WebglEvents } from '../../constants/events';
 
 export default function Mouse({
   isVisible = false,
 }) {
-  const context = useContext(AppContext);
+  const context = useAppContext();
   const [top, setTop] = useState(0);
   const [left, setLeft] = useState(0);
   const [isActive, setIsActive] = useState(false);
