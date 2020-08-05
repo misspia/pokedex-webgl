@@ -1,12 +1,13 @@
 import { DefaultLoadingManager } from 'three';
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
 
 import * as S from './ExperiencePage.styles';
 import { clone } from '../../utils';
 import { AppEvents } from '../../constants/events';
-import { AppContext } from '../../contexts';
+import { useAppContext } from '../../hooks';
+
 import { LoadingOverlay } from '../../components/common';
 import Stages from '../../constants/stages';
 import Entrance from '../../components/Entrance';
@@ -30,7 +31,7 @@ export default function ExperiencePage({
   location,
   match,
 }) {
-  const context = useContext(AppContext);
+  const context = useAppContext();
   const [id, setId] = useState(3);
   const [isLoading, setIsLoading] = useState(true);
   const [loadingProgress, setLoadingProgress] = useState(0);

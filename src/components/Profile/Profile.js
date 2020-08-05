@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useContext } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { AppContext } from '../../contexts';
+import { useAppContext } from '../../hooks';
 import { Icons } from '../../themes';
 import { GET_POKEMON_BY_ID, GET_EVOLUTION_BY_CHAIN_ID } from './Profile.gql';
 import ProfileOverview from '../ProfileOverview';
@@ -15,7 +15,7 @@ export default function Profile({
   active = false,
   id = null,
 }) {
-  const context = useContext(AppContext);
+  const context = useAppContext();
 
   const {
     loading: pokemonLoading,

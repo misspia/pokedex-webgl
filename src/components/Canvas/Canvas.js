@@ -1,5 +1,5 @@
-import React, { useEffect, useContext, useRef, useState } from 'react';
-import { AppContext } from '../../contexts';
+import React, { useEffect, useRef } from 'react';
+import { useAppContext } from '../../hooks';
 import { WebglEvents } from '../../constants/events';
 import * as S from './Canvas.styles';
 
@@ -7,7 +7,7 @@ export default function Canvas({
   entries = [],
   selectEntry = () => { },
 }) {
-  const context = useContext(AppContext);
+  const context = useAppContext();
   const canvasRef = useRef(null);
   const guiRef = useRef(null);
 

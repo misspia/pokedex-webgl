@@ -3,11 +3,11 @@ import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 import * as S from './router.styles';
 import * as routes from './routes';
 import { AppProvider } from '../contexts';
+import useMobileCheck from '../hooks/useMobileCheck';
+import WebglApplication from '../webgl/WebglApplication';
 
 import ExperiencePage from '../pages/ExperiencePage';
-import MobilePage from '../pages/MobilePage';
-import WebglApplication from '../webgl/WebglApplication';
-import useMobileCheck from '../hooks/useMobileCheck';
+import ErrorPage from '../pages/ErrorPage';
 
 export default function AppRouter() {
   const [isMobile, setIsMobile] = useState(true);
@@ -27,9 +27,9 @@ export default function AppRouter() {
           <S.Container>
             <Switch>
               <Route exact path={routes.home} component={ExperiencePage} >
-                {isMobile && <Redirect to={routes.mobile}/>}
+                {isMobile && <Redirect to={routes.error}/>}
               </Route>
-              <Route exact path={routes.mobile} component={MobilePage}>
+              <Route exact path={routes.error} component={ErrorPage}>
                 {!isMobile && <Redirect to={routes.home}/>}
               </Route>
             </Switch>
