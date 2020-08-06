@@ -3,7 +3,6 @@ import SceneManager from './SceneManager';
 import Lights from './Lights';
 import CardCarousel from './CardCarousel';
 import Floor from './Floor';
-import PostProcessor from './PostProcessor';
 
 import { WebglEvents, AppEvents } from '../constants/events';
 import Layers from '../constants/layers';
@@ -15,7 +14,6 @@ export default class Pokedex extends SceneManager {
   constructor(eventDispatcher) {
     super();
     this.eventDispatcher = eventDispatcher;
-    this.pp = new PostProcessor(this);
     this.lights = new Lights();
     this.floor = new Floor();
     this.carousel = {};
@@ -29,7 +27,6 @@ export default class Pokedex extends SceneManager {
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
-    this.pp.setup();
 
     this.add(this.lights.ambient);
     this.add(this.lights.spot);
@@ -75,11 +72,7 @@ export default class Pokedex extends SceneManager {
   }
 
   setupEvents() {
-    window.addEventListener('resize', (e) => {
-      this.resize(e);
-      this.pp.resize(e)
-    }, { passive: true });
-
+    window.addEventListener('resize', (e) => this.resize(e), { passive: true });
   }
 
   dispatchDeactivateEntry() {
@@ -95,13 +88,6 @@ export default class Pokedex extends SceneManager {
     }
     this.carousel.update();
 
-    // this.renderer.autoClear = false;
-    // this.renderer.clear();
-
-    this.camera.layers.set(Layers.BLOOM_CARD);
-    // this.pp.render();
-
-    // this.renderer.clearDepth();
     this.camera.layers.set(Layers.BASE);
     this.renderer.render(this.scene, this.camera);
   }

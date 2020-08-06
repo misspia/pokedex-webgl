@@ -7,7 +7,6 @@ export default class MainStage {
     this.canvas = context.canvas;
     this.mouse = context.mouse;
     this.eventDispatcher = context.eventDispatcher;
-    this.pp = context.pp;
     this.animator = new Animator(context);
 
     this.carousel = context.carousel;
