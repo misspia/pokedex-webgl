@@ -5,7 +5,6 @@ import CardCarousel from './CardCarousel';
 import Floor from './Floor';
 
 import { WebglEvents, AppEvents } from '../constants/events';
-import Layers from '../constants/layers';
 import { EntranceStage, IntroStage, MainStage } from './stages';
 import Stages from '../constants/stages';
 
@@ -26,7 +25,6 @@ export default class Pokedex extends SceneManager {
     this.initializeScene(canvas);
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-
 
     this.add(this.lights.ambient);
     this.add(this.lights.spot);
@@ -87,8 +85,7 @@ export default class Pokedex extends SceneManager {
       this.stage.update();
     }
     this.carousel.update();
-
-    this.camera.layers.set(Layers.BASE);
+    this.lights.updateSpot(this.camera.position);
     this.renderer.render(this.scene, this.camera);
   }
 }
