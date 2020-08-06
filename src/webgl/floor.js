@@ -6,7 +6,7 @@ export default class Floor {
     this.depth = 500;
     this.height = 0.1;
 
-    const geometry = new THREE.PlaneGeometry(this.width, this.depth);
+    const geometry = new THREE.PlaneGeometry(this.width, this.depth, this.width, this.depth);
 
     const material = new THREE.MeshPhongMaterial({
       color: 0xffffff,

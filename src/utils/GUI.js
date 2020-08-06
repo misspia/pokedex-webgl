@@ -9,15 +9,9 @@ export default class GUI {
     if (container) {
       container.appendChild(this.gui.domElement);
     }
-    // this.createCardBloomFolder();
     // this.createOrbFolder();
   }
-  createCardBloomFolder() {
-    const folder = this.gui.addFolder('bloom');
-    folder.add(this.context.pp.bloom, 'strength', 0, 50, 0.1);
-    folder.add(this.context.pp.bloom, 'radius', 0, 5, 0.1);
-    folder.add(this.context.pp.bloom, 'threshold', 0, 5, 0.1);
-  }
+
   createOrbFolder() {
     const { orb } = this.context;
     const controller = {

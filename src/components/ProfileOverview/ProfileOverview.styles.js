@@ -86,7 +86,6 @@ export const artworkStyles = css`
   height: 20em;
 `;
 
-
 export const View = styled.div`
   opacity: 0;
   position: absolute;
@@ -106,52 +105,3 @@ export const Tabs = styled.div`
   display: flex;
   margin-top: 1em;
 `;
-
-const TAB_HEIGHT = '3em';
-const TAB_TRIANGLE_WIDTH = '1.5em';
-
-export const Tab = styled.div`
-  position: relative;
-  height: ${TAB_HEIGHT};
-  width: 8em;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  background-color: ${props => getTabBgColor(props.isActive, props.type)};
-  color: ${props => getTabBgColor(!props.isActive, props.type)};
-
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  transition: 0.2s all;
-  cursor: pointer;
-
-  &::before, &&:after {
-    content: '';
-    position: absolute;
-    top: 0;
-
-    width: 0;
-    height: 0;
-    border-style: solid;
-
-
-  }
-
-  &&:before {
-    left: -${TAB_TRIANGLE_WIDTH};
-    border-width: 0 0 ${TAB_HEIGHT} ${TAB_TRIANGLE_WIDTH};
-    border-color: transparent transparent ${props => getTabBgColor(props.isActive, props.type)} transparent;
-  }
-
-  &&:after {
-    right: -${TAB_TRIANGLE_WIDTH};
-    border-width: ${TAB_HEIGHT} ${TAB_TRIANGLE_WIDTH} 0 0;
-    border-color: ${props => getTabBgColor(props.isActive, props.type)} transparent transparent transparent;
-  }
-`;
-
-function getTabBgColor(isActive, type) {
-  return isActive ? Colors.types[type] : Colors.white;
-}

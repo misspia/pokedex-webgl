@@ -33,7 +33,7 @@ export default class SceneManager {
       canvas: this.canvas,
       antialias: true,
       alpha: false,
-      stencil: false,
+      // stencil: false,
     });
     this.setClearColor(0xffffff);
     const dpr = Math.min(1.5, window.devicePixelRatio);

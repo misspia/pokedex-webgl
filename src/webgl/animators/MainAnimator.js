@@ -6,7 +6,6 @@ import { Vector3 } from 'three';
 export default class MainAnimator {
   constructor(context) {
     this.context = context;
-    this.pp = context.pp;
     this.returnCameraPosition = new Vector3();
     this.cameraRotation = new Vector3().copy(this.context.camera.rotation);
     this.cameraYPositionInactive = 100;
@@ -37,6 +36,7 @@ export default class MainAnimator {
         },
         onComplete: () => {
           this.context.disablePointerEvents(false);
+          resolve();
         }
       })
         .add('camera')
@@ -68,15 +68,6 @@ export default class MainAnimator {
         .to(card.frontUniforms.uBGVisibility, 0.6, {
           value: 1,
         })
-        .to(this.pp.bloom, 2, {
-          onStart: () => {
-            resolve();
-          },
-          strength: 18,
-          radius: 1.2,
-          threshold: 0,
-          ease: Power4.easeOut,
-        })
     })
   }
 
@@ -92,14 +83,6 @@ export default class MainAnimator {
           resolve();
         },
       })
-        .to(this.pp.bloom, 0.4, {
-          strength: 0,
-          radius: 0,
-          threshold: 0,
-          onComplete: () => {
-            card.setLayer(Layers.BASE);
-          }
-        })
         .to(card.frontUniforms.uBGVisibility, 0.4, {
           value: 0,
         })
