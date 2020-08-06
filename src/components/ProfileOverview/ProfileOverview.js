@@ -6,6 +6,7 @@ import SummaryBox from '../SummaryBox';
 import StatsBox from '../StatsBox';
 import EvolutionDiagram from '../EvolutionDiagram';
 import { formatNationalNo } from '../../utils';
+import ProfileTab from '../ProfileTab';
 
 const SUMMARY = 'summary';
 const STATS = 'stats';
@@ -105,14 +106,13 @@ export default function ProfileOverview({
         </S.Card>
         <S.Tabs ref={tabsRef}>
           {navTabs.map(tab => (
-            <S.Tab
+            <ProfileTab
               key={tab}
               onClick={() => setActiveTab(tab)}
               type={types[0]}
               isActive={tab === activeTab}
-            >
-              {tab}
-            </S.Tab>
+              label={tab}
+            />
           ))}
         </S.Tabs>
       </S.InnerWrapper>

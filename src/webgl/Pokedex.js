@@ -95,13 +95,13 @@ export default class Pokedex extends SceneManager {
     }
     this.carousel.update();
 
-    this.renderer.autoClear = false;
-    this.renderer.clear();
+    // this.renderer.autoClear = false;
+    // this.renderer.clear();
 
     this.camera.layers.set(Layers.BLOOM_CARD);
-    this.pp.render();
+    // this.pp.render();
 
-    this.renderer.clearDepth();
+    // this.renderer.clearDepth();
     this.camera.layers.set(Layers.BASE);
     this.renderer.render(this.scene, this.camera);
   }
