@@ -127,7 +127,5 @@ export default class MainStage {
       type: WebglEvents.FOCUS_CARD,
       card: this.mouse.isIntersectionCard() ? this.mouse.intersection : null,
     });
-
-
   }
 }
