@@ -52,7 +52,7 @@ export default class EntranceStage {
       return;
     }
     this.context.mouse.updatePosition(e);
-    this.context.mouse.updateIntersection();
+    this.context.mouse.updateIntersection([this.gate]);
     const { intersection } = this.context.mouse;
     if (intersection && intersection.object.name === ComponentNames.GATE) {
       gsap.to(this.gate.material.uniforms.uPos.value, 1.2, {

@@ -1,4 +1,6 @@
 import * as THREE from 'three';
+
+import { throttle } from '../utils';
 import SceneManager from './SceneManager';
 import Lights from './Lights';
 import CardCarousel from './CardCarousel';
@@ -35,6 +37,10 @@ export default class Pokedex extends SceneManager {
     );
 
     this.setupEvents();
+
+    setInterval(() => {
+      this.lights.updateSpot(this.camera.position);
+    }, 1000);
   }
 
   load(list) {
@@ -85,7 +91,9 @@ export default class Pokedex extends SceneManager {
       this.stage.update();
     }
     this.carousel.update();
-    this.lights.updateSpot(this.camera.position);
+
+    //   this.lights.updateSpot(this.camera.position);
+
     this.renderer.render(this.scene, this.camera);
   }
 }

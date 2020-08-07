@@ -4,8 +4,8 @@ export default class Lights {
   constructor() {
     this.spot = new THREE.SpotLight(0xffffff, 0.8);
     this.spot.castShadow = true;
-    this.spot.shadow.mapSize.width = 4096;
-    this.spot.shadow.mapSize.height = 4096;
+    this.spot.shadow.mapSize.width = 8192;
+    this.spot.shadow.mapSize.height = 8192;
     this.spot.shadow.near = 1;
     this.spot.shadow.far = 400;
     this.spot.position.set(0, 300, 0);
@@ -16,10 +16,7 @@ export default class Lights {
 
   }
   updateSpot(position) {
-    this.spot.position.set(
-      position.x,
-      this.spot.position.y,
-      position.z
-    );
+    this.spot.position.copy(position);
+    this.spot.position.y = 300;
   }
 }
