@@ -40,11 +40,11 @@ export default class Mouse {
     this.mouseCSS.y = e.clientY;
   }
 
-  updateIntersection() {
+  updateIntersection(intersectables = []) {
     this.context.camera.updateMatrix();
     this.raycaster.setFromCamera(this.mouse, this.context.camera);
 
-    const intersections = this.raycaster.intersectObjects(this.context.scene.children, true);
+    const intersections = this.raycaster.intersectObjects(intersectables, true);
 
     if (intersections) {
       this.intersection = intersections[0];

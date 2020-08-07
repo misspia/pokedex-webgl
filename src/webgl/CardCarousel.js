@@ -6,8 +6,8 @@ import { WebglEvents } from '../constants/events';
 import { TOTAL_ENTRIES, CAROUSEL_RADIUS } from '../constants/entries';
 import CardBack from './CardBack';
 
-const NUM_ROWS = 3;
-const NUM_COLS = Math.ceil(TOTAL_ENTRIES / NUM_ROWS);
+const NUM_COLS = Math.ceil(Math.sqrt(TOTAL_ENTRIES));
+const NUM_ROWS = Math.ceil(TOTAL_ENTRIES / NUM_COLS);
 
 const CIRCUMFERENCE = calcCircumference(CAROUSEL_RADIUS);
 const GRID_WIDTH = CIRCUMFERENCE / NUM_COLS;
@@ -62,6 +62,10 @@ export default class CardCarousel {
     return this.bbox.max;
   }
 
+  get children() {
+    return this.pivot.children;
+  }
+
   load(list) {
     list.splice(TOTAL_ENTRIES);
 
@@ -97,11 +101,12 @@ export default class CardCarousel {
 
   calcListItemPosition(index) {
     const col = index % NUM_COLS;
-    const row = (index - (index % NUM_COLS)) / NUM_COLS;
+    const row = Math.floor(index / NUM_COLS);
+
     return {
-      x: col * GRID_WIDTH - TOTAL_WIDTH / 2,
+      x:  0 - (col * GRID_WIDTH - TOTAL_WIDTH / 2),
       y: 2,
-      z: row * GRID_HEIGHT - TOTAL_HEIGHT / 2,
+      z: 0 - (row * GRID_HEIGHT - TOTAL_HEIGHT / 2),
     }
   }
 

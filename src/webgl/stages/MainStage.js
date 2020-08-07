@@ -25,6 +25,10 @@ export default class MainStage {
     this.setupEvents();
   }
 
+  updateMouseIntersection() {
+    this.mouse.updateIntersection(this.context.carousel.children);
+  }
+
   setupEvents() {
     this.canvas.addEventListener('mousemove', (e) => {
       this.mouse.updatePosition(e);
@@ -37,7 +41,7 @@ export default class MainStage {
     });
 
     this.canvas.addEventListener('mousedown', (e) => {
-      this.mouse.updateIntersection();
+      this.updateMouseIntersection();
 
       if (
         !this.mouse.intersection
@@ -78,10 +82,14 @@ export default class MainStage {
           });
       }
     );
+
+    setInterval(() => {
+      this.updateIntersection();
+    }, 200);
   }
 
   updateIntersection() {
-    this.mouse.updateIntersection();
+    this.updateMouseIntersection();
 
     if(!this.mouse.intersection) {
       return;
@@ -114,8 +122,6 @@ export default class MainStage {
     if(Math.abs(y) > 0.3 && this.context.carousel.isInZBounds(newZ)) {
       this.context.camera.position.z = newZ;
     }
-
-    this.updateIntersection();
 
     this.eventDispatcher.dispatchEvent({
       type: WebglEvents.FOCUS_CARD,

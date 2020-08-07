@@ -27,7 +27,7 @@ export const reveal = (wrapper) => {
       ease: Back.easeOut(1.7),
     })
     .to(wrapper, 0.5, {
-      backgroundColor: 'rgba(255, 255, 255, 0.7)',
+      backgroundColor: 'rgba(255, 255, 255, 0.85)',
     })
 }
 
