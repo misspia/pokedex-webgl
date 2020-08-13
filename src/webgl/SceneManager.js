@@ -36,8 +36,8 @@ export default class SceneManager {
       // stencil: false,
     });
     this.setClearColor(0xffffff);
-    const dpr = Math.min(1.5, window.devicePixelRatio);
-    this.renderer.setPixelRatio(dpr);
+    // const dpr = Math.min(1.5, window.devicePixelRatio);
+    // this.renderer.setPixelRatio(dpr);
 
     // this.controls = new Controls(this);
 

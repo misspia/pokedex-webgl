@@ -2,8 +2,8 @@ import * as THREE from 'three';
 
 export default class Floor {
   constructor() {
-    this.width = 500;
-    this.depth = 500;
+    this.width = 450;
+    this.depth = 450;
     this.height = 0.1;
 
     const geometry = new THREE.PlaneGeometry(this.width, this.depth, this.width, this.depth);

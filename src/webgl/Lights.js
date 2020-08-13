@@ -7,8 +7,8 @@ export default class Lights {
     this.spot.shadow.mapSize.width = 8192;
     this.spot.shadow.mapSize.height = 8192;
     this.spot.shadow.near = 1;
-    this.spot.shadow.far = 400;
-    this.spot.position.set(0, 300, 0);
+    this.spot.shadow.far = 500;
+    this.spot.position.set(0, 400, 0);
 
     this.spotHelper = new THREE.SpotLightHelper(this.spot, 0xff0000);
 
